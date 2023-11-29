@@ -9,7 +9,9 @@
 *.test
 *.out
 
-build/
+build/darwins
+build/windows
+build/bin
 dist/
 
 # Package
