@@ -1,7 +1,5 @@
 import { ReactJkMusicPlayerAudioListProps as AudioList } from 'react-jinke-music-player';
 
-// export interface AudioList extends ReactJkMusicPlayerAudioListProps {}
-
 export const SampleAudioList: AudioList[] = [
 	{
 		name: 'Despacito',

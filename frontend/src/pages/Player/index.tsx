@@ -2,13 +2,21 @@ import { default as MusicPlayer, ReactJkMusicPlayerAudioListProps as AudioList }
 import 'react-jinke-music-player/assets/index.css';
 import { Container } from './styles';
 import { useState } from 'react';
-import { SampleAudioList } from '../../interfaces/audio';
+import { SampleAudioList } from '../../types/data';
 import { Header } from '../../components/Header';
+import { IArtist, IItem, IAudio, IPlaylist } from '../../types';
+import QueueEmpty from '../../assets/img/bg-1-1.png';
 
 export const Player = () => {
+	const [audio, setAudio] = useState<IAudio>();
 	const [audioLists, setAudioLists] = useState<AudioList>();
 	const [loading, setLoading] = useState<boolean>(false);
-	const [queue, setQueue] = useState<Array<any>>([]);
+	const [queue, setQueue] = useState<Array<AudioList>>([]);
+	const [currentStats, setCurrentStats] = useState<IItem>();
+	const [playlistsToAdd, setPlaylistsToAdd] = useState<Array<IPlaylist>>([]);
+	const [artist, setArtist] = useState<IArtist>();
+
+	const handleSearchArtist = (id: string) => {};
 
 	return (
 		<>
@@ -22,27 +30,26 @@ export const Player = () => {
 				// setArtist={setArtist}
 				/>
 				<div className="playlistsToAdd">
-					{/* {artist && artist.photo !== '' && playlistsToAdd && playlistsToAdd.length > 0 && !loading && (
+					{artist && artist.photo !== '' && playlistsToAdd && playlistsToAdd.length > 0 && !loading && (
 						<div className="artist" onClick={() => handleSearchArtist(artist.id)}>
 							<div className="background" style={{ backgroundImage: `url('${artist.photo}')` }}></div>
 						</div>
-					)} */}
+					)}
 
-					{/* {playlistsToAdd &&
+					{playlistsToAdd &&
 						playlistsToAdd.length > 0 &&
 						!loading &&
 						playlistsToAdd.map((i, k) => (
-							// @ts-ignore
 							<Playlist
 								title={i.title}
 								id={i.id}
 								songs={i.songs}
 								thumb={i.thumb}
-								setPlaylistModalOpened={setPlaylistModalOpened}
+								// setPlaylistModalOpened={setPlaylistModalOpened}
 								key={k}
-								setCurrentPlaylist={setCurrentPlaylist}
+								// setCurrentPlaylist={setCurrentPlaylist}
 							/>
-						))} */}
+						))}
 				</div>
 
 				<div className="items">
@@ -101,39 +108,41 @@ export const Player = () => {
 				</div>
 
 				<div className="queue">
-					{/* {!loading &&
-						videos &&
-						videos.length === 0 &&
+					{!loading &&
+						// videos &&
+						// videos.length === 0 &&
 						(queue && queue.length > 0 ? (
-							queue.map((i, k) => (
-								<QueueItem
-									key={k}
-									position={k}
-									title={i.title}
-									thumb={i.thumb}
-									author={i.author}
-									duration={i.duration}
-									id={i.id}
-								/>
-							))
+							// queue.map((i, k) => (
+							// 	<QueueItem
+							// 		key={k}
+							// 		position={k}
+							// 		title={i.title}
+							// 		thumb={i.thumb}
+							// 		author={i.author}
+							// 		duration={i.duration}
+							// 		id={i.id}
+							// 	/>
+							// ))
+							<></>
 						) : currentStats && currentStats.title !== '' ? (
-							<QueueItem
-								position={0}
-								title={currentStats.title}
-								author={currentStats.author}
-								thumb={currentStats.thumb}
-								duration={currentStats.duration}
-								id={currentStats.id}
-							/>
+							// <QueueItem
+							// 	position={0}
+							// 	title={currentStats.title}
+							// 	author={currentStats.author}
+							// 	thumb={currentStats.thumb}
+							// 	duration={currentStats.duration}
+							// 	id={currentStats.id}
+							// />
+							<></>
 						) : (
 							<div className="empty">
 								<img src={QueueEmpty} />
 
-								<h3>Queue empty, try to search for a song or play a list. :)</h3>
+								<h3>play some music ~hooman~</h3>
 							</div>
-						))} */}
+						))}
 				</div>
-				<MusicPlayer audioLists={SampleAudioList} mode={'full'} />
+				<MusicPlayer audioLists={SampleAudioList} mode={'full'} autoPlay={false} />
 			</Container>
 		</>
 	);
