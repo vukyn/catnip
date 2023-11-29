@@ -1,25 +1,43 @@
 import { default as MusicPlayer, ReactJkMusicPlayerAudioListProps as AudioList } from 'react-jinke-music-player';
 import 'react-jinke-music-player/assets/index.css';
 import { Container } from './styles';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SampleAudioList } from '../../types/data';
 import { Header } from '../../components/Header';
 import { IArtist, IItem, IAudio, IPlaylist } from '../../types';
-import QueueEmpty from '../../assets/img/bg-1-1.png';
+import QueueEmptyImg from '../../assets/img/bg-1-1.png';
+import FavoritesImg from '../../assets/favorite.png';
+import LocalImg from '../../assets/local.png';
+import AddToQueueImg from '../../assets/addtoqueue.svg';
+import { Playlist } from '../../components/Playlist';
+import ReactLoading from 'react-loading';
+import { NewPlaylistModal } from '../../components/NewPlaylistModal';
 
 export const Player = () => {
-	const [audio, setAudio] = useState<IAudio>();
-	const [audioLists, setAudioLists] = useState<AudioList>();
-	const [loading, setLoading] = useState<boolean>(false);
+	// objects
+	const [audios, setAudios] = useState<Array<IAudio>>([]);
+	const [artist, setArtist] = useState<IArtist>();
 	const [queue, setQueue] = useState<Array<AudioList>>([]);
 	const [currentStats, setCurrentStats] = useState<IItem>();
-	const [playlistsToAdd, setPlaylistsToAdd] = useState<Array<IPlaylist>>([]);
-	const [artist, setArtist] = useState<IArtist>();
+	const [currentPlaylist, setCurrentPlaylist] = useState<IPlaylist>();
+	const [userPlaylist, setUserPlaylist] = useState<Array<IPlaylist>>([]);
 
+	// behaviors
+	const [newPlaylistModalOpened, setNewPlaylistModalOpened] = useState<boolean>(false);
+	const [favoritesModalOpened, setFavoritesModalOpened] = useState<boolean>(false);
+	const [playlistModalOpened, setPlaylistModalOpened] = useState<boolean>(false);
+	const [localModalOpened, setLocalModalOpened] = useState<boolean>(false);
+	const [loading, setLoading] = useState<boolean>(false);
+
+	// handlers
 	const handleSearchArtist = (id: string) => {};
+
+	// initial
+	useEffect(() => {}, []);
 
 	return (
 		<>
+			{newPlaylistModalOpened && <NewPlaylistModal setNewPlaylistModalOpened={setNewPlaylistModalOpened} />}
 			<Container>
 				<Header
 				// setVideos={setVideos}
@@ -29,60 +47,61 @@ export const Player = () => {
 				// setMoreOptionsOpened={setMoreOptionsOpened}
 				// setArtist={setArtist}
 				/>
-				<div className="playlistsToAdd">
-					{artist && artist.photo !== '' && playlistsToAdd && playlistsToAdd.length > 0 && !loading && (
+				{/* <div className="playlistsToAdd">
+					{artist && artist.photo !== '' && userPlaylist && userPlaylist.length > 0 && !loading && (
 						<div className="artist" onClick={() => handleSearchArtist(artist.id)}>
 							<div className="background" style={{ backgroundImage: `url('${artist.photo}')` }}></div>
 						</div>
 					)}
 
-					{playlistsToAdd &&
-						playlistsToAdd.length > 0 &&
+					{userPlaylist &&
+						userPlaylist.length > 0 &&
 						!loading &&
-						playlistsToAdd.map((i, k) => (
+						userPlaylist.map((i, k) => (
 							<Playlist
 								title={i.title}
 								id={i.id}
 								songs={i.songs}
 								thumb={i.thumb}
-								// setPlaylistModalOpened={setPlaylistModalOpened}
+								setPlaylistModalOpened={setPlaylistModalOpened}
 								key={k}
-								// setCurrentPlaylist={setCurrentPlaylist}
+								setCurrentPlaylist={setCurrentPlaylist}
 							/>
 						))}
-				</div>
+				</div> */}
 
 				<div className="items">
-					{/* {videos.length > 0 && !loading ? (
-						videos.map((i, k) => (
-							<Item
-								key={k}
-								thumb={i.thumb}
-								title={i.title}
-								author={i.author}
-								views={i.views}
-								id={i.id}
-								duration={i.duration}
-								setCurrentAudio={setCurrentAudio}
-								setCurrentStats={setCurrentStats}
-								position={0}
-								// @ts-ignore
-								playlist={{}}
-							/>
+					{audios.length > 0 && !loading ? (
+						audios.map((i, k) => (
+							// <Item
+							// 	key={k}
+							// 	thumb={i.thumb}
+							// 	title={i.title}
+							// 	author={i.author}
+							// 	views={i.views}
+							// 	id={i.id}
+							// 	duration={i.duration}
+							// 	setCurrentAudio={setCurrentAudio}
+							// 	setCurrentStats={setCurrentStats}
+							// 	position={0}
+							// 	// @ts-ignore
+							// 	playlist={{}}
+							// />
+							<></>
 						))
 					) : loading ? (
 						<ReactLoading type="spin" color="#999" width={36} className="spinner" />
 					) : (
 						<div className="playlists">
 							<div title="Favorites" className="playlist" onClick={() => setFavoritesModalOpened(true)}>
-								<div className="backgrounds" style={{ backgroundImage: `url('${FavoritesBackground}')` }} />
+								<div className="backgrounds" style={{ backgroundImage: `url('${FavoritesImg}')` }} />
 							</div>
 
 							<div title="Local" className="playlist" onClick={() => setLocalModalOpened(true)}>
-								<div className="backgrounds" style={{ backgroundImage: `url('${LocalBackground}')` }} />
+								<div className="backgrounds" style={{ backgroundImage: `url('${LocalImg}')` }} />
 							</div>
 
-							{playlists.length > 0 &&
+							{/* {playlists.length > 0 &&
 								playlists.map((i, k) =>
 									i.photo ? (
 										<div title={i.name} key={k} className="artist" onClick={() => handleArtist(k)}>
@@ -93,18 +112,18 @@ export const Player = () => {
 											<div className="background" style={{ backgroundImage: `url('${i.thumb}')` }}></div>
 										</div>
 									)
-								)}
-							{videos.length === 0 && !loading && (
+								)} */}
+							{audios.length === 0 && !loading && (
 								<div className="playlist" onClick={() => setNewPlaylistModalOpened(true)}>
 									<div className="background"></div>
 
 									<div className="buttons">
-										<img src={AddToQueue} width={28} />
+										<img src={AddToQueueImg} width={28} />
 									</div>
 								</div>
 							)}
 						</div>
-					)} */}
+					)}
 				</div>
 
 				<div className="queue">
@@ -136,7 +155,7 @@ export const Player = () => {
 							<></>
 						) : (
 							<div className="empty">
-								<img src={QueueEmpty} />
+								<img src={QueueEmptyImg} />
 
 								<h3>play some music ~hooman~</h3>
 							</div>
