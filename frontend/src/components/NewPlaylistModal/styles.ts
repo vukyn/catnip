@@ -27,14 +27,17 @@ export const Container = styled.div`
 	border-radius: 8px;
 	padding: 0.75rem;
 
-	.background {
-		background: #333;
+	.thumbnail {
 		width: 210px;
 		height: 210px;
-		background-position: center;
-		background-repeat: no-repeat;
-		background-size: 380px;
-		border-radius: 6px;
+		background: #333;
+		border-radius: 12px;
+
+		img {
+			width: 210px;
+			height: 210px;
+			border-radius: 12px;
+		}
 	}
 
 	.textboxes {
@@ -89,5 +92,8 @@ export const Container = styled.div`
 
 	#cancel {
 		background: #ff6464;
+	}
+
+	@media (min-width: 1080px) {
 	}
 `;

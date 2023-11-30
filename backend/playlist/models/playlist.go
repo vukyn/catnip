@@ -14,7 +14,7 @@ type Playlist struct {
 func (p *Playlist) ParseFromYoutube(in *ytModel.PlaylistItem) {
 	p.Id = in.Snippet.ResourceId.VideoId
 	p.Title = in.Snippet.Title
-	p.Thumbnail = in.Snippet.Thumbnails.Medium.Url
+	p.Thumbnail = in.Snippet.Thumbnails.Maxres.Url
 	p.Author = in.Snippet.ChannelTitle
 }
 

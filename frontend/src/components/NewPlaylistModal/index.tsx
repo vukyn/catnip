@@ -1,9 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
-
 import { Background, Container } from './styles';
-
-// import { notificate } from '../../utils/notifications';
-// import { api } from '../../utils/api';
+import { GetPlaylistById } from '../../wailsjs/go/handler/Playlist';
+import { notificate } from '../../utils/notification';
 
 type Props = {
 	setNewPlaylistModalOpened: Function;
@@ -41,15 +39,14 @@ export const NewPlaylistModal = (props: Props) => {
 
 			const id = e.target!.value.split('list=')[1];
 
-			// api.get(`/playlist?id=${id}`)
-			// 	.then(({ data }) => {
-			// 		setPlaylist({
-			// 			id,
-			// 			thumb: data.videos[0].thumb,
-			// 		});
-			// 	})
-
-			// 	.catch(() => notificate('error', "Failed to get playlist, maybe it' private."));
+			GetPlaylistById(id)
+				.then((data) => {
+					setPlaylist({
+						id,
+						thumb: data[0].thumb,
+					});
+				})
+				.catch(() => notificate('error', 'Failed to get playlist, please try again later.'));
 		});
 
 		// @ts-ignore
@@ -108,7 +105,7 @@ export const NewPlaylistModal = (props: Props) => {
 					<input type="text" id="title" ref={titleRef} maxLength={24} placeholder="Title" />
 				</div>
 
-				<div style={{ backgroundImage: `url('${playlist && playlist.thumb}')` }} className="background"></div>
+				<div className="thumbnail">{playlist && playlist.thumb && <img alt="" src={playlist.thumb}></img>}</div>
 
 				<div className="buttons">
 					<input type="button" id="cancel" value="Cancel" onClick={() => setNewPlaylistModalOpened(false)} />

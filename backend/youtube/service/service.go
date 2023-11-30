@@ -22,9 +22,10 @@ func (s *service) GetYoutubePlaylistItemsV1(ctx context.Context, id string) (*mo
 	part := "snippet"
 	maxResults := 50
 	client := &http.Client{}
-	var playlist *models.Playlist
+	playlist := &models.Playlist{}
 
-	req, err := http.NewRequest("GET", fmt.Sprintf("%v/playlistItems?part=%v&maxResults=%v&playlistId=%v&key=%v", constant.YOUTUBE_API_URL, part, maxResults, id, constant.GOOGLE_KEY), nil)
+	url := fmt.Sprintf("%v/playlistItems?part=%v&maxResults=%v&playlistId=%v&key=%v", constant.YOUTUBE_API_URL, part, maxResults, id, constant.GOOGLE_KEY)
+	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}

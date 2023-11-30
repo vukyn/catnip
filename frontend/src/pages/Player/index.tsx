@@ -18,6 +18,7 @@ export const Player = () => {
 	const [audios, setAudios] = useState<Array<IAudio>>([]);
 	const [artist, setArtist] = useState<IArtist>();
 	const [queue, setQueue] = useState<Array<AudioList>>([]);
+	const [playlists, setPlaylists] = useState<Array<IPlaylist>>([]);
 	const [currentStats, setCurrentStats] = useState<IItem>();
 	const [currentPlaylist, setCurrentPlaylist] = useState<IPlaylist>();
 	const [userPlaylist, setUserPlaylist] = useState<Array<IPlaylist>>([]);
@@ -31,9 +32,34 @@ export const Player = () => {
 
 	// handlers
 	const handleSearchArtist = (id: string) => {};
+	const handlePlaylist = (k: number) => {
+		// let playlists = JSON.parse(window.localStorage.getItem('playlists')!);
+		// playlists.unshift(playlists[k]);
+		// delete playlists[k + 1];
+		// api.get(`/playlist?id=${playlists[0].id}`)
+		// 	.then(({ data }) => {
+		// 		setCurrentPlaylist({
+		// 			...playlists[0],
+		// 			videos: data.videos,
+		// 		});
+		// 		setPlaylistModalOpened(true);
+		// 	})
+		// 	.catch(() => notificate('error', "Failed to set playlist, maybe it's private, invalid or was deleted."))
+		// 	.finally(() => {
+		// 		window.localStorage.setItem('playlists', JSON.stringify(playlists.filter((i: PlaylistT) => i !== null)));
+		// 		window.dispatchEvent(new Event('playlistsUpdated'));
+		// 	});
+	};
 
 	// initial
 	useEffect(() => {}, []);
+
+	// events
+	const onPlaylistSave = window.addEventListener('playlistsaved', () => {
+		setPlaylists(JSON.parse(window.localStorage.getItem('playlists')!));
+	});
+	// @ts-ignore
+	window.removeEventListener('playlistsaved', onPlaylistSave);
 
 	return (
 		<>
@@ -47,14 +73,14 @@ export const Player = () => {
 				// setMoreOptionsOpened={setMoreOptionsOpened}
 				// setArtist={setArtist}
 				/>
-				{/* <div className="playlistsToAdd">
-					{artist && artist.photo !== '' && userPlaylist && userPlaylist.length > 0 && !loading && (
+				<div className="playlistsToAdd">
+					{/* {artist && artist.photo !== '' && userPlaylist && userPlaylist.length > 0 && !loading && (
 						<div className="artist" onClick={() => handleSearchArtist(artist.id)}>
 							<div className="background" style={{ backgroundImage: `url('${artist.photo}')` }}></div>
 						</div>
-					)}
+					)} */}
 
-					{userPlaylist &&
+					{/* {userPlaylist &&
 						userPlaylist.length > 0 &&
 						!loading &&
 						userPlaylist.map((i, k) => (
@@ -67,8 +93,8 @@ export const Player = () => {
 								key={k}
 								setCurrentPlaylist={setCurrentPlaylist}
 							/>
-						))}
-				</div> */}
+						))} */}
+				</div>
 
 				<div className="items">
 					{audios.length > 0 && !loading ? (
@@ -101,18 +127,21 @@ export const Player = () => {
 								<div className="backgrounds" style={{ backgroundImage: `url('${LocalImg}')` }} />
 							</div>
 
-							{/* {playlists.length > 0 &&
-								playlists.map((i, k) =>
-									i.photo ? (
-										<div title={i.name} key={k} className="artist" onClick={() => handleArtist(k)}>
-											<div className="background" style={{ backgroundImage: `url('${i.photo}')` }}></div>
-										</div>
-									) : (
-										<div title={i.title} key={k} className="playlist" onClick={() => handlePlaylist(k)}>
-											<div className="background" style={{ backgroundImage: `url('${i.thumb}')` }}></div>
-										</div>
-									)
-								)} */}
+							{playlists.length > 0 &&
+								playlists.map((i, k) => (
+									// i.photo ? (
+									// 	<div title={i.name} key={k} className="artist" onClick={() => handleArtist(k)}>
+									// 		<div className="background" style={{ backgroundImage: `url('${i.photo}')` }}></div>
+									// 	</div>
+									// ) : (
+									// 	<div title={i.title} key={k} className="playlist" onClick={() => handlePlaylist(k)}>
+									// 		<div className="background" style={{ backgroundImage: `url('${i.thumb}')` }}></div>
+									// 	</div>
+									// )
+									<div title={i.title} key={k} className="playlist" onClick={() => handlePlaylist(k)}>
+										<div className="background" style={{ backgroundImage: `url('${i.thumb}')` }}></div>
+									</div>
+								))}
 							{audios.length === 0 && !loading && (
 								<div className="playlist" onClick={() => setNewPlaylistModalOpened(true)}>
 									<div className="background"></div>
