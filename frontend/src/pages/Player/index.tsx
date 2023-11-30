@@ -12,14 +12,17 @@ import AddToQueueImg from '../../assets/addtoqueue.svg';
 import { Playlist } from '../../components/Playlist';
 import ReactLoading from 'react-loading';
 import { NewPlaylistModal } from '../../components/NewPlaylistModal';
+import { GetPlaylistById } from '../../wailsjs/go/handler/Playlist';
+import { models } from '../../wailsjs/go/models';
+import { notificate } from '../../utils/notification';
 
 export const Player = () => {
 	// objects
 	const [audios, setAudios] = useState<Array<IAudio>>([]);
 	const [artist, setArtist] = useState<IArtist>();
 	const [queue, setQueue] = useState<Array<AudioList>>([]);
-	const [playlists, setPlaylists] = useState<Array<IPlaylist>>([]);
 	const [currentStats, setCurrentStats] = useState<IItem>();
+	const [playlists, setPlaylists] = useState<Array<IPlaylist>>([]);
 	const [currentPlaylist, setCurrentPlaylist] = useState<IPlaylist>();
 	const [userPlaylist, setUserPlaylist] = useState<Array<IPlaylist>>([]);
 
@@ -32,10 +35,11 @@ export const Player = () => {
 
 	// handlers
 	const handleSearchArtist = (id: string) => {};
-	const handlePlaylist = (k: number) => {
+	const handleSelectPlaylist = (v: IPlaylist) => {
 		// let playlists = JSON.parse(window.localStorage.getItem('playlists')!);
-		// playlists.unshift(playlists[k]);
-		// delete playlists[k + 1];
+		// playlists = playlists.filter((item: IPlaylist) => item.id !== v.id);
+		// playlists.unshift(playlists[i]);
+		// delete playlists[i + 1];
 		// api.get(`/playlist?id=${playlists[0].id}`)
 		// 	.then(({ data }) => {
 		// 		setCurrentPlaylist({
@@ -44,11 +48,29 @@ export const Player = () => {
 		// 		});
 		// 		setPlaylistModalOpened(true);
 		// 	})
-		// 	.catch(() => notificate('error', "Failed to set playlist, maybe it's private, invalid or was deleted."))
-		// 	.finally(() => {
-		// 		window.localStorage.setItem('playlists', JSON.stringify(playlists.filter((i: PlaylistT) => i !== null)));
-		// 		window.dispatchEvent(new Event('playlistsUpdated'));
-		// 	});
+		GetPlaylistById(v.id)
+			.then((data) => {
+				setCurrentPlaylist({
+					id: v.id,
+					title: v.title,
+					thumb: v.thumb,
+					audios: data.map((i: models.Playlist) => {
+						return {
+							author: i.author,
+							thumb: i.thumb,
+							title: i.title,
+							id: i.id,
+							duration: '',
+							views: '',
+						};
+					}),
+				});
+			})
+			.catch(() => notificate('error', 'Failed to set playlist, please try again later.'))
+			.finally(() => {
+				window.localStorage.setItem('playlists', JSON.stringify(playlists.filter((i: IPlaylist) => i !== null)));
+				window.dispatchEvent(new Event('playlistsUpdated'));
+			});
 	};
 
 	// initial
@@ -128,7 +150,7 @@ export const Player = () => {
 							</div>
 
 							{playlists.length > 0 &&
-								playlists.map((i, k) => (
+								playlists.map((v, i) => (
 									// i.photo ? (
 									// 	<div title={i.name} key={k} className="artist" onClick={() => handleArtist(k)}>
 									// 		<div className="background" style={{ backgroundImage: `url('${i.photo}')` }}></div>
@@ -138,8 +160,8 @@ export const Player = () => {
 									// 		<div className="background" style={{ backgroundImage: `url('${i.thumb}')` }}></div>
 									// 	</div>
 									// )
-									<div title={i.title} key={k} className="playlist" onClick={() => handlePlaylist(k)}>
-										<div className="background" style={{ backgroundImage: `url('${i.thumb}')` }}></div>
+									<div title={v.title} key={i} className="playlist" onClick={() => handleSelectPlaylist(v)}>
+										<div className="background" style={{ backgroundImage: `url('${v.thumb}')` }}></div>
 									</div>
 								))}
 							{audios.length === 0 && !loading && (

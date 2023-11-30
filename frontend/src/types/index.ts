@@ -18,9 +18,9 @@ export interface IPlaylist {
 	id: string;
 	thumb: string;
 	title: string;
-	songs: number;
+	// songs: number;
 	audios: Array<IAudio>;
-	type: string;
+	type?: string;
 }
 
 export interface IAudio {
