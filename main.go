@@ -4,6 +4,9 @@ import (
 	"embed"
 	"log"
 
+	initPlaylist "catnip/backend/playlist/init"
+	initYoutube "catnip/backend/youtube/init"
+
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
@@ -20,6 +23,10 @@ var icon []byte
 func main() {
 	// Create an instance of the app structure
 	app := NewApp()
+
+	// Init backend
+	youtube := initYoutube.NewInit()
+	playlist := initPlaylist.NewInit(youtube)
 
 	// Create application with options
 	err := wails.Run(&options.App{
@@ -49,6 +56,7 @@ func main() {
 		WindowStartState: options.Normal,
 		Bind: []interface{}{
 			app,
+			&playlist.Handler,
 		},
 		// Windows platform specific options
 		Windows: &windows.Options{

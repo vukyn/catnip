@@ -2,8 +2,9 @@ package usecase
 
 import (
 	"catnip/backend/playlist/models"
+	"context"
 )
 
 type IUseCase interface {
-	PlaylistService(id string) ([]*models.Playlist, error)
+	GetById(ctx context.Context, id string) ([]*models.Playlist, error)
 }
