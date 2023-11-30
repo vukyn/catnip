@@ -5,7 +5,6 @@ import (
 	"log"
 
 	"github.com/wailsapp/wails/v2"
-	"github.com/wailsapp/wails/v2/pkg/logger"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
 	"github.com/wailsapp/wails/v2/pkg/options/mac"
@@ -24,25 +23,25 @@ func main() {
 
 	// Create application with options
 	err := wails.Run(&options.App{
-		Title:             "Catnip",
-		Width:             1024,
-		Height:            768,
-		MinWidth:          1024,
-		MinHeight:         768,
-		MaxWidth:          1280,
-		MaxHeight:         800,
-		DisableResize:     false,
-		Fullscreen:        false,
-		Frameless:         false,
-		StartHidden:       false,
-		HideWindowOnClose: false,
-		BackgroundColour:  &options.RGBA{R: 255, G: 255, B: 255, A: 255},
+		Title:     "Catnip",
+		Width:     1024,
+		Height:    640,
+		MinWidth:  1024,
+		MinHeight: 640,
+		// MaxWidth:          1280,
+		// MaxHeight:         800,
+		DisableResize: false,
+		Fullscreen:    false,
+		Frameless:     true,
+		// StartHidden:       false,
+		HideWindowOnClose: true,
+		BackgroundColour:  &options.RGBA{R: 27, G: 38, B: 54, A: 1},
 		AssetServer: &assetserver.Options{
 			Assets: assets,
 		},
-		Menu:             nil,
-		Logger:           nil,
-		LogLevel:         logger.DEBUG,
+		// Menu:             nil,
+		// Logger:           nil,
+		// LogLevel:         logger.DEBUG,
 		OnStartup:        app.startup,
 		OnDomReady:       app.domReady,
 		OnBeforeClose:    app.beforeClose,
@@ -56,9 +55,8 @@ func main() {
 			WebviewIsTransparent: false,
 			WindowIsTranslucent:  false,
 			DisableWindowIcon:    false,
-			// DisableFramelessWindowDecorations: false,
-			WebviewUserDataPath: "",
-			ZoomFactor:          1.0,
+			WebviewUserDataPath:  "",
+			ZoomFactor:           1.0,
 		},
 		// Mac platform specific options
 		Mac: &mac.Options{
