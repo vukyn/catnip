@@ -1,23 +1,25 @@
+import { NextUIProvider } from '@nextui-org/react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-import { Player } from './pages/Player';
-
+import IndexPage from './pages';
 import './styles/global.css';
+import { StrictMode } from 'react';
 
 const router = createBrowserRouter([
 	{
 		path: '/',
-		element: <Player />,
+		element: <IndexPage />,
 	},
 ]);
 
-createRoot(document.querySelector('#root')!).render(
-	<>
-		<ToastContainer />
+const App = () => {
+	return (
+		<StrictMode>
+			<NextUIProvider>
+				<RouterProvider router={router} />
+			</NextUIProvider>
+		</StrictMode>
+	);
+};
 
-		<RouterProvider router={router} />
-	</>
-);
+createRoot(document.querySelector('#root')!).render(<App />);
