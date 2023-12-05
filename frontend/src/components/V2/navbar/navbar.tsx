@@ -13,6 +13,8 @@ interface Props {
 }
 
 export const NavbarWrapper = ({ children }: Props) => {
+	const [searchText, setSearchText] = React.useState('');
+
 	return (
 		<div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
 			<Navbar
@@ -29,11 +31,10 @@ export const NavbarWrapper = ({ children }: Props) => {
 					<Input
 						startContent={<SearchIcon />}
 						isClearable
+						value={searchText}
+						onChange={(e) => setSearchText(e.target.value)}
+						onClear={() => setSearchText('')}
 						className="w-full"
-						classNames={{
-							input: 'w-full',
-							mainWrapper: 'w-full',
-						}}
 						placeholder="Search..."
 					/>
 				</NavbarContent>
