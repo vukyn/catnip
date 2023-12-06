@@ -18,8 +18,7 @@ export interface IPlaylist {
 	id: string;
 	thumb: string;
 	title: string;
-	// songs: number;
-	audios: Array<IAudio>;
+	audios?: Array<IAudio>;
 	type?: string;
 }
 

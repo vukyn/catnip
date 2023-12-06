@@ -1,11 +1,16 @@
 import React from 'react';
 import { ChevronUpIcon } from '../icons/chevron-up-icon';
-import { Accordion, AccordionItem } from '@nextui-org/react';
+import { Accordion, AccordionItem, Button } from '@nextui-org/react';
 
 interface Props {
 	icon: React.ReactNode;
 	title: string;
-	items: string[];
+	items: ItemProps[];
+}
+
+interface ItemProps {
+	title: string;
+	onClick: () => void;
 }
 
 export const CollapseItems = ({ icon, items, title }: Props) => {
@@ -30,9 +35,14 @@ export const CollapseItems = ({ icon, items, title }: Props) => {
 				>
 					<div className="pl-12">
 						{items.map((item, index) => (
-							<span key={index} className="w-full flex  text-default-500 hover:text-default-900 transition-colors">
-								{item}
-							</span>
+							<Button
+								key={index}
+								className="w-full flex flex-row gap-2 justify-start text-left"
+								variant="light"
+								onClick={item.onClick}
+							>
+								{item.title}
+							</Button>
 						))}
 					</div>
 				</AccordionItem>

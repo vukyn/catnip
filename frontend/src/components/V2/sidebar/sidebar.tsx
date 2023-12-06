@@ -13,10 +13,13 @@ import { SidebarMenu } from './sidebar-menu';
 import { useSidebarContext } from '../layout/layout-context';
 import { useLocation } from 'react-router-dom';
 import { CollapseItems } from './collapse-items';
+import { useDisclosure } from '@nextui-org/react';
+import { AddPlaylistModal } from '../modal/add-playlist-model';
 
 export const SidebarWrapper = () => {
 	const { pathname } = useLocation();
 	const { collapsed, setCollapsed } = useSidebarContext();
+	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
 	return (
 		<aside className="h-screen sticky top-0">
@@ -40,7 +43,12 @@ export const SidebarWrapper = () => {
 						</SidebarMenu>
 						<SidebarMenu title="Your collection">
 							<SidebarItem isActive={pathname === '/me/tracks'} title="Tracks" icon={<ListIcon />} href="me/tracks" />
-							<CollapseItems icon={<ListMusicIcon />} items={['Add playlist']} title="Playlists" />
+							<CollapseItems
+								icon={<ListMusicIcon />}
+								items={[{ title: '+ Add playlist', onClick: onOpen }]}
+								title="Playlists"
+							/>
+							<AddPlaylistModal key="add-playlist" isOpen={isOpen} onOpenChange={onOpenChange} />
 							<SidebarItem isActive={pathname === '/me/likes'} title="Likes" icon={<HeartIcon />} href="me/likes" />
 						</SidebarMenu>
 					</div>
