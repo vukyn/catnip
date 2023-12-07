@@ -16,10 +16,12 @@ export interface IArtist {
 
 export interface IPlaylist {
 	id: string;
-	thumb: string;
 	title: string;
-	audios?: Array<IAudio>;
-	type?: string;
+	channel_id: string;
+	channel_title: string;
+	description?: string;
+	published_at?: string;
+	thumbnail?: string;
 }
 
 export interface IAudio {

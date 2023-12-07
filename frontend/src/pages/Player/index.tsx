@@ -13,7 +13,7 @@ import { Playlist } from '../../components/Playlist';
 import ReactLoading from 'react-loading';
 import { NewPlaylistModal } from '../../components/NewPlaylistModal';
 import { GetPlaylistById } from '../../wailsjs/go/handler/Playlist';
-import { models } from '../../wailsjs/go/models';
+// import { models } from '../../wailsjs/go/models';
 import { notificate } from '../../utils/notification';
 
 export const Player = () => {
@@ -48,29 +48,29 @@ export const Player = () => {
 		// 		});
 		// 		setPlaylistModalOpened(true);
 		// 	})
-		GetPlaylistById(v.id)
-			.then((data) => {
-				setCurrentPlaylist({
-					id: v.id,
-					title: v.title,
-					thumb: v.thumb,
-					audios: data.map((i: models.Playlist) => {
-						return {
-							author: i.author,
-							thumb: i.thumb,
-							title: i.title,
-							id: i.id,
-							duration: '',
-							views: '',
-						};
-					}),
-				});
-			})
-			.catch(() => notificate('error', 'Failed to set playlist, please try again later.'))
-			.finally(() => {
-				window.localStorage.setItem('playlists', JSON.stringify(playlists.filter((i: IPlaylist) => i !== null)));
-				window.dispatchEvent(new Event('playlistsUpdated'));
-			});
+		// GetPlaylistById(v.id)
+		// 	.then((data) => {
+		// 		setCurrentPlaylist({
+		// 			id: v.id,
+		// 			title: v.title,
+		// 			thumb: v.thumb,
+		// 			audios: data.map((i: models.Playlist) => {
+		// 				return {
+		// 					author: i.author,
+		// 					thumb: i.thumb,
+		// 					title: i.title,
+		// 					id: i.id,
+		// 					duration: '',
+		// 					views: '',
+		// 				};
+		// 			}),
+		// 		});
+		// 	})
+		// 	.catch(() => notificate('error', 'Failed to set playlist, please try again later.'))
+		// 	.finally(() => {
+		// 		window.localStorage.setItem('playlists', JSON.stringify(playlists.filter((i: IPlaylist) => i !== null)));
+		// 		window.dispatchEvent(new Event('playlistsUpdated'));
+		// 	});
 	};
 
 	// initial
@@ -161,7 +161,7 @@ export const Player = () => {
 									// 	</div>
 									// )
 									<div title={v.title} key={i} className="playlist" onClick={() => handleSelectPlaylist(v)}>
-										<div className="background" style={{ backgroundImage: `url('${v.thumb}')` }}></div>
+										{/* <div className="background" style={{ backgroundImage: `url('${v.thumb}')` }}></div> */}
 									</div>
 								))}
 							{audios.length === 0 && !loading && (

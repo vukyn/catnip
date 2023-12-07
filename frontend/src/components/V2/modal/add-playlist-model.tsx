@@ -1,4 +1,4 @@
-import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Image } from '@nextui-org/react';
+import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Image, Spinner } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
 import { GetPlaylistById } from '../../../wailsjs/go/handler/Playlist';
 import { IPlaylist } from '../../../types';
@@ -10,12 +10,24 @@ type Props = {
 };
 
 export const AddPlaylistModal = ({ isOpen, onOpenChange }: Props) => {
+	const [loading, setLoading] = useState<boolean>(false);
 	const [url, setUrl] = useState<string>('');
+	const [title, setTitle] = useState<string>('');
 	const [playlist, setPlaylist] = useState<IPlaylist>({
 		id: '',
 		title: '',
-		thumb: '',
+		channel_id: '',
+		channel_title: '',
 	});
+
+	const resetPlaylist = () => {
+		setPlaylist({
+			id: '',
+			title: '',
+			channel_id: '',
+			channel_title: '',
+		});
+	};
 
 	const onGetFromClipboard = () => {
 		navigator.clipboard.readText().then((text) => {
@@ -28,19 +40,27 @@ export const AddPlaylistModal = ({ isOpen, onOpenChange }: Props) => {
 		if (!value.includes('/playlist?list=')) return;
 
 		const id = value.split('list=')[1];
+		setLoading(true);
 		GetPlaylistById(id)
 			.then((data) => {
+				if (title.length === 0) setTitle(data.title);
 				setPlaylist({
-					id,
-					title: '',
-					thumb: data[0].thumb,
+					...data,
 				});
+				setLoading(false);
 			})
 			.catch(() => console.log('error', 'Failed to get playlist, please try again later.'));
 	};
 
+	const onModalClose = () => {
+		setUrl('');
+		setTitle('');
+		resetPlaylist();
+		onOpenChange(false);
+	};
+
 	return (
-		<Modal isOpen={isOpen} onOpenChange={onOpenChange} onClose={() => setUrl('')} placement="top-center">
+		<Modal isOpen={isOpen} onOpenChange={onOpenChange} onClose={onModalClose} placement="top-center">
 			<ModalContent>
 				{(onClose) => (
 					<>
@@ -59,9 +79,10 @@ export const AddPlaylistModal = ({ isOpen, onOpenChange }: Props) => {
 									)
 								}
 							/>
-							<Input placeholder="Title" variant="bordered" />
+							<Input placeholder="Title" variant="bordered" value={title} onChange={(e) => setTitle(e.target.value)} />
+							<div className="w-full flex flex-row justify-center">{loading ? <Spinner color="secondary" /> : ''}</div>
 							<div className="w-full flex flex-row justify-center">
-								<Image width={300} alt="" src={playlist.thumb} />
+								<Image width={300} alt="" src={playlist.thumbnail} />
 							</div>
 						</ModalBody>
 						<ModalFooter>

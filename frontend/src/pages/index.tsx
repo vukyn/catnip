@@ -13,7 +13,7 @@ const IndexPage = () => {
 						<div className="flex flex-col gap-2">
 							<img src={QueueEmptyImg} />
 							<h3>play some music ~hooman~</h3>
-							<MusicPlayer audioLists={SampleAudioList} mode="full" theme="light" />
+							<MusicPlayer audioLists={SampleAudioList} mode="full" theme="light" autoPlay={false} />
 						</div>
 					</div>
 				</div>

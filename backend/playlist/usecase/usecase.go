@@ -2,26 +2,28 @@ package usecase
 
 import (
 	"catnip/backend/playlist/models"
-	ytSv "catnip/backend/youtube/service"
+	youtubeSv "catnip/backend/youtube/service"
 	"context"
 )
 
 type usecase struct {
-	ytSv ytSv.IService
+	youtubeSv youtubeSv.IService
 }
 
 func InitUsecase(
-	ytSv ytSv.IService,
+	youtubeSv youtubeSv.IService,
 ) IUseCase {
 	return &usecase{
-		ytSv: ytSv,
+		youtubeSv: youtubeSv,
 	}
 }
 
-func (u *usecase) GetById(ctx context.Context, id string) ([]*models.Playlist, error) {
-	ytPlaylist, err := u.ytSv.GetYoutubePlaylistInfoV1(ctx, id)
+func (u *usecase) GetPlaylistById(ctx context.Context, id string) (*models.Playlist, error) {
+	res := (&models.Playlist{})
+	ytPlaylist, err := u.youtubeSv.GetPlaylistInfoV1(ctx, id)
 	if err != nil {
 		return nil, err
 	}
-	return (&models.Playlist{}).ParseFromListYoutube(ytPlaylist.Items), nil
+	res.ParseFromYoutube(ytPlaylist)
+	return res, nil
 }

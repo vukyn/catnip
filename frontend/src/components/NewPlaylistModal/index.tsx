@@ -39,14 +39,14 @@ export const NewPlaylistModal = (props: Props) => {
 
 			const id = e.target!.value.split('list=')[1];
 
-			GetPlaylistById(id)
-				.then((data) => {
-					setPlaylist({
-						id,
-						thumb: data[0].thumb,
-					});
-				})
-				.catch(() => notificate('error', 'Failed to get playlist, please try again later.'));
+			// GetPlaylistById(id)
+			// 	.then((data) => {
+			// 		setPlaylist({
+			// 			id,
+			// 			thumb: data[0].thumb,
+			// 		});
+			// 	})
+			// 	.catch(() => notificate('error', 'Failed to get playlist, please try again later.'));
 		});
 
 		// @ts-ignore
@@ -105,7 +105,7 @@ export const NewPlaylistModal = (props: Props) => {
 					<input type="text" id="title" ref={titleRef} maxLength={24} placeholder="Title" />
 				</div>
 
-				<div className="thumbnail">{playlist && playlist.thumb && <img alt="" src={playlist.thumb}></img>}</div>
+				{/* <div className="thumbnail">{playlist && playlist.thumb && <img alt="" src={playlist.thumb}></img>}</div> */}
 
 				<div className="buttons">
 					<input type="button" id="cancel" value="Cancel" onClick={() => setNewPlaylistModalOpened(false)} />

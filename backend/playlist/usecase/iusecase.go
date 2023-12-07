@@ -6,5 +6,5 @@ import (
 )
 
 type IUseCase interface {
-	GetById(ctx context.Context, id string) ([]*models.Playlist, error)
+	GetPlaylistById(ctx context.Context, id string) (*models.Playlist, error)
 }

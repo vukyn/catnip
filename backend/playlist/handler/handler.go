@@ -18,7 +18,7 @@ func NewHandler(
 	}
 }
 
-func (p *Playlist) GetPlaylistById(id string) ([]*models.Playlist, error) {
+func (p *Playlist) GetPlaylistById(id string) (*models.Playlist, error) {
 	ctx := context.Background()
-	return p.usecase.GetById(ctx, id)
+	return p.usecase.GetPlaylistById(ctx, id)
 }
