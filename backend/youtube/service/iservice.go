@@ -6,6 +6,6 @@ import (
 )
 
 type IService interface {
-	GetYoutubePlaylistItemsV1(ctx context.Context, id string) (*models.Playlist, error)
+	GetYoutubePlaylistInfoV1(ctx context.Context, id string) (*models.Playlist, error)
 	GetYoutubeVideoV1(ctx context.Context, id string) (*models.Video, error)
 }

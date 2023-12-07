@@ -19,7 +19,7 @@ func InitUsecase(
 }
 
 func (u *usecase) GetById(ctx context.Context, id string) ([]*models.Playlist, error) {
-	ytPlaylist, err := u.ytSv.GetYoutubePlaylistItemsV1(ctx, id)
+	ytPlaylist, err := u.ytSv.GetYoutubePlaylistInfoV1(ctx, id)
 	if err != nil {
 		return nil, err
 	}

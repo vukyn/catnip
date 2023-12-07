@@ -1,27 +1,26 @@
 package models
 
 type Playlist struct {
-	Items []*PlaylistItem `json:"items"`
+	Title        string
+	ChannelId    string
+	ChannelTitle string
+	Description  string
+	PublishedAt  string
+	Thumbnails   struct {
+		Default  Thumbnail
+		Medium   Thumbnail
+		High     Thumbnail
+		Standard Thumbnail
+		Maxres   Thumbnail
+	}
+	Items []*PlaylistItem
 }
 
 type PlaylistItem struct {
-	Snippet struct {
-		Title        string `json:"title"`
-		ChannelId    string `json:"channelId"`
-		ChannelTitle string `json:"channelTitle"`
-		Position     int    `json:"position"`
-		Description  string `json:"description"`
-		ResourceId   struct {
-			VideoId string `json:"videoId"`
-		} `json:"resourceId"`
-		Thumbnails struct {
-			Default  Thumbnail `json:"default"`
-			Medium   Thumbnail `json:"medium"`
-			High     Thumbnail `json:"high"`
-			Standard Thumbnail `json:"standard"`
-			Maxres   Thumbnail `json:"maxres"`
-		} `json:"thumbnails"`
-	} `json:"snippet"`
+	Title       string
+	Position    int
+	Description string
+	VideoId     string
 }
 
 type Thumbnail struct {
