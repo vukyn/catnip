@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { GetPlaylistById } from '../../../wailsjs/go/handler/Playlist';
 import { IPlaylist } from '../../../types';
 import { PasteIcon } from '../icons/paste-icon';
+import { SavedPlaylist } from '../../../types/local';
 
 type Props = {
 	isOpen: boolean;
@@ -52,6 +53,33 @@ export const AddPlaylistModal = ({ isOpen, onOpenChange }: Props) => {
 			.catch(() => console.log('error', 'Failed to get playlist, please try again later.'));
 	};
 
+	const onSavePlaylist = () => {
+		if (window.localStorage.getItem('saved_playlists') !== null) {
+			const playlists: SavedPlaylist[] = JSON.parse(window.localStorage.getItem('saved_playlists')!);
+
+			playlists.unshift({
+				id: playlist.id,
+				title: playlist.title,
+				type: 'custom',
+			});
+
+			window.localStorage.setItem('saved_playlists', JSON.stringify(playlists));
+		} else {
+			window.localStorage.setItem(
+				'saved_playlists',
+				JSON.stringify([
+					{
+						id: playlist.id,
+						title: playlist.title,
+						type: 'custom',
+					},
+				])
+			);
+		}
+		resetPlaylist();
+		onOpenChange(false);
+	};
+
 	const onModalClose = () => {
 		setUrl('');
 		setTitle('');
@@ -89,7 +117,7 @@ export const AddPlaylistModal = ({ isOpen, onOpenChange }: Props) => {
 							<Button color="danger" variant="flat" onClick={onClose}>
 								Close
 							</Button>
-							<Button color="primary" onPress={onClose}>
+							<Button color="primary" onPress={onSavePlaylist}>
 								Save
 							</Button>
 						</ModalFooter>
