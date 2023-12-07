@@ -1,16 +1,18 @@
 import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Image, Spinner } from '@nextui-org/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { GetPlaylistById } from '../../../wailsjs/go/handler/Playlist';
 import { IPlaylist } from '../../../types';
 import { PasteIcon } from '../icons/paste-icon';
 import { SavedPlaylist } from '../../../types/local';
+import { uuidv4 } from '../../../utils/guid';
 
 type Props = {
 	isOpen: boolean;
+	onSave: (playlist: SavedPlaylist) => void;
 	onOpenChange: (isOpen: boolean) => void;
 };
 
-export const AddPlaylistModal = ({ isOpen, onOpenChange }: Props) => {
+export const AddPlaylistModal = ({ isOpen, onSave, onOpenChange }: Props) => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [url, setUrl] = useState<string>('');
 	const [title, setTitle] = useState<string>('');
@@ -54,30 +56,23 @@ export const AddPlaylistModal = ({ isOpen, onOpenChange }: Props) => {
 	};
 
 	const onSavePlaylist = () => {
+		let newItem: SavedPlaylist = {
+			id: playlist.id,
+			guid: uuidv4(),
+			title: playlist.title,
+			type: 'custom',
+		}
 		if (window.localStorage.getItem('saved_playlists') !== null) {
 			const playlists: SavedPlaylist[] = JSON.parse(window.localStorage.getItem('saved_playlists')!);
 
-			playlists.unshift({
-				id: playlist.id,
-				title: playlist.title,
-				type: 'custom',
-			});
+			playlists.unshift(newItem);
 
 			window.localStorage.setItem('saved_playlists', JSON.stringify(playlists));
 		} else {
-			window.localStorage.setItem(
-				'saved_playlists',
-				JSON.stringify([
-					{
-						id: playlist.id,
-						title: playlist.title,
-						type: 'custom',
-					},
-				])
-			);
+			window.localStorage.setItem('saved_playlists', JSON.stringify([newItem]));
 		}
-		resetPlaylist();
-		onOpenChange(false);
+		onSave(newItem);
+		onModalClose();
 	};
 
 	const onModalClose = () => {

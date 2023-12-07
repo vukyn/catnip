@@ -12,14 +12,84 @@ import { SidebarItem } from './sidebar-item';
 import { SidebarMenu } from './sidebar-menu';
 import { useSidebarContext } from '../layout/layout-context';
 import { useLocation } from 'react-router-dom';
-import { CollapseItems } from './collapse-items';
+import { CollapseItems, ItemProps } from './collapse-items';
 import { useDisclosure } from '@nextui-org/react';
 import { AddPlaylistModal } from '../modal/add-playlist-model';
+import { SavedPlaylist } from '../../../types/local';
+import { useEffect, useState } from 'react';
 
 export const SidebarWrapper = () => {
 	const { pathname } = useLocation();
+	const [playlistItems, setPlaylistItems] = useState<ItemProps[]>([]);
 	const { collapsed, setCollapsed } = useSidebarContext();
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+	const onDeletePlaylist = (key: string) => {
+		const playlists: SavedPlaylist[] = JSON.parse(window.localStorage.getItem('saved_playlists')!);
+		const newPlaylists = playlists.filter((playlist) => playlist.guid !== key);
+		window.localStorage.setItem('saved_playlists', JSON.stringify(newPlaylists));
+		setPlaylistItems([
+			{
+				id: 'add-playlist',
+				title: '+ Add playlist',
+				onClick: onOpen,
+				canDelete: false,
+				onDelete: () => {},
+			},
+			...newPlaylists.map((playlist) => ({
+				id: playlist.guid,
+				title: playlist.title,
+				onClick: () => {},
+				canDelete: true,
+				onDelete: onDeletePlaylist,
+			})),
+		]);
+	};
+
+	useEffect(() => {
+		if (window.localStorage.getItem('saved_playlists') !== null) {
+			const playlists: SavedPlaylist[] = JSON.parse(window.localStorage.getItem('saved_playlists')!);
+			setPlaylistItems([
+				{
+					id: 'add-playlist',
+					title: '+ Add playlist',
+					onClick: onOpen,
+					canDelete: false,
+					onDelete: () => {},
+				},
+				...playlists.map((playlist) => ({
+					id: playlist.guid,
+					title: playlist.title,
+					onClick: () => {},
+					canDelete: true,
+					onDelete: onDeletePlaylist,
+				})),
+			]);
+		} else {
+			setPlaylistItems([
+				{
+					id: 'add-playlist',
+					title: '+ Add playlist',
+					onClick: onOpen,
+					canDelete: false,
+					onDelete: () => {},
+				},
+			]);
+		}
+	}, []);
+
+	const onAddPlaylist = (playlist: SavedPlaylist) => {
+		setPlaylistItems([
+			...playlistItems,
+			{
+				id: 'add-playlist',
+				title: playlist.title,
+				onClick: () => {},
+				canDelete: true,
+				onDelete: onDeletePlaylist,
+			},
+		]);
+	};
 
 	return (
 		<aside className="h-screen sticky top-0">
@@ -43,12 +113,8 @@ export const SidebarWrapper = () => {
 						</SidebarMenu>
 						<SidebarMenu title="Your collection">
 							<SidebarItem isActive={pathname === '/me/tracks'} title="Tracks" icon={<ListIcon />} href="me/tracks" />
-							<CollapseItems
-								icon={<ListMusicIcon />}
-								items={[{ title: '+ Add playlist', onClick: onOpen }]}
-								title="Playlists"
-							/>
-							<AddPlaylistModal key="add-playlist" isOpen={isOpen} onOpenChange={onOpenChange} />
+							<CollapseItems icon={<ListMusicIcon />} items={playlistItems} title="Playlists" />
+							<AddPlaylistModal key="add-playlist" isOpen={isOpen} onSave={onAddPlaylist} onOpenChange={onOpenChange} />
 							<SidebarItem isActive={pathname === '/me/likes'} title="Likes" icon={<HeartIcon />} href="me/likes" />
 						</SidebarMenu>
 					</div>
