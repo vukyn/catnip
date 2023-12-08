@@ -1,7 +1,7 @@
 package models
 
 type Playlist struct {
-	Id      string	`json:"id"`
+	Id      string `json:"id"`
 	Snippet struct {
 		Title        string `json:"title"`
 		ChannelId    string `json:"channelId"`
@@ -22,16 +22,14 @@ type Playlist struct {
 }
 
 type PlaylistItem struct {
-	Items []struct {
-		Snippet struct {
-			Title       string `json:"title"`
-			Position    int    `json:"position"`
-			Description string `json:"description"`
-			ResourceId  struct {
-				VideoId string `json:"videoId"`
-			} `json:"resourceId"`
-		} `json:"snippet"`
-	} `json:"items"`
+	Snippet struct {
+		Title       string `json:"title"`
+		Position    int    `json:"position"`
+		Description string `json:"description"`
+		ResourceId  struct {
+			VideoId string `json:"videoId"`
+		} `json:"resourceId"`
+	} `json:"snippet"`
 }
 
 type Thumbnail struct {
