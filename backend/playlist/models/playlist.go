@@ -38,9 +38,9 @@ type PlaylistItem struct {
 	VideoId     string `json:"video_id"`
 }
 
-func (p *PlaylistItem) ParseFromListItemYoutube(in *ytModel.PlaylistItem) []*PlaylistItem {
+func (p *PlaylistItem) ParseFromListItemYoutube(in []*ytModel.PlaylistItem) []*PlaylistItem {
 	out := make([]*PlaylistItem, 0)
-	for _, v := range in.Items {
+	for _, v := range in {
 		item := &PlaylistItem{}
 		copier.Copy(item, v.Snippet)
 		item.VideoId = v.Snippet.ResourceId.VideoId
