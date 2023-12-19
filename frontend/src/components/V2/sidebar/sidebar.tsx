@@ -17,12 +17,14 @@ import { useDisclosure } from '@nextui-org/react';
 import { AddPlaylistModal } from '../modal/add-playlist-model';
 import { SavedPlaylist } from '../../../types/local';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const SidebarWrapper = () => {
 	const { pathname } = useLocation();
 	const [playlistItems, setPlaylistItems] = useState<ItemProps[]>([]);
 	const { collapsed, setCollapsed } = useSidebarContext();
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
+	const navigate = useNavigate();
 
 	const onDeletePlaylist = (key: string) => {
 		const playlists: SavedPlaylist[] = JSON.parse(window.localStorage.getItem('saved_playlists')!);
@@ -39,7 +41,9 @@ export const SidebarWrapper = () => {
 			...newPlaylists.map((playlist) => ({
 				id: playlist.guid,
 				title: playlist.title,
-				onClick: () => {},
+				onClick: () => {
+					navigate(`/playlist/${playlist.id}`);
+				},
 				canDelete: true,
 				onDelete: onDeletePlaylist,
 			})),
@@ -60,7 +64,9 @@ export const SidebarWrapper = () => {
 				...playlists.map((playlist) => ({
 					id: playlist.guid,
 					title: playlist.title,
-					onClick: () => {},
+					onClick: () => {
+						navigate(`/playlist/${playlist.id}`);
+					},
 					canDelete: true,
 					onDelete: onDeletePlaylist,
 				})),
@@ -84,7 +90,9 @@ export const SidebarWrapper = () => {
 			{
 				id: 'add-playlist',
 				title: playlist.title,
-				onClick: () => {},
+				onClick: () => {
+					navigate(`/playlist/${playlist.id}`);
+				},
 				canDelete: true,
 				onDelete: onDeletePlaylist,
 			},

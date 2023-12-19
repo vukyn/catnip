@@ -11,7 +11,7 @@ const router = createBrowserRouter([
 		element: <IndexPage />,
 	},
 	{
-		path: 'discover',
+		path: '/playlist/:id',
 		element: <PlaylistPage />,
 	},
 ]);

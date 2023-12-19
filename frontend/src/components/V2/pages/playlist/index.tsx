@@ -4,10 +4,12 @@ import { SongCard } from './components/song-card';
 import { GetPlaylistById } from '../../../../wailsjs/go/handler/Playlist';
 import { useEffect, useState } from 'react';
 import { IPlaylist } from '../../../../types';
+import { useParams } from 'react-router-dom';
 
 type Props = {};
 
 const PlaylistPage = ({}: Props) => {
+	let { id } = useParams();
 	const [playlist, setPlaylist] = useState<IPlaylist>();
 	const users = [
 		{
@@ -173,8 +175,8 @@ const PlaylistPage = ({}: Props) => {
 		},
 	];
 
-	const onQuery = () => {
-		GetPlaylistById('PLXMY36-jumXiA2oaUvxG_vSOL8jMatyHu')
+	const onQuery = (id: string) => {
+		GetPlaylistById(id)
 			.then((data) => {
 				setPlaylist({
 					...data,
@@ -184,8 +186,8 @@ const PlaylistPage = ({}: Props) => {
 	};
 
 	useEffect(() => {
-		onQuery();
-	}, []);
+		onQuery(id || '');
+	}, [id]);
 
 	return (
 		<Layout>
