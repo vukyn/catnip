@@ -1,27 +1,14 @@
 import { Layout } from '../../layout/layout';
-import { Card, CardBody, CardHeader, Divider, Image, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
-import { Row } from './components/row';
+import { Card, CardBody, CardHeader, Divider, Image } from '@nextui-org/react';
 import { SongCard } from './components/song-card';
+import { GetPlaylistById } from '../../../../wailsjs/go/handler/Playlist';
+import { useEffect, useState } from 'react';
+import { IPlaylist } from '../../../../types';
 
 type Props = {};
 
 const PlaylistPage = ({}: Props) => {
-	const description = `Wren Evans - LOI CHOI (The First Album)\n#LoiChoi #TheFirstAlbum
-													#TheNeoPopPunk\n--------------------/-----------------\nCreative: monoX Team\nCreative
-													Director: Lim Feng\n3D Artist: Đại Trần\n3D Fashion Designer: Raion Nguyen\nGraphic
-													Designers: Ducky Wakk, Blake Nguyen \nVideo Editor: Khang Nguyễn\n\nmonoX Team \nLead of
-													Artist Management: Amy Tran \nArtist Management Executive: Ái Vy \nArtist Assistant:
-													Quỳnh Anh \nMarketing Manager: Brian Phan\nCreative Social Planner: Trang Dé\nPR &
-													Communication: Tôn Thất Minh Khôi\nBusiness Head: Tô Minh An Lộc \nAccount Executive:
-													Huyền Vy \nProject Coordinator: Tram Nguyen \nGraphic Designer: Blake Nguyen \nProject
-													Producer & Video Editor: Khang Nguyễn \nDocumentary & BTS: Thắng Lê \nAdmin: Ái
-													Khanh\n\nSpecial thanks to METUB và Universal Music Vietnam`;
-	const columns = [
-		{ name: 'NAME', uid: 'name' },
-		{ name: 'ROLE', uid: 'role' },
-		{ name: 'STATUS', uid: 'status' },
-		{ name: 'ACTIONS', uid: 'actions' },
-	];
+	const [playlist, setPlaylist] = useState<IPlaylist>();
 	const users = [
 		{
 			id: 1,
@@ -186,6 +173,20 @@ const PlaylistPage = ({}: Props) => {
 		},
 	];
 
+	const onQuery = () => {
+		GetPlaylistById('PLXMY36-jumXiA2oaUvxG_vSOL8jMatyHu')
+			.then((data) => {
+				setPlaylist({
+					...data,
+				});
+			})
+			.catch(() => console.log('error', 'Failed to get playlist, please try again later.'));
+	};
+
+	useEffect(() => {
+		onQuery();
+	}, []);
+
 	return (
 		<Layout>
 			<div className="h-full">
@@ -195,22 +196,20 @@ const PlaylistPage = ({}: Props) => {
 						<div className="flex flex-col gap-2">
 							<div className="gap-5 justify-center w-full">
 								<Card className="bg-default-50 rounded-xl shadow-md px-3 w-full">
-									<CardHeader className="text-2xl font-semibold">Wren Evans - LOI CHOI (The First Album)</CardHeader>
+									<CardHeader className="text-2xl font-semibold">{playlist?.channel_title}</CardHeader>
 									<Divider />
 									<CardBody className="py-5">
 										<div className="flex gap-2.5">
 											<div className="flex-none">
-												<Image
-													width={300}
-													alt="NextUI hero Image"
-													src="https://i.ytimg.com/vi/A8C71-mSkAk/maxresdefault.jpg"
-												/>
+												<Image width={300} alt="NextUI hero Image" src={playlist?.thumbnail} />
 											</div>
 											<div className="w-full">
-												<h1 className="text-xl">Wren Evans - LOI CHOI (The First Album) ft. itsnk</h1>
+												<h1 className="text-xl">{playlist?.title}</h1>
 												<div
 													className="text-xs overflow-auto max-h-32"
-													dangerouslySetInnerHTML={{ __html: description.replaceAll('\n', '<br/>') }}
+													dangerouslySetInnerHTML={{
+														__html: playlist?.description?.replaceAll('\n', '<br/>') || '',
+													}}
 												></div>
 											</div>
 										</div>
@@ -222,7 +221,7 @@ const PlaylistPage = ({}: Props) => {
 						<div className="flex flex-col justify-center w-full py-5 px-4 lg:px-0  max-w-[90rem] mx-auto gap-3">
 							<div className=" w-full flex flex-col gap-4">
 								{users.map(() => {
-									return <SongCard />
+									return <SongCard />;
 								})}
 							</div>
 						</div>
