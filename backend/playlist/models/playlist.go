@@ -20,15 +20,7 @@ type Playlist struct {
 func (p *Playlist) ParseFromYoutube(in *ytModel.Playlist) {
 	p.Id = in.Id
 	copier.Copy(p, in.Snippet)
-	if in.Snippet.Thumbnails.Maxres != nil {
-		p.Thumbnail = in.Snippet.Thumbnails.Maxres.Url
-	} else if in.Snippet.Thumbnails.Standard != nil {
-		p.Thumbnail = in.Snippet.Thumbnails.Standard.Url
-	} else if in.Snippet.Thumbnails.High != nil {
-		p.Thumbnail = in.Snippet.Thumbnails.High.Url
-	} else {
-		p.Thumbnail = in.Snippet.Thumbnails.Default.Url
-	}
+	p.Thumbnail = getThumbnail(in.Snippet.Thumbnails)
 }
 
 type PlaylistItem struct {
@@ -36,6 +28,8 @@ type PlaylistItem struct {
 	Position    int    `json:"position"`
 	Description string `json:"description"`
 	VideoId     string `json:"video_id"`
+	Thumbnail   string `json:"thumbnail"`
+	PublishedAt string `json:"published_at"`
 }
 
 func (p *PlaylistItem) ParseFromListItemYoutube(in []*ytModel.PlaylistItem) []*PlaylistItem {
@@ -43,8 +37,22 @@ func (p *PlaylistItem) ParseFromListItemYoutube(in []*ytModel.PlaylistItem) []*P
 	for _, v := range in {
 		item := &PlaylistItem{}
 		copier.Copy(item, v.Snippet)
-		item.VideoId = v.Snippet.ResourceId.VideoId
+		item.VideoId = v.ContentDetails.VideoId
+		item.PublishedAt = v.ContentDetails.VideoPublishedAt
+		p.Thumbnail = getThumbnail(v.Snippet.Thumbnails)
 		out = append(out, item)
 	}
 	return out
+}
+
+func getThumbnail(in *ytModel.Thumbnails) string {
+	if in.Maxres != nil {
+		return in.Maxres.Url
+	} else if in.Standard != nil {
+		return in.Standard.Url
+	} else if in.High != nil {
+		return in.High.Url
+	} else {
+		return in.Default.Url
+	}
 }

@@ -1,10 +1,10 @@
 export interface IItem {
-	thumb: string;
 	title: string;
-	author: string;
-	views: string;
-	duration: string;
-	id: string;
+	video_id: string;
+	// views: string;
+	// duration: string;
+	published_at?: string;
+	thumbnail?: string;
 }
 
 export interface IArtist {

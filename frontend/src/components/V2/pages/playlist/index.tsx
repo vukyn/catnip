@@ -1,192 +1,39 @@
-import { Layout } from '../../layout/layout';
-import { Card, CardBody, CardHeader, Divider, Image } from '@nextui-org/react';
-import { SongCard } from './components/song-card';
-import { GetPlaylistById } from '../../../../wailsjs/go/handler/Playlist';
-import { useEffect, useState } from 'react';
-import { IPlaylist } from '../../../../types';
-import { useParams } from 'react-router-dom';
+import { Layout } from "../../layout/layout";
+import { Card, CardBody, CardHeader, Divider, Image } from "@nextui-org/react";
+import { SongCard } from "./components/song-card";
+import { GetPlaylistById, GetPlaylistItemByPlaylistId } from "../../../../wailsjs/go/handler/Playlist";
+import { useEffect, useState } from "react";
+import { IItem, IPlaylist } from "../../../../types";
+import { useParams } from "react-router-dom";
 
 type Props = {};
 
 const PlaylistPage = ({}: Props) => {
 	let { id } = useParams();
 	const [playlist, setPlaylist] = useState<IPlaylist>();
-	const users = [
-		{
-			id: 1,
-			name: 'Tony Reichert',
-			role: 'CEO',
-			team: 'Management',
-			status: 'active',
-			age: '29',
-			avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026024d',
-			email: 'tony.reichert@example.com',
-		},
-		{
-			id: 2,
-			name: 'Zoey Lang',
-			role: 'Technical Lead',
-			team: 'Development',
-			status: 'paused',
-			age: '25',
-			avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026704d',
-			email: 'zoey.lang@example.com',
-		},
-		{
-			id: 3,
-			name: 'Jane Fisher',
-			role: 'Senior Developer',
-			team: 'Development',
-			status: 'active',
-			age: '22',
-			avatar: 'https://i.pravatar.cc/150?u=a04258114e29026702d',
-			email: 'jane.fisher@example.com',
-		},
-		{
-			id: 4,
-			name: 'William Howard',
-			role: 'Community Manager',
-			team: 'Marketing',
-			status: 'vacation',
-			age: '28',
-			avatar: 'https://i.pravatar.cc/150?u=a048581f4e29026701d',
-			email: 'william.howard@example.com',
-		},
-		{
-			id: 5,
-			name: 'Kristen Copper',
-			role: 'Sales Manager',
-			team: 'Sales',
-			status: 'active',
-			age: '24',
-			avatar: 'https://i.pravatar.cc/150?u=a092581d4ef9026700d',
-			email: 'kristen.cooper@example.com',
-		},
-		{
-			id: 6,
-			name: 'Tony Reichert',
-			role: 'CEO',
-			team: 'Management',
-			status: 'active',
-			age: '29',
-			avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026024d',
-			email: 'tony.reichert@example.com',
-		},
-		{
-			id: 10,
-			name: 'Kristen Copper',
-			role: 'Sales Manager',
-			team: 'Sales',
-			status: 'active',
-			age: '24',
-			avatar: 'https://i.pravatar.cc/150?u=a092581d4ef9026700d',
-			email: 'kristen.cooper@example.com',
-		},
-		{
-			id: 8,
-			name: 'Jane Fisher',
-			role: 'Senior Developer',
-			team: 'Development',
-			status: 'active',
-			age: '22',
-			avatar: 'https://i.pravatar.cc/150?u=a04258114e29026702d',
-			email: 'jane.fisher@example.com',
-		},
-		{
-			id: 7,
-			name: 'Zoey Lang',
-			role: 'Technical Lead',
-			team: 'Development',
-			status: 'paused',
-			age: '25',
-			avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026704d',
-			email: 'zoey.lang@example.com',
-		},
+	const [items, setItems] = useState<IItem[]>([]);
 
-		{
-			id: 9,
-			name: 'William Howard',
-			role: 'Community Manager',
-			team: 'Marketing',
-			status: 'vacation',
-			age: '28',
-			avatar: 'https://i.pravatar.cc/150?u=a048581f4e29026701d',
-			email: 'william.howard@example.com',
-		},
-		{
-			id: 11,
-			name: 'Tony Reichert',
-			role: 'CEO',
-			team: 'Management',
-			status: 'active',
-			age: '29',
-			avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026024d',
-			email: 'tony.reichert@example.com',
-		},
-		{
-			id: 12,
-			name: 'Kristen Copper',
-			role: 'Sales Manager',
-			team: 'Sales',
-			status: 'active',
-			age: '24',
-			avatar: 'https://i.pravatar.cc/150?u=a092581d4ef9026700d',
-			email: 'kristen.cooper@example.com',
-		},
-		{
-			id: 13,
-			name: 'Jane Fisher',
-			role: 'Senior Developer',
-			team: 'Development',
-			status: 'active',
-			age: '22',
-			avatar: 'https://i.pravatar.cc/150?u=a04258114e29026702d',
-			email: 'jane.fisher@example.com',
-		},
-		{
-			id: 14,
-			name: 'Zoey Lang',
-			role: 'Technical Lead',
-			team: 'Development',
-			status: 'paused',
-			age: '25',
-			avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026704d',
-			email: 'zoey.lang@example.com',
-		},
-		{
-			id: 15,
-			name: 'Tony Reichert',
-			role: 'CEO',
-			team: 'Management',
-			status: 'active',
-			age: '29',
-			avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026024d',
-			email: 'tony.reichert@example.com',
-		},
-		{
-			id: 16,
-			name: 'Kristen Copper',
-			role: 'Sales Manager',
-			team: 'Sales',
-			status: 'active',
-			age: '24',
-			avatar: 'https://i.pravatar.cc/150?u=a092581d4ef9026700d',
-			email: 'kristen.cooper@example.com',
-		},
-	];
-
-	const onQuery = (id: string) => {
+	const onRender = (id: string) => {
 		GetPlaylistById(id)
 			.then((data) => {
 				setPlaylist({
 					...data,
 				});
 			})
-			.catch(() => console.log('error', 'Failed to get playlist, please try again later.'));
+			.catch(() => console.log("error", "Failed to get playlist, please try again later."));
+
+		GetPlaylistItemByPlaylistId(id)
+			.then((data) => {
+				console.log(data);
+				setItems(data);
+			})
+			.catch(() => console.log("error", "Failed to get playlist, please try again later."));
 	};
 
 	useEffect(() => {
-		onQuery(id || '');
+		if (id) {
+			onRender(id);
+		}
 	}, [id]);
 
 	return (
@@ -210,7 +57,7 @@ const PlaylistPage = ({}: Props) => {
 												<div
 													className="text-xs overflow-auto max-h-32"
 													dangerouslySetInnerHTML={{
-														__html: playlist?.description?.replaceAll('\n', '<br/>') || '',
+														__html: playlist?.description?.replaceAll("\n", "<br/>") || "",
 													}}
 												></div>
 											</div>
@@ -222,9 +69,10 @@ const PlaylistPage = ({}: Props) => {
 						{/* Songs */}
 						<div className="flex flex-col justify-center w-full py-5 px-4 lg:px-0  max-w-[90rem] mx-auto gap-3">
 							<div className=" w-full flex flex-col gap-4">
-								{users.map(() => {
-									return <SongCard />;
-								})}
+								{items &&
+									items.map((item) => {
+										return <SongCard key={item.video_id} item={item} />;
+									})}
 							</div>
 						</div>
 					</div>

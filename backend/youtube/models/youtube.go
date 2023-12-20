@@ -3,39 +3,42 @@ package models
 type Playlist struct {
 	Id      string `json:"id"`
 	Snippet struct {
-		Title        string `json:"title"`
-		ChannelId    string `json:"channelId"`
-		ChannelTitle string `json:"channelTitle"`
-		Description  string `json:"description"`
-		PublishedAt  string `json:"publishedAt"`
-		ResourceId   struct {
-			VideoId string `json:"videoId"`
-		} `json:"resourceId"`
-		Thumbnails struct {
-			Default  *Thumbnail `json:"default"`
-			Medium   *Thumbnail `json:"medium"`
-			High     *Thumbnail `json:"high"`
-			Standard *Thumbnail `json:"standard"`
-			Maxres   *Thumbnail `json:"maxres"`
-		} `json:"thumbnails"`
+		Title        string     `json:"title"`
+		ChannelId    string     `json:"channelId"`
+		ChannelTitle string     `json:"channelTitle"`
+		Description  string     `json:"description"`
+		PublishedAt  string     `json:"publishedAt"`
+		Thumbnails   *Thumbnails `json:"thumbnails"`
 	} `json:"snippet"`
 }
 
 type PlaylistItem struct {
 	Snippet struct {
-		Title       string `json:"title"`
-		Position    int    `json:"position"`
-		Description string `json:"description"`
-		ResourceId  struct {
-			VideoId string `json:"videoId"`
-		} `json:"resourceId"`
+		Title       string     `json:"title"`
+		Position    int        `json:"position"`
+		Description string     `json:"description"`
+		Thumbnails  *Thumbnails `json:"thumbnails"`
 	} `json:"snippet"`
+	ContentDetails *ContentDetails `json:"contentDetails"`
 }
 
 type Thumbnail struct {
 	Url    string `json:"url"`
 	Width  int    `json:"width"`
 	Height int    `json:"height"`
+}
+
+type Thumbnails struct {
+	Default  *Thumbnail `json:"default"`
+	Medium   *Thumbnail `json:"medium"`
+	High     *Thumbnail `json:"high"`
+	Standard *Thumbnail `json:"standard"`
+	Maxres   *Thumbnail `json:"maxres"`
+}
+
+type ContentDetails struct {
+	VideoId          string `json:"videoId"`
+	VideoPublishedAt string `json:"videoPublishedAt"`
 }
 
 type Video struct {

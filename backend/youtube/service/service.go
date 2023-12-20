@@ -44,7 +44,7 @@ func (s *service) GetPlaylistInfoV1(ctx context.Context, id string) (*models.Pla
 }
 
 func (s *service) GetPlaylistItemsV1(ctx context.Context, id string) ([]*models.PlaylistItem, error) {
-	part := "snippet"
+	part := "snippet,contentDetails"
 	maxResults := 50
 	client := &http.Client{}
 	var res map[string]interface{}
