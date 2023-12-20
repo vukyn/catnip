@@ -2,7 +2,7 @@ import { Layout } from "../../layout/layout";
 import { Card, CardBody, CardHeader, Divider, Image } from "@nextui-org/react";
 import { SongCard } from "./components/song-card";
 import { GetPlaylistById, GetPlaylistItemByPlaylistId } from "../../../../wailsjs/go/handler/Playlist";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import { IItem, IPlaylist } from "../../../../types";
 import { useParams } from "react-router-dom";
 
@@ -82,4 +82,4 @@ const PlaylistPage = ({}: Props) => {
 	);
 };
 
-export default PlaylistPage;
+export default memo(PlaylistPage);

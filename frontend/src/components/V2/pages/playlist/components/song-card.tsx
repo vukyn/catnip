@@ -7,7 +7,7 @@ type Props = {
 
 export const SongCard = ({ item }: Props) => {
 	return (
-		<Card className="bg-default-50 rounded-xl shadow-md px-3 w-full">
+		<Card className="bg-default-50 rounded-xl shadow-md px-3 w-full hover:opacity-80 hover:cursor-pointer">
 			<CardBody className="py-5">
 				<div className="flex gap-2.5">
 					<div className="flex-none">
