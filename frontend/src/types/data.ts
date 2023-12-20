@@ -13,4 +13,16 @@ export const SampleAudioList: AudioList[] = [
 		cover: 'https://res.cloudinary.com/ehsanahmadi/image/upload/v1573758778/Sirvan-Khosravi-Dorost-Nemisham_glicks.jpg',
 		musicSrc: 'https://res.cloudinary.com/ehsanahmadi/video/upload/v1573550770/Sirvan-Khosravi-Dorost-Nemisham-128_kb8urq.mp3',
 	},
+	{
+		name: 'Test',
+		singer: 'Sirvan Khosravi',
+		cover: 'https://res.cloudinary.com/ehsanahmadi/image/upload/v1573758778/Sirvan-Khosravi-Dorost-Nemisham_glicks.jpg',
+		musicSrc: 'F:/Code/golang/moo-windows/B9otsRRe0BE.mp3',
+	},
+	{
+		name: 'Test 2',
+		singer: 'Sirvan Khosravi',
+		cover: 'https://res.cloudinary.com/ehsanahmadi/image/upload/v1573758778/Sirvan-Khosravi-Dorost-Nemisham_glicks.jpg',
+		musicSrc: 'F:/Code/golang/moo-windows/test.mp3',
+	},
 ];

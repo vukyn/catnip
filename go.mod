@@ -4,6 +4,7 @@ go 1.21
 
 require (
 	github.com/jinzhu/copier v0.4.0
+	github.com/kkdai/youtube/v2 v2.9.0
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/vukyn/kuery v1.0.0
 	github.com/wailsapp/wails/v2 v2.7.1
@@ -20,7 +21,6 @@ require (
 	github.com/google/pprof v0.0.0-20230907193218-d3ddc7976beb // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/jchv/go-winloader v0.0.0-20210711035445-715c2860da7e // indirect
-	github.com/kkdai/youtube/v2 v2.9.0 // indirect
 	github.com/labstack/echo/v4 v4.10.2 // indirect
 	github.com/labstack/gommon v0.4.0 // indirect
 	github.com/leaanthony/go-ansi-parser v1.6.0 // indirect

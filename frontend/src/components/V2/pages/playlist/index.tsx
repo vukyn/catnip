@@ -23,10 +23,9 @@ const PlaylistPage = ({}: Props) => {
 
 		GetPlaylistItemByPlaylistId(id)
 			.then((data) => {
-				console.log(data);
 				setItems(data);
 			})
-			.catch(() => console.log('error', 'Failed to get playlist, please try again later.'));
+			.catch(() => console.log('error', 'Failed to get playlist items, please try again later.'));
 	};
 
 	useEffect(() => {

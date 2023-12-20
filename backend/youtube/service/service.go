@@ -111,7 +111,7 @@ func (s *service) DownloadVideoV1(ctx context.Context, id, path string) (*models
 	}
 	defer stream.Close()
 
-	downloadPath := fmt.Sprintf("%v/%v", path, video.Title)
+	downloadPath := fmt.Sprintf("%v/%v.mp3", path, id)
 	file, err := os.Create(downloadPath)
 	if err != nil {
 		return nil, err
