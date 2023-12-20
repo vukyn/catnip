@@ -28,7 +28,7 @@ export const SettingModal = ({ isOpen, onOpenChange }: Props) => {
 			<ModalContent>
 				{(onClose) => (
 					<>
-						<ModalHeader className="flex flex-col gap-1">Get from Youtube</ModalHeader>
+						<ModalHeader className="flex flex-col gap-1">Set download path</ModalHeader>
 						<ModalBody className="flex flex-col">
 							<Input
 								placeholder="Download path"

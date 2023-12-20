@@ -3,6 +3,7 @@ export interface IItem {
 	video_id: string;
 	// views: string;
 	// duration: string;
+	author: string;
 	published_at?: string;
 	thumbnail?: string;
 }

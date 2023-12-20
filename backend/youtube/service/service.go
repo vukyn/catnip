@@ -139,6 +139,7 @@ func (s *service) DownloadVideoV1(ctx context.Context, id, path string) (*models
 func (s *service) DownloadVideoV2(ctx context.Context, id string) (*models.VideoDownload, error) {
 	client := youtube.Client{}
 
+	fmt.Println("Downloading video: ", id)
 	video, err := client.GetVideo(id)
 	if err != nil {
 		return nil, err

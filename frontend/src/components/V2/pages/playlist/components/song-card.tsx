@@ -2,22 +2,37 @@ import { Button, Card, CardBody, Image } from '@nextui-org/react';
 import { IItem } from '../../../../../types';
 import { Play2Icon } from '../../../icons/play-circle-2-icon';
 import { DownloadVideo } from '../../../../../wailsjs/go/handler/Playlist';
-import { DownloadPath } from '../../../../../types/local';
+import { useContext, useState } from 'react';
+import { AudioContext, AudioContextType } from '../../../../../app';
 
 type Props = {
 	item: IItem;
 };
 
 export const SongCard = ({ item }: Props) => {
+	const { audioLists, setAudioLists } = useContext(AudioContext) as AudioContextType;
+	const [loading, setLoading] = useState(false);
+	
 	const onClick = (id: string) => {
-		const path: DownloadPath = JSON.parse(window.localStorage.getItem('saved_playlists')!);
-		if (path !== null) {
-			DownloadVideo(id, path.path)
-				.then((data) => {
-					console.log(data);
-				})
-				.catch(() => console.log('error', 'Failed to download, please try again later.'));
-		}
+		setLoading(true);
+		DownloadVideo(id, '')
+			.then((data) => {
+				setAudioLists([
+					...audioLists,
+					{
+						name: item.title,
+						singer: 'test',
+						musicSrc: data,
+						cover: item.thumbnail,
+					},
+				]);
+				setLoading(false);
+			})
+			.catch((err) => {
+				setLoading(false);
+				console.log('error', 'Failed to download, please try again later. error: ', err);
+				return;
+			});
 	};
 
 	return (
@@ -33,6 +48,8 @@ export const SongCard = ({ item }: Props) => {
 							variant="light"
 							aria-label="play song"
 							disableAnimation
+							isLoading={loading}
+							onClick={() => onClick(item.video_id)}
 						>
 							<Play2Icon fill="#c5cce3" />
 						</Button>

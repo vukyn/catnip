@@ -14,10 +14,11 @@ type Playlist struct {
 
 type PlaylistItem struct {
 	Snippet struct {
-		Title       string      `json:"title"`
-		Position    int         `json:"position"`
-		Description string      `json:"description"`
-		Thumbnails  *Thumbnails `json:"thumbnails"`
+		Title        string      `json:"title"`
+		Position     int         `json:"position"`
+		ChannelTitle string      `json:"channelTitle"`
+		Description  string      `json:"description"`
+		Thumbnails   *Thumbnails `json:"thumbnails"`
 	} `json:"snippet"`
 	ContentDetails *ContentDetails `json:"contentDetails"`
 }

@@ -7,6 +7,7 @@ export namespace models {
 	    video_id: string;
 	    thumbnail: string;
 	    published_at: string;
+	    author: string;
 	
 	    static createFrom(source: any = {}) {
 	        return new PlaylistItem(source);
@@ -20,6 +21,7 @@ export namespace models {
 	        this.video_id = source["video_id"];
 	        this.thumbnail = source["thumbnail"];
 	        this.published_at = source["published_at"];
+	        this.author = source["author"];
 	    }
 	}
 	export class Playlist {

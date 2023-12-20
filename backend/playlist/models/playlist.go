@@ -33,6 +33,7 @@ type PlaylistItem struct {
 	VideoId     string `json:"video_id"`
 	Thumbnail   string `json:"thumbnail"`
 	PublishedAt string `json:"published_at"`
+	Author      string `json:"author"`
 }
 
 func (p *PlaylistItem) ParseFromListItemYoutube(in []*ytModel.PlaylistItem) []*PlaylistItem {
@@ -44,6 +45,7 @@ func (p *PlaylistItem) ParseFromListItemYoutube(in []*ytModel.PlaylistItem) []*P
 		publishedAt, _ := time.Parse(time.RFC3339, v.ContentDetails.VideoPublishedAt)
 		item.PublishedAt = publishedAt.Format("2006-01-02 15:04:05")
 		item.Thumbnail = getThumbnail(v.Snippet.Thumbnails)
+		item.Author = v.Snippet.ChannelTitle	
 		out = append(out, item)
 	}
 	return out
