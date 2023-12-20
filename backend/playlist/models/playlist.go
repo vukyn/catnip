@@ -39,7 +39,7 @@ func (p *PlaylistItem) ParseFromListItemYoutube(in []*ytModel.PlaylistItem) []*P
 		copier.Copy(item, v.Snippet)
 		item.VideoId = v.ContentDetails.VideoId
 		item.PublishedAt = v.ContentDetails.VideoPublishedAt
-		p.Thumbnail = getThumbnail(v.Snippet.Thumbnails)
+		item.Thumbnail = getThumbnail(v.Snippet.Thumbnails)
 		out = append(out, item)
 	}
 	return out
