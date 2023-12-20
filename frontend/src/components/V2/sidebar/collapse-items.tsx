@@ -55,7 +55,7 @@ export const CollapseItems = ({ icon, items, title }: Props) => {
 											key={index}
 											size="sm"
 											variant="light"
-											// style={{ pointerEvents: 'none' }}
+											style={{ background: 'transparent' }}
 											onClick={item.onDelete && (() => item.onDelete(item.id ?? ''))}
 										>
 											Remove

@@ -2,6 +2,7 @@ package models
 
 import (
 	ytModel "catnip/backend/youtube/models"
+	"time"
 
 	"github.com/jinzhu/copier"
 )
@@ -20,6 +21,8 @@ type Playlist struct {
 func (p *Playlist) ParseFromYoutube(in *ytModel.Playlist) {
 	p.Id = in.Id
 	copier.Copy(p, in.Snippet)
+	publishedAt, _ := time.Parse(time.RFC3339, in.Snippet.PublishedAt)
+	p.PublishedAt = publishedAt.Format("2006-01-02 15:04:05")
 	p.Thumbnail = getThumbnail(in.Snippet.Thumbnails)
 }
 
@@ -38,7 +41,8 @@ func (p *PlaylistItem) ParseFromListItemYoutube(in []*ytModel.PlaylistItem) []*P
 		item := &PlaylistItem{}
 		copier.Copy(item, v.Snippet)
 		item.VideoId = v.ContentDetails.VideoId
-		item.PublishedAt = v.ContentDetails.VideoPublishedAt
+		publishedAt, _ := time.Parse(time.RFC3339, v.ContentDetails.VideoPublishedAt)
+		item.PublishedAt = publishedAt.Format("2006-01-02 15:04:05")
 		item.Thumbnail = getThumbnail(v.Snippet.Thumbnails)
 		out = append(out, item)
 	}

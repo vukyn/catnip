@@ -1,4 +1,4 @@
-import { Card, CardBody, CardHeader, Divider, Image } from '@nextui-org/react';
+import { Card, CardBody, CardHeader, Divider, Image, Spacer } from '@nextui-org/react';
 import { SongCard } from './components/song-card';
 import { GetPlaylistById, GetPlaylistItemByPlaylistId } from '../../../../wailsjs/go/handler/Playlist';
 import { memo, useEffect, useState } from 'react';
@@ -71,6 +71,7 @@ const PlaylistPage = ({}: Props) => {
 						})}
 				</div>
 			</div>
+			<Spacer y={10} />
 		</div>
 	);
 };

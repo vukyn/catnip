@@ -1,5 +1,6 @@
-import { Card, CardBody, CardHeader, Divider, Image } from "@nextui-org/react";
-import { IItem } from "../../../../../types";
+import { Button, Card, CardBody, Image } from '@nextui-org/react';
+import { IItem } from '../../../../../types';
+import { Play2Icon } from '../../../icons/play-circle-2-icon';
 
 type Props = {
 	item: IItem;
@@ -7,11 +8,21 @@ type Props = {
 
 export const SongCard = ({ item }: Props) => {
 	return (
-		<Card className="bg-default-50 rounded-xl shadow-md px-3 w-full hover:opacity-80 hover:cursor-pointer">
+		<Card className="bg-default-50 rounded-xl shadow-md px-3 w-full">
 			<CardBody className="py-5">
 				<div className="flex gap-2.5">
-					<div className="flex-none">
+					<div className="relative hover:opacity-80 hover:cursor-pointer">
 						<Image width={180} alt="NextUI hero Image" src={item.thumbnail} />
+						<Button
+							style={{ background: 'transparent' }}
+							className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
+							isIconOnly
+							variant="light"
+							aria-label="play song"
+							disableAnimation
+						>
+							<Play2Icon fill="#c5cce3" />
+						</Button>
 					</div>
 					<div>
 						<h1 className="text-l">{item.title}</h1>
