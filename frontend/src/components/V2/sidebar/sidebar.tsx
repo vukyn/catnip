@@ -112,7 +112,7 @@ export const SidebarWrapper = () => {
 				</div>
 				<div className="flex flex-col justify-between h-full">
 					<div className={Sidebar.Body()}>
-						<SidebarItem title="Home" icon={<HomeIcon />} isActive={pathname === '/'} href="/" />
+						<SidebarItem title="Home" icon={<HomeIcon />} isActive={pathname === '/home'} href="/home" />
 						<SidebarMenu title="Main">
 							<SidebarItem isActive={pathname === '/discover'} title="Discover" icon={<PlayIcon />} href="discover" />
 							<SidebarItem isActive={pathname === '/chart'} title="Chart" icon={<TrendingUpIcon />} href="chart" />
