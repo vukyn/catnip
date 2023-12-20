@@ -3,3 +3,5 @@
 import {models} from '../models';
 
 export function GetPlaylistById(arg1:string):Promise<models.Playlist>;
+
+export function GetPlaylistItemByPlaylistId(arg1:string):Promise<Array<models.PlaylistItem>>;

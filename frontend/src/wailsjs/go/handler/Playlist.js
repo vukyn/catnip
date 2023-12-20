@@ -5,3 +5,7 @@
 export function GetPlaylistById(arg1) {
   return window['go']['handler']['Playlist']['GetPlaylistById'](arg1);
 }
+
+export function GetPlaylistItemByPlaylistId(arg1) {
+  return window['go']['handler']['Playlist']['GetPlaylistItemByPlaylistId'](arg1);
+}

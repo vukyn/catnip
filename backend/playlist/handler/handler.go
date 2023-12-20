@@ -22,3 +22,8 @@ func (p *Playlist) GetPlaylistById(id string) (*models.Playlist, error) {
 	ctx := context.Background()
 	return p.usecase.GetPlaylistById(ctx, id)
 }
+
+func (p *Playlist) GetPlaylistItemByPlaylistId(id string) ([]*models.PlaylistItem, error) {
+	ctx := context.Background()
+	return p.usecase.GetPlaylistItemByPlaylistId(ctx, id)
+}
