@@ -27,3 +27,8 @@ func (p *Playlist) GetPlaylistItemByPlaylistId(id string) ([]*models.PlaylistIte
 	ctx := context.Background()
 	return p.usecase.GetPlaylistItemByPlaylistId(ctx, id)
 }
+
+func (p *Playlist) DownloadVideo(id, path string) (string, error) {
+	ctx := context.Background()
+	return p.usecase.DownloadVideo(ctx, id, path)
+}

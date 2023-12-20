@@ -35,3 +35,11 @@ func (u *usecase) GetPlaylistItemByPlaylistId(ctx context.Context, id string) ([
 	}
 	return (&models.PlaylistItem{}).ParseFromListItemYoutube(ytPlaylistItems), nil
 }
+
+func (u *usecase) DownloadVideo(ctx context.Context, id, path string) (string, error) {
+	res, err := u.youtubeSv.DownloadVideoV1(ctx, id, path)
+	if err != nil {
+		return "", err
+	}
+	return res.Url, nil
+}

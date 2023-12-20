@@ -7,8 +7,11 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
+	"os"
 
+	"github.com/kkdai/youtube/v2"
 	kuery "github.com/vukyn/kuery/http"
 )
 
@@ -91,4 +94,36 @@ func (s *service) GetVideoV1(ctx context.Context, id string) (*models.Video, err
 	}
 
 	return video, nil
+}
+
+func (s *service) DownloadVideoV1(ctx context.Context, id, path string) (*models.VideoDownload, error) {
+	client := youtube.Client{}
+
+	video, err := client.GetVideo(id)
+	if err != nil {
+		return nil, err
+	}
+
+	formats := video.Formats.WithAudioChannels() // only get videos with audio
+	stream, _, err := client.GetStream(video, &formats[0])
+	if err != nil {
+		return nil, err
+	}
+	defer stream.Close()
+
+	downloadPath := fmt.Sprintf("%v/%v", path, video.Title)
+	file, err := os.Create(downloadPath)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+
+	_, err = io.Copy(file, stream)
+	if err != nil {
+		return nil, err
+	}
+	return &models.VideoDownload{
+		VideoId: id,
+		Url:     downloadPath,
+	}, nil
 }
