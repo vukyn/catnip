@@ -17,12 +17,6 @@ export const SampleAudioList: AudioList[] = [
 		name: 'Test',
 		singer: 'Sirvan Khosravi',
 		cover: 'https://res.cloudinary.com/ehsanahmadi/image/upload/v1573758778/Sirvan-Khosravi-Dorost-Nemisham_glicks.jpg',
-		musicSrc: 'F:/Code/golang/moo-windows/B9otsRRe0BE.mp3',
-	},
-	{
-		name: 'Test 2',
-		singer: 'Sirvan Khosravi',
-		cover: 'https://res.cloudinary.com/ehsanahmadi/image/upload/v1573758778/Sirvan-Khosravi-Dorost-Nemisham_glicks.jpg',
-		musicSrc: 'F:/Code/golang/moo-windows/test.mp3',
+		musicSrc: 'https:/gocleanarch.blob.core.windows.net/catnip-media/B9otsRRe0BE.mp3',
 	},
 ];

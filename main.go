@@ -5,8 +5,10 @@ import (
 	"log"
 
 	initPlaylist "catnip/backend/playlist/init"
+	initStorage "catnip/backend/storage/init"
 	initYoutube "catnip/backend/youtube/init"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/storage/azblob"
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
@@ -25,11 +27,16 @@ func main() {
 	app := NewApp()
 
 	// Init backend
-	youtube := initYoutube.NewInit()
+	az, err := initAzBlob()
+	if err != nil {
+		panic(err)
+	}
+	storage := initStorage.NewInit(az)
+	youtube := initYoutube.NewInit(storage)
 	playlist := initPlaylist.NewInit(youtube)
 
 	// Create application with options
-	err := wails.Run(&options.App{
+	err = wails.Run(&options.App{
 		Title:     "Catnip",
 		Width:     1024,
 		Height:    640,
@@ -90,4 +97,20 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func initAzBlob() (*azblob.Client, error) {
+	const (
+		host = "https://gocleanarch.blob.core.windows.net/"
+		key  = "vlBNqkY1znW2y7KDkyCvEN9MIIh9IAfF2nJF0LpskHk9vollScVvb4GZKYwcxSIZlK3xkF6WiNJ9+AStQtv9dQ=="
+	)
+	credential, err := azblob.NewSharedKeyCredential("gocleanarch", key)
+	if err != nil {
+		return nil, err
+	}
+	client, err := azblob.NewClientWithSharedKeyCredential(host, credential, nil)
+	if err != nil {
+		return nil, err
+	}
+	return client, nil
 }

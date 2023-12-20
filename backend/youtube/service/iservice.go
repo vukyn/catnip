@@ -10,4 +10,5 @@ type IService interface {
 	GetPlaylistItemsV1(ctx context.Context, id string) ([]*models.PlaylistItem, error)
 	GetVideoV1(ctx context.Context, id string) (*models.Video, error)
 	DownloadVideoV1(ctx context.Context, id, path string) (*models.VideoDownload, error)
+	DownloadVideoV2(ctx context.Context, id string) (*models.VideoDownload, error)
 }

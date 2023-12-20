@@ -11,15 +11,21 @@ import (
 	"net/http"
 	"os"
 
+	storageModel "catnip/backend/storage/models"
+	storageSv "catnip/backend/storage/service"
+
 	"github.com/kkdai/youtube/v2"
 	kuery "github.com/vukyn/kuery/http"
 )
 
 type service struct {
+	storageSv storageSv.IService
 }
 
-func InitService() IService {
-	return &service{}
+func InitService(storageSv storageSv.IService) IService {
+	return &service{
+		storageSv: storageSv,
+	}
 }
 
 func (s *service) GetPlaylistInfoV1(ctx context.Context, id string) (*models.Playlist, error) {
@@ -96,6 +102,7 @@ func (s *service) GetVideoV1(ctx context.Context, id string) (*models.Video, err
 	return video, nil
 }
 
+// Download and save local
 func (s *service) DownloadVideoV1(ctx context.Context, id, path string) (*models.VideoDownload, error) {
 	client := youtube.Client{}
 
@@ -125,5 +132,35 @@ func (s *service) DownloadVideoV1(ctx context.Context, id, path string) (*models
 	return &models.VideoDownload{
 		VideoId: id,
 		Url:     downloadPath,
+	}, nil
+}
+
+// Download and save online
+func (s *service) DownloadVideoV2(ctx context.Context, id string) (*models.VideoDownload, error) {
+	client := youtube.Client{}
+
+	video, err := client.GetVideo(id)
+	if err != nil {
+		return nil, err
+	}
+
+	formats := video.Formats.WithAudioChannels() // only get videos with audio
+	stream, _, err := client.GetStream(video, &formats[0])
+	if err != nil {
+		return nil, err
+	}
+	defer stream.Close()
+
+	res, err := s.storageSv.Upload(ctx, &storageModel.UploadRequest{
+		File:     stream,
+		Filename: fmt.Sprintf("%v.mp3", id),
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return &models.VideoDownload{
+		VideoId: id,
+		Url:     res,
 	}, nil
 }
