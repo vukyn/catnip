@@ -9,6 +9,9 @@
 *.test
 *.out
 
+# IDE
+.vscode
+
 build/darwins
 build/windows
 build/bin

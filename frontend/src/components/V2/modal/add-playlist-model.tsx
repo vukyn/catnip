@@ -59,9 +59,9 @@ export const AddPlaylistModal = ({ isOpen, onSave, onOpenChange }: Props) => {
 		let newItem: SavedPlaylist = {
 			id: playlist.id,
 			guid: uuidv4(),
-			title: playlist.title,
+			title: title,
 			type: 'custom',
-		}
+		};
 		if (window.localStorage.getItem('saved_playlists') !== null) {
 			const playlists: SavedPlaylist[] = JSON.parse(window.localStorage.getItem('saved_playlists')!);
 
@@ -78,6 +78,7 @@ export const AddPlaylistModal = ({ isOpen, onSave, onOpenChange }: Props) => {
 	const onModalClose = () => {
 		setUrl('');
 		setTitle('');
+		setLoading(false);
 		resetPlaylist();
 		onOpenChange(false);
 	};

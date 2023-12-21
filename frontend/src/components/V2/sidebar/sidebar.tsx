@@ -7,6 +7,7 @@ import { HeartIcon } from '../icons/heart-icon';
 import { ListIcon } from '../icons/list-icon';
 import { ListMusicIcon } from '../icons/list-music-icon';
 import { TrendingUpIcon } from '../icons/trending-up-icon';
+import { SettingIcon } from '../icons/setting-icon';
 import { SearchV2Icon } from '../icons/search-v2-icon';
 import { SidebarItem } from './sidebar-item';
 import { SidebarMenu } from './sidebar-menu';
@@ -17,12 +18,16 @@ import { useDisclosure } from '@nextui-org/react';
 import { AddPlaylistModal } from '../modal/add-playlist-model';
 import { SavedPlaylist } from '../../../types/local';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { SettingModal } from '../modal/setting-modal';
 
 export const SidebarWrapper = () => {
 	const { pathname } = useLocation();
 	const [playlistItems, setPlaylistItems] = useState<ItemProps[]>([]);
 	const { collapsed, setCollapsed } = useSidebarContext();
-	const { isOpen, onOpen, onOpenChange } = useDisclosure();
+	const { isOpen: isOpenAddPlaylist, onOpen: onOpenAddPlaylist, onOpenChange: onOpenChangeAddPlaylist } = useDisclosure();
+	const { isOpen: isOpenSetting, onOpen: onOpenSetting, onOpenChange: onOpenChangeSetting } = useDisclosure();
+	const navigate = useNavigate();
 
 	const onDeletePlaylist = (key: string) => {
 		const playlists: SavedPlaylist[] = JSON.parse(window.localStorage.getItem('saved_playlists')!);
@@ -32,14 +37,16 @@ export const SidebarWrapper = () => {
 			{
 				id: 'add-playlist',
 				title: '+ Add playlist',
-				onClick: onOpen,
+				onClick: onOpenAddPlaylist,
 				canDelete: false,
 				onDelete: () => {},
 			},
 			...newPlaylists.map((playlist) => ({
 				id: playlist.guid,
 				title: playlist.title,
-				onClick: () => {},
+				onClick: () => {
+					navigate(`/playlist/${playlist.id}`);
+				},
 				canDelete: true,
 				onDelete: onDeletePlaylist,
 			})),
@@ -53,14 +60,16 @@ export const SidebarWrapper = () => {
 				{
 					id: 'add-playlist',
 					title: '+ Add playlist',
-					onClick: onOpen,
+					onClick: onOpenAddPlaylist,
 					canDelete: false,
 					onDelete: () => {},
 				},
 				...playlists.map((playlist) => ({
 					id: playlist.guid,
 					title: playlist.title,
-					onClick: () => {},
+					onClick: () => {
+						navigate(`/playlist/${playlist.id}`);
+					},
 					canDelete: true,
 					onDelete: onDeletePlaylist,
 				})),
@@ -70,7 +79,7 @@ export const SidebarWrapper = () => {
 				{
 					id: 'add-playlist',
 					title: '+ Add playlist',
-					onClick: onOpen,
+					onClick: onOpenAddPlaylist,
 					canDelete: false,
 					onDelete: () => {},
 				},
@@ -84,7 +93,9 @@ export const SidebarWrapper = () => {
 			{
 				id: 'add-playlist',
 				title: playlist.title,
-				onClick: () => {},
+				onClick: () => {
+					navigate(`/playlist/${playlist.id}`);
+				},
 				canDelete: true,
 				onDelete: onDeletePlaylist,
 			},
@@ -104,7 +115,7 @@ export const SidebarWrapper = () => {
 				</div>
 				<div className="flex flex-col justify-between h-full">
 					<div className={Sidebar.Body()}>
-						<SidebarItem title="Home" icon={<HomeIcon />} isActive={pathname === '/'} href="/" />
+						<SidebarItem title="Home" icon={<HomeIcon />} isActive={pathname === '/home'} href="/home" />
 						<SidebarMenu title="Main">
 							<SidebarItem isActive={pathname === '/discover'} title="Discover" icon={<PlayIcon />} href="discover" />
 							<SidebarItem isActive={pathname === '/chart'} title="Chart" icon={<TrendingUpIcon />} href="chart" />
@@ -114,8 +125,15 @@ export const SidebarWrapper = () => {
 						<SidebarMenu title="Your collection">
 							<SidebarItem isActive={pathname === '/me/tracks'} title="Tracks" icon={<ListIcon />} href="me/tracks" />
 							<CollapseItems icon={<ListMusicIcon />} items={playlistItems} title="Playlists" />
-							<AddPlaylistModal key="add-playlist" isOpen={isOpen} onSave={onAddPlaylist} onOpenChange={onOpenChange} />
+							<AddPlaylistModal
+								key="add-playlist"
+								isOpen={isOpenAddPlaylist}
+								onSave={onAddPlaylist}
+								onOpenChange={onOpenChangeAddPlaylist}
+							/>
 							<SidebarItem isActive={pathname === '/me/likes'} title="Likes" icon={<HeartIcon />} href="me/likes" />
+							<SidebarItem title="Setting" icon={<SettingIcon />} onClick={onOpenSetting}/>
+							<SettingModal key="setting" isOpen={isOpenSetting} onOpenChange={onOpenChangeSetting} />
 						</SidebarMenu>
 					</div>
 				</div>

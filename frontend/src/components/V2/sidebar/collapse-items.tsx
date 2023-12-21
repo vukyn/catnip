@@ -39,7 +39,7 @@ export const CollapseItems = ({ icon, items, title }: Props) => {
 					<div className="pl-8">
 						{items.map((item, index) =>
 							item.canDelete ? (
-								<Popover placement="right">
+								<Popover key={index} placement="right">
 									<PopoverTrigger>
 										<Button
 											key={index}
@@ -55,7 +55,7 @@ export const CollapseItems = ({ icon, items, title }: Props) => {
 											key={index}
 											size="sm"
 											variant="light"
-											// style={{ pointerEvents: 'none' }}
+											style={{ background: 'transparent' }}
 											onClick={item.onDelete && (() => item.onDelete(item.id ?? ''))}
 										>
 											Remove
