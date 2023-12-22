@@ -135,18 +135,21 @@ func (s *service) DownloadVideoV1(ctx context.Context, id, path string) (*models
 	}, nil
 }
 
-// Download and save online
+// Download and save storage online
 func (s *service) DownloadVideoV2(ctx context.Context, id string) (*models.VideoDownload, error) {
 	client := youtube.Client{}
 
-	fmt.Println("Downloading video: ", id)
 	video, err := client.GetVideo(id)
 	if err != nil {
 		return nil, err
 	}
 
-	formats := video.Formats.WithAudioChannels() // only get videos with audio
-	stream, _, err := client.GetStream(video, &formats[0])
+	fmt.Println("Downloading video: ", id)
+	// 139: m4a, audio, 48k
+	// 140: m4a, audio, 128k
+	// 141: m4a, audio, 256k
+	formats := video.Formats.FindByItag(140) // (m4a, audio, 128k)
+	stream, _, err := client.GetStream(video, formats)
 	if err != nil {
 		return nil, err
 	}

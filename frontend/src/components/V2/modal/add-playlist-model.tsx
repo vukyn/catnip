@@ -39,6 +39,11 @@ export const AddPlaylistModal = ({ isOpen, onSave, onOpenChange }: Props) => {
 		});
 	};
 
+	const onChangeUrl = (text: string) => {
+		setUrl(text);
+		onQuery(text);
+	};
+
 	const onQuery = (value: string) => {
 		if (!value.includes('/playlist?list=')) return;
 
@@ -94,7 +99,7 @@ export const AddPlaylistModal = ({ isOpen, onSave, onOpenChange }: Props) => {
 								placeholder="Playlist URL"
 								variant="bordered"
 								value={url}
-								onChange={(e) => setUrl(e.target.value)}
+								onChange={(e) => onChangeUrl(e.target.value)}
 								endContent={
 									url.length === 0 && (
 										<Button isIconOnly aria-label="Paste" variant="light" size="sm" onClick={onGetFromClipboard}>
@@ -104,7 +109,7 @@ export const AddPlaylistModal = ({ isOpen, onSave, onOpenChange }: Props) => {
 								}
 							/>
 							<Input placeholder="Title" variant="bordered" value={title} onChange={(e) => setTitle(e.target.value)} />
-							<div className="w-full flex flex-row justify-center">{loading ? <Spinner color="secondary" /> : ''}</div>
+							<div className="w-full flex flex-row justify-center">{loading ? <Spinner color="secondary" /> : ""}</div>
 							<div className="w-full flex flex-row justify-center">
 								<Image width={300} alt="" src={playlist.thumbnail} />
 							</div>
