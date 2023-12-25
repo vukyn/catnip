@@ -160,7 +160,7 @@ func (s *service) DownloadVideoV2(ctx context.Context, id string) (*models.Video
 
 	res, err := s.storageSv.Upload(ctx, &storageModel.UploadRequest{
 		File:     stream,
-		Filename: fmt.Sprintf("%v.mp3", id),
+		Filename: fmt.Sprintf("%v.m4a", id),
 	})
 	if err != nil {
 		return nil, err

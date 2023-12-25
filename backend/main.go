@@ -40,7 +40,7 @@ func testYoutubeApi() {
 	}
 	storage := initStorage.NewInit(az)
 	youtube := initYoutube.NewInit(storage)
-	res, err := youtube.Service.DownloadVideoV2(ctx, "B9otsRRe0BE")
+	res, err := youtube.Service.DownloadVideoV2(ctx, "nyWbun_PbTc")
 	if err != nil {
 		panic(err)
 	}
@@ -61,4 +61,7 @@ func testPlaylistApi() {
 		panic(err)
 	}
 	fmt.Print(log.PrettyPrint(playlistItems))
+}
+
+func testStorageApi() {
 }
