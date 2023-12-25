@@ -4,6 +4,7 @@ import { GetPlaylistById, GetPlaylistItemByPlaylistId } from '../../../../wailsj
 import { memo, useEffect, useState } from 'react';
 import { IItem, IPlaylist } from '../../../../types';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 type Props = {};
 
@@ -19,13 +20,13 @@ const PlaylistPage = ({}: Props) => {
 					...data,
 				});
 			})
-			.catch(() => console.log('error', 'Failed to get playlist, please try again later.'));
+			.catch(() => toast('Failed to get playlist, please try again later.'));
 
 		GetPlaylistItemByPlaylistId(id)
 			.then((data) => {
 				setItems(data);
 			})
-			.catch(() => console.log('error', 'Failed to get playlist items, please try again later.'));
+			.catch(() => toast('Failed to get playlist items, please try again later.'));
 	};
 
 	useEffect(() => {
