@@ -4,6 +4,7 @@ import { Play2Icon } from '../../../icons/play-circle-2-icon';
 import { DownloadVideo } from '../../../../../wailsjs/go/handler/Playlist';
 import { useContext, useState } from 'react';
 import { AudioContext, AudioContextType } from '../../../../../app';
+import { toast } from 'react-toastify';
 
 type Props = {
 	item: IItem;
@@ -23,7 +24,9 @@ export const SongCard = ({ item }: Props) => {
 						__PLAYER_KEY__: item.video_id,
 						name: item.title,
 						singer: item.author,
-						musicSrc: data,
+						musicSrc: () => {
+							return Promise.resolve(data);
+						},
 						cover: item.thumbnail,
 					},
 				]);
@@ -31,7 +34,7 @@ export const SongCard = ({ item }: Props) => {
 			})
 			.catch((err) => {
 				setLoading(false);
-				console.log('error', 'Failed to download, please try again later. error: ', err);
+				toast('error', 'Failed to download, please try again later. error: ', err);
 				return;
 			});
 	};
