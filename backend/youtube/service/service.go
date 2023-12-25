@@ -28,6 +28,7 @@ func InitService(storageSv storageSv.IService) IService {
 	}
 }
 
+// Get playlist info (offical api)
 func (s *service) GetPlaylistInfoV1(ctx context.Context, id string) (*models.Playlist, error) {
 	part := "snippet"
 	maxResults := 50
@@ -52,6 +53,7 @@ func (s *service) GetPlaylistInfoV1(ctx context.Context, id string) (*models.Pla
 	return playlist, nil
 }
 
+// Get playlist items (offical api)
 func (s *service) GetPlaylistItemsV1(ctx context.Context, id string) ([]*models.PlaylistItem, error) {
 	part := "snippet,contentDetails"
 	maxResults := 50
@@ -80,6 +82,7 @@ func (s *service) GetPlaylistItemsV1(ctx context.Context, id string) ([]*models.
 	return playlistItems, nil
 }
 
+// Get video info (offical api)
 func (s *service) GetVideoV1(ctx context.Context, id string) (*models.Video, error) {
 	part := "contentDetails,statistics,player"
 	maxResults := 1
@@ -102,7 +105,7 @@ func (s *service) GetVideoV1(ctx context.Context, id string) (*models.Video, err
 	return video, nil
 }
 
-// Download and save local
+// Download and save local (lib api)
 func (s *service) DownloadVideoV1(ctx context.Context, id, path string) (*models.VideoDownload, error) {
 	client := youtube.Client{}
 
@@ -135,7 +138,7 @@ func (s *service) DownloadVideoV1(ctx context.Context, id, path string) (*models
 	}, nil
 }
 
-// Download and save storage online
+// Download and save cloud storage (lib api)
 func (s *service) DownloadVideoV2(ctx context.Context, id string) (*models.VideoDownload, error) {
 	client := youtube.Client{}
 
