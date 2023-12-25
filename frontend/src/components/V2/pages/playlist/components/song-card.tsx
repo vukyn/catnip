@@ -12,7 +12,7 @@ type Props = {
 export const SongCard = ({ item }: Props) => {
 	const { audioLists, setAudioLists } = useContext(AudioContext) as AudioContextType;
 	const [loading, setLoading] = useState(false);
-	
+
 	const onClick = (id: string) => {
 		setLoading(true);
 		DownloadVideo(id, '')
@@ -20,8 +20,9 @@ export const SongCard = ({ item }: Props) => {
 				setAudioLists([
 					...audioLists,
 					{
+						__PLAYER_KEY__: item.video_id,
 						name: item.title,
-						singer: 'test',
+						singer: item.author,
 						musicSrc: data,
 						cover: item.thumbnail,
 					},
