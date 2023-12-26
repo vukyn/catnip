@@ -4,6 +4,9 @@ dev:
 builds:
 	wails build
 
+builds-ins:
+	wails build -nsis
+
 generate:
 	wails generate module
 
