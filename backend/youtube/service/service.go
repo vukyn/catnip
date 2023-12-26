@@ -105,6 +105,16 @@ func (s *service) GetVideoV1(ctx context.Context, id string) (*models.Video, err
 	return video, nil
 }
 
+// Get video info (lib api)
+func (s *service) GetVideoV2(ctx context.Context, id string) (*youtube.Video, error) {
+	client := youtube.Client{}
+	video, err := client.GetVideo(id)
+	if err != nil {
+		return nil, err
+	}
+	return video, nil
+}
+
 // Download and save local (lib api)
 func (s *service) DownloadVideoV1(ctx context.Context, id, path string) (*models.VideoDownload, error) {
 	client := youtube.Client{}
