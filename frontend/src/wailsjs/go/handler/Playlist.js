@@ -13,3 +13,7 @@ export function GetPlaylistById(arg1) {
 export function GetPlaylistItemByPlaylistId(arg1) {
   return window['go']['handler']['Playlist']['GetPlaylistItemByPlaylistId'](arg1);
 }
+
+export function GetVideoById(arg1) {
+  return window['go']['handler']['Playlist']['GetVideoById'](arg1);
+}

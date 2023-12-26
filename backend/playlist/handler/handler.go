@@ -18,6 +18,11 @@ func NewHandler(
 	}
 }
 
+func (p *Playlist) GetVideoById(id string) (*models.Video, error) {
+	ctx := context.Background()
+	return p.usecase.GetVideoById(ctx, id)
+}
+
 func (p *Playlist) GetPlaylistById(id string) (*models.Playlist, error) {
 	ctx := context.Background()
 	return p.usecase.GetPlaylistById(ctx, id)

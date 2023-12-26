@@ -43,6 +43,16 @@ type ContentDetails struct {
 }
 
 type Video struct {
+	Id      string `json:"id"`
+	Snippet struct {
+		Title        string      `json:"title"`
+		ChannelId    string      `json:"channelId"`
+		ChannelTitle string      `json:"channelTitle"`
+		Description  string      `json:"description"`
+		PublishedAt  string      `json:"publishedAt"`
+		Thumbnails   *Thumbnails `json:"thumbnails"`
+		Tags         []string    `json:"tags"`
+	} `json:"snippet"`
 	ContentDetails struct {
 		Duration   string `json:"duration"`
 		Definition string `json:"definition"`
