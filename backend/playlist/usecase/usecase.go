@@ -48,7 +48,7 @@ func (u *usecase) GetPlaylistItemByPlaylistId(ctx context.Context, id string) ([
 	if err != nil {
 		return nil, err
 	}
-	query.Where(playlistItems, func(item *youtubeModel.PlaylistItem) bool {
+	playlistItems = query.Where(playlistItems, func(item *youtubeModel.PlaylistItem) bool {
 		return item.Snippet.Title != PRIVATE_TITLE
 	})
 	return (&playlistModel.PlaylistItem{}).ParseFromListItemYoutubeV1(playlistItems), nil

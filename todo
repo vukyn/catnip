@@ -2,6 +2,8 @@ Feature:
   - Dark theme (pending)
   - Download song (progressing)
   - Paging playlist item (pending)
+  - Show version (pending)
 
 Bug:
-  - Crash app when load playlist with more 100 songs (pending)
+  - Crash app when load playlist with more 100 songs (done) => fixed in v0.1.1
+    - Reason: App crash when load private video -> cannot load thumnail (nil pointer reference)
