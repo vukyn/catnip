@@ -58,7 +58,7 @@ func getThumbnail(in *ytModel.Thumbnails) string {
 		return in.Standard.Url
 	} else if in.High != nil {
 		return in.High.Url
-	} else if in.Default.Url != "" {
+	} else if in.Default != nil {
 		return in.Default.Url
 	} else {
 		return ""

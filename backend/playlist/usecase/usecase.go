@@ -1,10 +1,15 @@
 package usecase
 
 import (
-	"catnip/backend/playlist/models"
+	playlistModel "catnip/backend/playlist/models"
+	youtubeModel "catnip/backend/youtube/models"
 	youtubeSv "catnip/backend/youtube/service"
 	"context"
+
+	"github.com/vukyn/kuery/query"
 )
+
+const PRIVATE_TITLE = "Private video"
 
 type usecase struct {
 	youtubeSv youtubeSv.IService
@@ -18,22 +23,25 @@ func InitUsecase(
 	}
 }
 
-func (u *usecase) GetPlaylistById(ctx context.Context, id string) (*models.Playlist, error) {
-	res := &models.Playlist{}
-	ytPlaylist, err := u.youtubeSv.GetPlaylistInfoV1(ctx, id)
+func (u *usecase) GetPlaylistById(ctx context.Context, id string) (*playlistModel.Playlist, error) {
+	res := &playlistModel.Playlist{}
+	playlist, err := u.youtubeSv.GetPlaylistInfoV1(ctx, id)
 	if err != nil {
 		return nil, err
 	}
-	res.ParseFromYoutube(ytPlaylist)
+	res.ParseFromYoutube(playlist)
 	return res, nil
 }
 
-func (u *usecase) GetPlaylistItemByPlaylistId(ctx context.Context, id string) ([]*models.PlaylistItem, error) {
-	ytPlaylistItems, err := u.youtubeSv.GetPlaylistItemsV1(ctx, id)
+func (u *usecase) GetPlaylistItemByPlaylistId(ctx context.Context, id string) ([]*playlistModel.PlaylistItem, error) {
+	playlistItems, err := u.youtubeSv.GetPlaylistItemsV1(ctx, id)
 	if err != nil {
 		return nil, err
 	}
-	return (&models.PlaylistItem{}).ParseFromListItemYoutube(ytPlaylistItems), nil
+	query.Where(playlistItems, func(item *youtubeModel.PlaylistItem) bool {
+		return item.Snippet.Title != PRIVATE_TITLE
+	})
+	return (&playlistModel.PlaylistItem{}).ParseFromListItemYoutube(playlistItems), nil
 }
 
 func (u *usecase) DownloadVideo(ctx context.Context, id, path string) (string, error) {

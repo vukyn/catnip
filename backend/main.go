@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	testYoutubeApi()
+	testPlaylistApi()
 }
 
 const (
