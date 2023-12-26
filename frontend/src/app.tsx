@@ -1,7 +1,7 @@
-import { createContext, useEffect, useState } from 'react';
-import { Layout } from './components/V2/layout/layout';
-import { default as MusicPlayer, ReactJkMusicPlayerAudioListProps as AudioList } from 'react-jinke-music-player';
-import { Outlet } from 'react-router-dom';
+import { createContext, useEffect, useState } from "react";
+import { Layout } from "./components/V2/layout/layout";
+import { default as MusicPlayer, ReactJkMusicPlayerAudioListProps as AudioList } from "react-jinke-music-player";
+import { Outlet } from "react-router-dom";
 
 export type AudioContextType = {
 	audioLists: AudioList[];
@@ -19,7 +19,7 @@ const App = () => {
 			setAudioList(updatedList);
 			return;
 		}
-	}
+	};
 
 	useEffect(() => {
 		if (audioList.length > 0) {
