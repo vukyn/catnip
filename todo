@@ -7,4 +7,5 @@ Feature:
 Bug:
   - Crash app when load playlist with more 100 songs (done) => fixed in v0.1.1
     - Reason: App crash when load private video -> cannot load thumnail (nil pointer reference)
-  - Run app background (not shutdown completely)
+  - Run app background (not shutdown completely) (done) => set HideWindowOnClose to false
+  - Download video access denied when run with installer
