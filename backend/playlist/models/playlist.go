@@ -45,7 +45,7 @@ func (p *PlaylistItem) ParseFromListItemYoutube(in []*ytModel.PlaylistItem) []*P
 		publishedAt, _ := time.Parse(time.RFC3339, v.ContentDetails.VideoPublishedAt)
 		item.PublishedAt = publishedAt.Format("2006-01-02 15:04:05")
 		item.Thumbnail = getThumbnail(v.Snippet.Thumbnails)
-		item.Author = v.Snippet.ChannelTitle	
+		item.Author = v.Snippet.ChannelTitle
 		out = append(out, item)
 	}
 	return out
@@ -58,7 +58,9 @@ func getThumbnail(in *ytModel.Thumbnails) string {
 		return in.Standard.Url
 	} else if in.High != nil {
 		return in.High.Url
-	} else {
+	} else if in.Default.Url != "" {
 		return in.Default.Url
+	} else {
+		return ""
 	}
 }
