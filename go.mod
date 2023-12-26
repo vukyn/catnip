@@ -7,6 +7,7 @@ require (
 	github.com/jinzhu/copier v0.4.0
 	github.com/kkdai/youtube/v2 v2.9.0
 	github.com/mitchellh/mapstructure v1.5.0
+	github.com/senseyeio/duration v0.0.0-20180430131211-7c2a214ada46
 	github.com/vukyn/kuery v1.0.0
 	github.com/wailsapp/wails/v2 v2.7.1
 )

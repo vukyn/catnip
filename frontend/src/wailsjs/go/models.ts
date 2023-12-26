@@ -68,6 +68,43 @@ export namespace models {
 		    return a;
 		}
 	}
+	
+	export class Video {
+	    id: string;
+	    title: string;
+	    duration: string;
+	    caption: string;
+	    view_count: number;
+	    like_count: number;
+	    comment_count: number;
+	    channel_id: string;
+	    channel_title: string;
+	    description: string;
+	    published_at: string;
+	    thumbnail: string;
+	    tags: string[];
+	
+	    static createFrom(source: any = {}) {
+	        return new Video(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.id = source["id"];
+	        this.title = source["title"];
+	        this.duration = source["duration"];
+	        this.caption = source["caption"];
+	        this.view_count = source["view_count"];
+	        this.like_count = source["like_count"];
+	        this.comment_count = source["comment_count"];
+	        this.channel_id = source["channel_id"];
+	        this.channel_title = source["channel_title"];
+	        this.description = source["description"];
+	        this.published_at = source["published_at"];
+	        this.thumbnail = source["thumbnail"];
+	        this.tags = source["tags"];
+	    }
+	}
 
 }
 

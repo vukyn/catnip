@@ -23,13 +23,23 @@ func InitUsecase(
 	}
 }
 
+func (u *usecase) GetVideoById(ctx context.Context, id string) (*playlistModel.Video, error) {
+	res := &playlistModel.Video{}
+	video, err := u.youtubeSv.GetVideoV1(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+	res.ParseFromYoutubeV1(video)
+	return res, nil
+}
+
 func (u *usecase) GetPlaylistById(ctx context.Context, id string) (*playlistModel.Playlist, error) {
 	res := &playlistModel.Playlist{}
 	playlist, err := u.youtubeSv.GetPlaylistInfoV1(ctx, id)
 	if err != nil {
 		return nil, err
 	}
-	res.ParseFromYoutube(playlist)
+	res.ParseFromYoutubeV1(playlist)
 	return res, nil
 }
 
@@ -41,7 +51,7 @@ func (u *usecase) GetPlaylistItemByPlaylistId(ctx context.Context, id string) ([
 	query.Where(playlistItems, func(item *youtubeModel.PlaylistItem) bool {
 		return item.Snippet.Title != PRIVATE_TITLE
 	})
-	return (&playlistModel.PlaylistItem{}).ParseFromListItemYoutube(playlistItems), nil
+	return (&playlistModel.PlaylistItem{}).ParseFromListItemYoutubeV1(playlistItems), nil
 }
 
 func (u *usecase) DownloadVideo(ctx context.Context, id, path string) (string, error) {
