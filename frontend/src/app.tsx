@@ -1,7 +1,8 @@
 import { createContext, useEffect, useState } from "react";
 import { Layout } from "./components/V2/layout/layout";
-import { default as MusicPlayer, ReactJkMusicPlayerAudioListProps as AudioList } from "react-jinke-music-player";
+import { default as MusicPlayer, ReactJkMusicPlayerAudioListProps as AudioList, TransformedDownloadAudioInfo } from "react-jinke-music-player";
 import { Outlet } from "react-router-dom";
+import download from "downloadjs";
 
 export type AudioContextType = {
 	audioLists: AudioList[];
@@ -19,6 +20,12 @@ const App = () => {
 			setAudioList(updatedList);
 			return;
 		}
+	};
+
+	const handleDownload = (audioInfo: TransformedDownloadAudioInfo) => {
+		const link = document.createElement("a");
+		link.href = audioInfo.src;
+		link.click();
 	};
 
 	useEffect(() => {
@@ -40,6 +47,7 @@ const App = () => {
 						theme="light"
 						autoPlay={isPlaying}
 						onAudioListsChange={(_, audioList) => onAudioListChange(audioList)}
+						customDownloader={handleDownload}
 					/>
 				</div>
 			</div>
