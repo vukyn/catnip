@@ -1,10 +1,10 @@
-import { Card, CardBody, CardHeader, Divider, Image, Spacer } from '@nextui-org/react';
-import { SongCard } from './components/song-card';
-import { GetPlaylistById, GetPlaylistItemByPlaylistId } from '../../../../wailsjs/go/handler/Playlist';
-import { memo, useEffect, useState } from 'react';
-import { IItem, IPlaylist } from '../../../../types';
-import { useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { Card, CardBody, CardHeader, Divider, Image, Pagination, Spacer } from "@nextui-org/react";
+import { SongCard } from "./components/song-card";
+import { GetPlaylistById, GetPlaylistItemByPlaylistId } from "../../../../wailsjs/go/handler/Playlist";
+import { memo, useEffect, useState } from "react";
+import { IItem, IPlaylist } from "../../../../types";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 type Props = {};
 
@@ -20,13 +20,13 @@ const PlaylistPage = ({}: Props) => {
 					...data,
 				});
 			})
-			.catch(() => toast('Failed to get playlist, please try again later.'));
+			.catch(() => toast("Failed to get playlist, please try again later."));
 
 		GetPlaylistItemByPlaylistId(id)
 			.then((data) => {
 				setItems(data);
 			})
-			.catch(() => toast('Failed to get playlist items, please try again later.'));
+			.catch(() => toast("Failed to get playlist items, please try again later."));
 	};
 
 	useEffect(() => {
@@ -53,7 +53,7 @@ const PlaylistPage = ({}: Props) => {
 									<div
 										className="text-xs overflow-auto max-h-32"
 										dangerouslySetInnerHTML={{
-											__html: playlist?.description?.replaceAll('\n', '<br/>') || '',
+											__html: playlist?.description?.replaceAll("\n", "<br/>") || "",
 										}}
 									></div>
 								</div>
@@ -63,7 +63,7 @@ const PlaylistPage = ({}: Props) => {
 				</div>
 			</div>
 			{/* Songs */}
-			<div className="flex flex-col justify-center w-full py-5 px-4 lg:px-0  max-w-[90rem] mx-auto gap-3">
+			<div className="flex flex-col justify-center w-full py-4 px-4 lg:px-0 max-w-[90rem] mx-auto gap-3">
 				<div className=" w-full flex flex-col gap-4">
 					{items &&
 						items.map((item) => {
@@ -71,7 +71,11 @@ const PlaylistPage = ({}: Props) => {
 						})}
 				</div>
 			</div>
-			<Spacer y={10} />
+			{/* <Spacer y={3} /> */}
+			<div className="flex flex-col justify-center w-full pb-5 px-4 lg:px-0 max-w-[90rem] mx-auto gap-3">
+					<Pagination total={10} initialPage={1} />
+			</div>
+			<Spacer y={16} />
 		</div>
 	);
 };
