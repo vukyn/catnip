@@ -23,14 +23,14 @@ func (p *Playlist) GetVideoById(id string) (*models.Video, error) {
 	return p.usecase.GetVideoById(ctx, id)
 }
 
-func (p *Playlist) GetPlaylistById(id string) (*models.Playlist, error) {
+func (p *Playlist) GetPlaylistById(req *models.GetPlaylistRequest) (*models.Playlist, error) {
 	ctx := context.Background()
-	return p.usecase.GetPlaylistById(ctx, id)
+	return p.usecase.GetPlaylistById(ctx, req)
 }
 
-func (p *Playlist) GetPlaylistItemByPlaylistId(id string) ([]*models.PlaylistItem, error) {
+func (p *Playlist) GetPlaylistItemByPlaylistId(req *models.GetPlaylistItemRequest) (*models.PlaylistItem, error) {
 	ctx := context.Background()
-	return p.usecase.GetPlaylistItemByPlaylistId(ctx, id)
+	return p.usecase.GetPlaylistItemByPlaylistId(ctx, req)
 }
 
 func (p *Playlist) DownloadVideo(id, path string) (string, error) {

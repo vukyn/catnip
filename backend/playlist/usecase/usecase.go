@@ -33,9 +33,9 @@ func (u *usecase) GetVideoById(ctx context.Context, id string) (*playlistModel.V
 	return res, nil
 }
 
-func (u *usecase) GetPlaylistById(ctx context.Context, id string) (*playlistModel.Playlist, error) {
+func (u *usecase) GetPlaylistById(ctx context.Context, req *playlistModel.GetPlaylistRequest) (*playlistModel.Playlist, error) {
 	res := &playlistModel.Playlist{}
-	playlist, err := u.youtubeSv.GetPlaylistInfoV1(ctx, id)
+	playlist, err := u.youtubeSv.GetPlaylistInfoV1(ctx, req.Id)
 	if err != nil {
 		return nil, err
 	}
@@ -43,15 +43,17 @@ func (u *usecase) GetPlaylistById(ctx context.Context, id string) (*playlistMode
 	return res, nil
 }
 
-func (u *usecase) GetPlaylistItemByPlaylistId(ctx context.Context, id string) ([]*playlistModel.PlaylistItem, error) {
-	playlistItems, err := u.youtubeSv.GetPlaylistItemsV1(ctx, id)
+func (u *usecase) GetPlaylistItemByPlaylistId(ctx context.Context, req *playlistModel.GetPlaylistItemRequest) (*playlistModel.PlaylistItem, error) {
+	playlistItems, err := u.youtubeSv.GetPlaylistItemsV1(ctx, req.Id, req.PageToken, req.Size)
 	if err != nil {
 		return nil, err
 	}
-	playlistItems = query.Where(playlistItems, func(item *youtubeModel.PlaylistItem) bool {
+	playlistItems.Items = query.Where(playlistItems.Items, func(item *youtubeModel.PlaylistItemDetail) bool {
 		return item.Snippet.Title != PRIVATE_TITLE
 	})
-	return (&playlistModel.PlaylistItem{}).ParseFromListItemYoutubeV1(playlistItems), nil
+	res := &playlistModel.PlaylistItem{}
+	res.ParseYoutubeV1(playlistItems)
+	return res, nil
 }
 
 func (u *usecase) DownloadVideo(ctx context.Context, id, path string) (string, error) {

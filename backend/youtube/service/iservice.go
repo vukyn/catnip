@@ -11,7 +11,7 @@ type IService interface {
 	// Get playlist info (offical api)
 	GetPlaylistInfoV1(ctx context.Context, id string) (*models.Playlist, error)
 	// Get playlist items (offical api)
-	GetPlaylistItemsV1(ctx context.Context, id string) ([]*models.PlaylistItem, error)
+	GetPlaylistItemsV1(ctx context.Context, id string, page string, size int) (*models.PlaylistItem, error)
 	// Get video info (offical api)
 	GetVideoV1(ctx context.Context, id string) (*models.Video, error)
 	// Get video info (lib api)
