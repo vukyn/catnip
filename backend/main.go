@@ -2,6 +2,7 @@ package main
 
 import (
 	initPlaylist "catnip/backend/playlist/init"
+	playlistModel "catnip/backend/playlist/models"
 	initStorage "catnip/backend/storage/init"
 	initYoutube "catnip/backend/youtube/init"
 	"context"
@@ -56,7 +57,9 @@ func testPlaylistApi() {
 	storage := initStorage.NewInit(az)
 	youtube := initYoutube.NewInit(storage)
 	playlist := initPlaylist.NewInit(youtube)
-	playlistItems, err := playlist.Usecase.GetVideoById(ctx, "9QAevjELLMs")
+	playlistItems, err := playlist.Usecase.GetPlaylistItemByPlaylistId(ctx, &playlistModel.GetPlaylistItemRequest{
+		Id: "PLpVpfec_CeUcCm5Owo5pOU7YeLrErOzWf",
+	})
 	if err != nil {
 		panic(err)
 	}

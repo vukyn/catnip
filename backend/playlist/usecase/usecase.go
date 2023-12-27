@@ -44,7 +44,15 @@ func (u *usecase) GetPlaylistById(ctx context.Context, req *playlistModel.GetPla
 }
 
 func (u *usecase) GetPlaylistItemByPlaylistId(ctx context.Context, req *playlistModel.GetPlaylistItemRequest) (*playlistModel.PlaylistItem, error) {
-	playlistItems, err := u.youtubeSv.GetPlaylistItemsV1(ctx, req.Id, req.PageToken, req.Size)
+	pageToken := ""
+	if req.PageToken != nil {
+		pageToken = *req.PageToken
+	}
+	size := 10
+	if req.Size != nil {
+		size = *req.Size
+	}
+	playlistItems, err := u.youtubeSv.GetPlaylistItemsV1(ctx, req.Id, pageToken, size)
 	if err != nil {
 		return nil, err
 	}

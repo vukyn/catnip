@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChevronUpIcon } from '../icons/chevron-up-icon';
+import { ChevronUpIcon } from '../icons/chevron-icon';
 import { Accordion, AccordionItem, Button, Popover, PopoverContent, PopoverTrigger } from '@nextui-org/react';
 
 interface Props {

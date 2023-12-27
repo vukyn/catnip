@@ -24,8 +24,8 @@ type ContentDetails struct {
 func GetTotal(in map[string]interface{}) int {
 	total := 0
 	if pageInfo, ok := in["pageInfo"].(map[string]interface{}); ok {
-		if t, ok := pageInfo["totalResults"].(int); ok {
-			total = t
+		if t, ok := pageInfo["totalResults"].(float64); ok {
+			total = int(t)
 		} else {
 			return total
 		}

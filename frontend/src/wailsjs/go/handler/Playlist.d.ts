@@ -4,8 +4,8 @@ import {models} from '../models';
 
 export function DownloadVideo(arg1:string,arg2:string):Promise<string>;
 
-export function GetPlaylistById(arg1:string):Promise<models.Playlist>;
+export function GetPlaylistById(arg1:models.GetPlaylistRequest):Promise<models.Playlist>;
 
-export function GetPlaylistItemByPlaylistId(arg1:string):Promise<Array<models.PlaylistItem>>;
+export function GetPlaylistItemByPlaylistId(arg1:models.GetPlaylistItemRequest):Promise<models.PlaylistItem>;
 
 export function GetVideoById(arg1:string):Promise<models.Video>;

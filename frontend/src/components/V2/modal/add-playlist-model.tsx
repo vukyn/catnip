@@ -49,7 +49,7 @@ export const AddPlaylistModal = ({ isOpen, onSave, onOpenChange }: Props) => {
 
 		const id = value.split('list=')[1];
 		setLoading(true);
-		GetPlaylistById(id)
+		GetPlaylistById({id})
 			.then((data) => {
 				if (title.length === 0) setTitle(data.title);
 				setPlaylist({

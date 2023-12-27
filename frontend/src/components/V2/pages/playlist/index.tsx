@@ -1,10 +1,12 @@
-import { Card, CardBody, CardHeader, Divider, Image, Pagination, Spacer } from "@nextui-org/react";
+import { Button, ButtonGroup, Card, CardBody, CardHeader, Divider, Image, Spacer } from "@nextui-org/react";
 import { SongCard } from "./components/song-card";
 import { GetPlaylistById, GetPlaylistItemByPlaylistId } from "../../../../wailsjs/go/handler/Playlist";
 import { memo, useEffect, useState } from "react";
 import { IItem, IPlaylist } from "../../../../types";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { ChevronLeftIcon, ChevronRightIcon } from "../../icons/chevron-icon";
+import { models } from "../../../../wailsjs/go/models";
 
 type Props = {};
 
@@ -12,9 +14,13 @@ const PlaylistPage = ({}: Props) => {
 	let { id } = useParams();
 	const [playlist, setPlaylist] = useState<IPlaylist>();
 	const [items, setItems] = useState<IItem[]>([]);
+	const [next, setNext] = useState<string>("");
+	const [prev, setPrev] = useState<string>("");
+	const [total, setTotal] = useState<number>(0);
+	const [page, setPage] = useState<number>(1);
 
 	const onRender = (id: string) => {
-		GetPlaylistById(id)
+		GetPlaylistById({ id: id })
 			.then((data) => {
 				setPlaylist({
 					...data,
@@ -22,11 +28,38 @@ const PlaylistPage = ({}: Props) => {
 			})
 			.catch(() => toast("Failed to get playlist, please try again later."));
 
-		GetPlaylistItemByPlaylistId(id)
+		GetPlaylistItemByPlaylistId({ id, page_token: "", size: 10 })
 			.then((data) => {
-				setItems(data);
+				ReRenderPlaylistItem(data);
 			})
 			.catch(() => toast("Failed to get playlist items, please try again later."));
+	};
+
+	const onNext = (id: string) => {
+		GetPlaylistItemByPlaylistId({ id, page_token: next, size: 10 })
+			.then((data) => {
+				setPage(page + 1);
+				ReRenderPlaylistItem(data);
+				window.scrollTo(0, 0);
+			})
+			.catch(() => toast("Failed to get playlist items, please try again later."));
+	};
+
+	const onPrev = (id: string) => {
+		GetPlaylistItemByPlaylistId({ id, page_token: prev, size: 10 })
+			.then((data) => {
+				setPage(page - 1);
+				ReRenderPlaylistItem(data);
+				window.scrollTo(0, 0);
+			})
+			.catch(() => toast("Failed to get playlist items, please try again later."));
+	};
+
+	const ReRenderPlaylistItem = (data: models.PlaylistItem) => {
+		setItems(data.items);
+		setNext(data.next);
+		setPrev(data.prev);
+		setTotal(data.total);
 	};
 
 	useEffect(() => {
@@ -72,8 +105,20 @@ const PlaylistPage = ({}: Props) => {
 				</div>
 			</div>
 			{/* <Spacer y={3} /> */}
-			<div className="flex flex-col justify-center w-full pb-5 px-4 lg:px-0 max-w-[90rem] mx-auto gap-3">
-					<Pagination total={10} initialPage={1} />
+			<div className="flex flex-col justify-center w-full pb-2 px-4 lg:px-0 max-w-[90rem] mx-auto gap-3">
+				<div className="flex justify-end">
+					<Button className="hover:cursor-default" variant="light" style={{ background: "transparent" }} disableAnimation>
+						{page} / {Math.ceil(total / 10)}
+					</Button>
+					<ButtonGroup>
+						<Button isIconOnly isDisabled={prev === ""} onClick={() => onPrev(id!)}>
+							<ChevronLeftIcon />
+						</Button>
+						<Button isIconOnly isDisabled={next === ""} onClick={() => onNext(id!)}>
+							<ChevronRightIcon />
+						</Button>
+					</ButtonGroup>
+				</div>
 			</div>
 			<Spacer y={16} />
 		</div>
