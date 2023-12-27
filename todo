@@ -1,11 +1,12 @@
 Feature:
-  - Dark theme (pending)
-  - Download song (progressing)
-  - Paging playlist item (pending)
-  - Show version (pending)
+  ☐ Dark theme
+  ☐ Download song @started(23-12-27 10:56)
+  ☐ Paging playlist item
+  ☐ Show version
+  ☐ Add all to queue
 
 Bug:
-  - Crash app when load playlist with more 100 songs (done) => fixed in v0.1.1
-    - Reason: App crash when load private video -> cannot load thumnail (nil pointer reference)
-  - Run app background (not shutdown completely) (done) => set HideWindowOnClose to false
-  - Download video access denied when run with installer
+  ✔ Crash app when load playlist with more 100 songs => fixed in v0.1.1 @done(23-12-27 10:45)
+    ✔ Reason: App crash when load private video -> cannot load thumnail (nil pointer reference) @done(23-12-27 10:45)
+  ✔ Run app background (not shutdown completely) => set HideWindowOnClose to false @done(23-12-27 10:52)
+  ☐ Download video access denied when run with installer
