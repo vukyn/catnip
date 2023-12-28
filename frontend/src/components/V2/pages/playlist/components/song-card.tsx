@@ -32,7 +32,7 @@ export const SongCard = ({ item }: Props) => {
 			})
 			.catch(() => {
 				setLoading(false);
-				toast("Failed to download, please try again later.");
+				toast.error("Failed to download, please try again later.");
 				return;
 			});
 	};

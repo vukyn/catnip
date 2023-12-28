@@ -26,13 +26,13 @@ const PlaylistPage = ({}: Props) => {
 					...data,
 				});
 			})
-			.catch(() => toast("Failed to get playlist, please try again later."));
+			.catch(() => toast.error("Failed to get playlist, please try again later."));
 
 		GetPlaylistItemByPlaylistId({ id, page_token: "", size: 10 })
 			.then((data) => {
 				ReRenderPlaylistItem(data);
 			})
-			.catch(() => toast("Failed to get playlist items, please try again later."));
+			.catch(() => toast.error("Failed to get playlist items, please try again later."));
 	};
 
 	const onNext = (id: string) => {
@@ -42,7 +42,7 @@ const PlaylistPage = ({}: Props) => {
 				ReRenderPlaylistItem(data);
 				window.scrollTo(0, 0);
 			})
-			.catch(() => toast("Failed to get playlist items, please try again later."));
+			.catch(() => toast.error("Failed to get playlist items, please try again later."));
 	};
 
 	const onPrev = (id: string) => {
@@ -52,7 +52,7 @@ const PlaylistPage = ({}: Props) => {
 				ReRenderPlaylistItem(data);
 				window.scrollTo(0, 0);
 			})
-			.catch(() => toast("Failed to get playlist items, please try again later."));
+			.catch(() => toast.error("Failed to get playlist items, please try again later."));
 	};
 
 	const ReRenderPlaylistItem = (data: models.PlaylistItem) => {
