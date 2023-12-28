@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { Logo } from '../../../types/logo';
-import Appicon from '../../../assets/appicon.png';
+import { useState } from "react";
+import { Logo } from "../../../../types/logo";
+import Appicon from "../../../assets/appicon.png";
 
 export const CompaniesDropdown = () => {
 	const [logo, setLogo] = useState<Logo>({
-		name: 'Catnip',
+		name: "Catnip",
 		img: <img style={{ width: 50, height: 50, borderRadius: 10 }} src={Appicon} />,
 	});
 	return (

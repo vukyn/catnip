@@ -2,11 +2,11 @@ import { Input, Link, Navbar, NavbarContent } from "@nextui-org/react";
 import React from "react";
 import { GithubIcon } from "../icons/github-icon";
 import { SearchIcon } from "../icons/search-icon";
-import { NotificationsDropdown } from "./notifications-dropdown";
-import { UserDropdown } from "./user-dropdown";
+import { NotificationsDropdown } from "./components/notifications-dropdown";
+import { UserDropdown } from "./components/user-dropdown";
 import { SupportIcon } from "../icons/support-icon";
-import { BurgerButton } from "./burger-button";
-import { ThemeSwitcher } from "./theme-switcher";
+import { BurgerButton } from "./components/burger-button";
+import { ThemeSwitcher } from "./components/theme-switcher";
 
 interface Props {
 	children: React.ReactNode;

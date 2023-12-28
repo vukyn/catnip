@@ -1,6 +1,6 @@
-import React from 'react';
-import { ChevronUpIcon } from '../icons/chevron-icon';
-import { Accordion, AccordionItem, Button, Popover, PopoverContent, PopoverTrigger } from '@nextui-org/react';
+import React from "react";
+import { ChevronUpIcon } from "../../icons/chevron-icon";
+import { Accordion, AccordionItem, Button, Popover, PopoverContent, PopoverTrigger } from "@nextui-org/react";
 
 interface Props {
 	icon: React.ReactNode;
@@ -23,10 +23,10 @@ export const CollapseItems = ({ icon, items, title }: Props) => {
 				<AccordionItem
 					indicator={<ChevronUpIcon />}
 					classNames={{
-						indicator: 'data-[open=true]:-rotate-180',
-						trigger: 'py-0 min-h-[44px] hover:bg-default-100 rounded-xl active:scale-[0.98] transition-transform px-3.5',
+						indicator: "data-[open=true]:-rotate-180",
+						trigger: "py-0 min-h-[44px] hover:bg-default-100 rounded-xl active:scale-[0.98] transition-transform px-3.5",
 
-						title: 'px-0 flex text-base gap-2 h-full items-center cursor-pointer',
+						title: "px-0 flex text-base gap-2 h-full items-center cursor-pointer",
 					}}
 					aria-label="Accordion 1"
 					title={
@@ -55,8 +55,8 @@ export const CollapseItems = ({ icon, items, title }: Props) => {
 											key={index}
 											size="sm"
 											variant="light"
-											style={{ background: 'transparent' }}
-											onClick={item.onDelete && (() => item.onDelete(item.id ?? ''))}
+											style={{ background: "transparent" }}
+											onClick={item.onDelete && (() => item.onDelete(item.id ?? ""))}
 										>
 											Remove
 										</Button>
