@@ -3,6 +3,7 @@ Feature:
   ✔ Paging playlist item @done(23-12-27 23:51)
   ☐ Show version
   ☐ Add all to queue
+  ☐ Routing with NextUI
 
 Bug:
   ✔ Crash app when load playlist with more 100 songs => fixed in v0.1.1 @done(23-12-27 10:45)
@@ -11,3 +12,4 @@ Bug:
   ☐ Download video access denied when run with installer
   ✔ Download video with 0 byte => replace with customDownloader @done(23-12-28 11:37)
   ☐ Thumnail cut half
+  ☐ Display home page

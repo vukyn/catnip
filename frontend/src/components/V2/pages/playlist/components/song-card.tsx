@@ -3,7 +3,7 @@ import { IItem } from "../../../../../types";
 import { Play2Icon } from "../../../icons/play-circle-2-icon";
 import { DownloadVideo } from "../../../../../wailsjs/go/handler/Playlist";
 import { useContext, useState } from "react";
-import { AudioContext, AudioContextType } from "../../../../../app";
+import { AudioContext, AudioContextType } from "../../../../..";
 import { toast } from "react-toastify";
 
 type Props = {

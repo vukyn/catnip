@@ -12,13 +12,12 @@ import { SearchV2Icon } from '../icons/search-v2-icon';
 import { SidebarItem } from './sidebar-item';
 import { SidebarMenu } from './sidebar-menu';
 import { useSidebarContext } from '../layout/layout-context';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from "react-router-dom";
 import { CollapseItems, ItemProps } from './collapse-items';
 import { useDisclosure } from '@nextui-org/react';
 import { AddPlaylistModal } from '../modal/add-playlist-model';
 import { SavedPlaylist } from '../../../types/local';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { SettingModal } from '../modal/setting-modal';
 
 export const SidebarWrapper = () => {

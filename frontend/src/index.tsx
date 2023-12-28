@@ -1,8 +1,11 @@
 import { createContext, useEffect, useState } from "react";
 import { Layout } from "./components/V2/layout/layout";
-import { default as MusicPlayer, ReactJkMusicPlayerAudioListProps as AudioList, TransformedDownloadAudioInfo } from "react-jinke-music-player";
+import {
+	default as MusicPlayer,
+	ReactJkMusicPlayerAudioListProps as AudioList,
+	TransformedDownloadAudioInfo,
+} from "react-jinke-music-player";
 import { Outlet } from "react-router-dom";
-import download from "downloadjs";
 
 export type AudioContextType = {
 	audioLists: AudioList[];
@@ -10,7 +13,7 @@ export type AudioContextType = {
 };
 export const AudioContext = createContext<AudioContextType | null>(null);
 
-const App = () => {
+const Index = () => {
 	const [audioList, setAudioList] = useState<AudioList[]>([]);
 	const [isPlaying, setIsPlaying] = useState(false);
 
@@ -55,4 +58,4 @@ const App = () => {
 	);
 };
 
-export default App;
+export default Index;
