@@ -114,15 +114,15 @@ export const SidebarWrapper = () => {
 				</div>
 				<div className="flex flex-col justify-between h-full">
 					<div className={Sidebar.Body()}>
-						<SidebarItem title="Home" icon={<HomeIcon />} isActive={pathname === '/home'} href="/home" />
-						<SidebarMenu title="Main">
+						<SidebarItem title="Home" icon={<HomeIcon />} href="/" />
+						{/* <SidebarMenu title="Main">
 							<SidebarItem isActive={pathname === '/discover'} title="Discover" icon={<PlayIcon />} href="discover" />
 							<SidebarItem isActive={pathname === '/chart'} title="Chart" icon={<TrendingUpIcon />} href="chart" />
 							<SidebarItem isActive={pathname === '/artist'} title="Artist" icon={<PortraitIcon />} href="artist" />
 							<SidebarItem isActive={pathname === '/search'} title="Search" icon={<SearchV2Icon />} href="search" />
-						</SidebarMenu>
+						</SidebarMenu> */}
 						<SidebarMenu title="Your collection">
-							<SidebarItem isActive={pathname === '/me/tracks'} title="Tracks" icon={<ListIcon />} href="me/tracks" />
+							{/* <SidebarItem isActive={pathname === '/me/tracks'} title="Tracks" icon={<ListIcon />} href="me/tracks" /> */}
 							<CollapseItems icon={<ListMusicIcon />} items={playlistItems} title="Playlists" />
 							<AddPlaylistModal
 								key="add-playlist"
@@ -130,7 +130,7 @@ export const SidebarWrapper = () => {
 								onSave={onAddPlaylist}
 								onOpenChange={onOpenChangeAddPlaylist}
 							/>
-							<SidebarItem isActive={pathname === '/me/likes'} title="Likes" icon={<HeartIcon />} href="me/likes" />
+							{/* <SidebarItem isActive={pathname === '/me/likes'} title="Likes" icon={<HeartIcon />} href="me/likes" /> */}
 							<SidebarItem title="Setting" icon={<SettingIcon />} onClick={onOpenSetting}/>
 							<SettingModal key="setting" isOpen={isOpenSetting} onOpenChange={onOpenChangeSetting} />
 						</SidebarMenu>

@@ -29,6 +29,7 @@ export const NavbarWrapper = ({ children }: Props) => {
 				</NavbarContent>
 				<NavbarContent className="w-full max-md:hidden">
 					<Input
+						disabled
 						startContent={<SearchIcon />}
 						isClearable
 						value={searchText}
@@ -39,22 +40,21 @@ export const NavbarWrapper = ({ children }: Props) => {
 					/>
 				</NavbarContent>
 				<NavbarContent justify="end" className="w-fit data-[justify=end]:flex-grow-0">
+					<Link href="https://github.com/vukyn" target={"_blank"}>
+						<GithubIcon />
+					</Link>
 					<div className="flex items-center gap-2">
 						<ThemeSwitcher />
 					</div>
 
-					<NotificationsDropdown />
+					{/* <NotificationsDropdown /> */}
 
-					<div className="max-md:hidden">
+					{/* <div className="max-md:hidden">
 						<SupportIcon />
-					</div>
-
-					<Link href="https://github.com/vukyn" target={"_blank"}>
-						<GithubIcon />
-					</Link>
-					<NavbarContent>
+					</div> */}
+					{/* <NavbarContent>
 						<UserDropdown />
-					</NavbarContent>
+					</NavbarContent> */}
 				</NavbarContent>
 			</Navbar>
 			{children}

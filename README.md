@@ -12,9 +12,9 @@ Fast and free music streaming music with modern UI. Written in Golang and React.
 - [x] Add to queue
 - [x] Shuffle, repeat
 - [x] Play, pause, next, previous
-- [ ] Download music
+- [x] Download music
 - [ ] Lyrics
-- [ ] Dark mode
+- [x] Dark mode
 - [x] Mini player
 - [ ] Statistics
 - [x] Desktop app
