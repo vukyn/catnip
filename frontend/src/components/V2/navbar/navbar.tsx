@@ -1,19 +1,19 @@
-import { Input, Link, Navbar, NavbarContent } from '@nextui-org/react';
-import React from 'react';
-import { GithubIcon } from '../icons/github-icon';
-import { SearchIcon } from '../icons/search-icon';
-import { NotificationsDropdown } from './notifications-dropdown';
-import { UserDropdown } from './user-dropdown';
-import { FeedbackIcon } from '../icons/feedback-icon';
-import { SupportIcon } from '../icons/support-icon';
-import { BurgerButton } from './burger-button';
+import { Input, Link, Navbar, NavbarContent } from "@nextui-org/react";
+import React from "react";
+import { GithubIcon } from "../icons/github-icon";
+import { SearchIcon } from "../icons/search-icon";
+import { NotificationsDropdown } from "./notifications-dropdown";
+import { UserDropdown } from "./user-dropdown";
+import { SupportIcon } from "../icons/support-icon";
+import { BurgerButton } from "./burger-button";
+import { ThemeSwitcher } from "./theme-switcher";
 
 interface Props {
 	children: React.ReactNode;
 }
 
 export const NavbarWrapper = ({ children }: Props) => {
-	const [searchText, setSearchText] = React.useState('');
+	const [searchText, setSearchText] = React.useState("");
 
 	return (
 		<div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
@@ -21,7 +21,7 @@ export const NavbarWrapper = ({ children }: Props) => {
 				isBordered
 				className="w-full"
 				classNames={{
-					wrapper: 'w-full max-w-full',
+					wrapper: "w-full max-w-full",
 				}}
 			>
 				<NavbarContent className="md:hidden">
@@ -33,15 +33,14 @@ export const NavbarWrapper = ({ children }: Props) => {
 						isClearable
 						value={searchText}
 						onChange={(e) => setSearchText(e.target.value)}
-						onClear={() => setSearchText('')}
+						onClear={() => setSearchText("")}
 						className="w-full"
 						placeholder="Search..."
 					/>
 				</NavbarContent>
 				<NavbarContent justify="end" className="w-fit data-[justify=end]:flex-grow-0">
-					<div className="flex items-center gap-2 max-md:hidden">
-						<FeedbackIcon />
-						<span>Feedback?</span>
+					<div className="flex items-center gap-2">
+						<ThemeSwitcher />
 					</div>
 
 					<NotificationsDropdown />
@@ -50,7 +49,7 @@ export const NavbarWrapper = ({ children }: Props) => {
 						<SupportIcon />
 					</div>
 
-					<Link href="https://github.com/Siumauricio/nextui-dashboard-template" target={'_blank'}>
+					<Link href="https://github.com/vukyn" target={"_blank"}>
 						<GithubIcon />
 					</Link>
 					<NavbarContent>

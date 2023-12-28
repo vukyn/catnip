@@ -6,6 +6,7 @@ import {
 	TransformedDownloadAudioInfo,
 } from "react-jinke-music-player";
 import { Outlet } from "react-router-dom";
+import useDarkMode from "use-dark-mode";
 
 export type AudioContextType = {
 	audioLists: AudioList[];
@@ -14,6 +15,7 @@ export type AudioContextType = {
 export const AudioContext = createContext<AudioContextType | null>(null);
 
 const Index = () => {
+	const darkMode = useDarkMode();
 	const [audioList, setAudioList] = useState<AudioList[]>([]);
 	const [isPlaying, setIsPlaying] = useState(false);
 
@@ -47,7 +49,8 @@ const Index = () => {
 					<MusicPlayer
 						audioLists={audioList}
 						mode="full"
-						theme="light"
+						theme={darkMode.value ? "dark" : "light"}
+						showThemeSwitch={false}
 						autoPlay={isPlaying}
 						onAudioListsChange={(_, audioList) => onAudioListChange(audioList)}
 						customDownloader={handleDownload}
