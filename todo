@@ -5,6 +5,7 @@ Feature:
   ☐ Add all to queue
   ✔ Routing with NextUI @done(23-12-28 23:09)
   ☐ Autoplay next song
+  ☐ Move folder V2 fronted to root
 
 Bug:
   ✔ Crash app when load playlist with more 100 songs => fixed in v0.1.1 @done(23-12-27 10:45)
