@@ -9,5 +9,5 @@ Bug:
     ✔ Reason: App crash when load private video -> cannot load thumnail (nil pointer reference) @done(23-12-27 10:45)
   ✔ Run app background (not shutdown completely) => set HideWindowOnClose to false @done(23-12-27 10:52)
   ☐ Download video access denied when run with installer
-  ☐ Download video with 0 byte
+  ✔ Download video with 0 byte => replace with customDownloader @done(23-12-28 11:37)
   ☐ Thumnail cut half
