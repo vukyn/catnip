@@ -37,6 +37,7 @@ export const SidebarWrapper = () => {
 				id: "add-playlist",
 				title: "+ Add playlist",
 				onClick: onOpenAddPlaylist,
+				isDefault: true,
 				canDelete: false,
 				onDelete: () => {},
 			},
@@ -46,6 +47,7 @@ export const SidebarWrapper = () => {
 				onClick: () => {
 					navigate(`/playlist/${playlist.id}`);
 				},
+				isDefault: false,
 				canDelete: true,
 				onDelete: onDeletePlaylist,
 			})),
@@ -61,6 +63,7 @@ export const SidebarWrapper = () => {
 					title: "+ Add playlist",
 					onClick: onOpenAddPlaylist,
 					canDelete: false,
+					isDefault: true,
 					onDelete: () => {},
 				},
 				...playlists.map((playlist) => ({
@@ -69,6 +72,7 @@ export const SidebarWrapper = () => {
 					onClick: () => {
 						navigate(`/playlist/${playlist.id}`);
 					},
+					isDefault: false,
 					canDelete: true,
 					onDelete: onDeletePlaylist,
 				})),
@@ -80,6 +84,7 @@ export const SidebarWrapper = () => {
 					title: "+ Add playlist",
 					onClick: onOpenAddPlaylist,
 					canDelete: false,
+					isDefault: true,
 					onDelete: () => {},
 				},
 			]);
@@ -95,6 +100,7 @@ export const SidebarWrapper = () => {
 				onClick: () => {
 					navigate(`/playlist/${playlist.id}`);
 				},
+				isDefault: true,
 				canDelete: true,
 				onDelete: onDeletePlaylist,
 			},

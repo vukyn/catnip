@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Logo } from "../../../../types/logo";
-import Appicon from "../../../assets/appicon.png";
+import AppIcon from "../../../../assets/appicon.png";
 
 export const CompaniesDropdown = () => {
 	const [logo, setLogo] = useState<Logo>({
 		name: "Catnip",
-		img: <img style={{ width: 50, height: 50, borderRadius: 10 }} src={Appicon} />,
+		img: <img style={{ width: 50, height: 50, borderRadius: 10 }} src={AppIcon} />,
 	});
 	return (
 		<div className="flex items-center gap-2">
