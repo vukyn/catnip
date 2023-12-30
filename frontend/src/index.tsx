@@ -4,9 +4,10 @@ import {
 	default as MusicPlayer,
 	ReactJkMusicPlayerAudioListProps as AudioList,
 	TransformedDownloadAudioInfo,
+	ReactJkMusicPlayerInstance,
 } from "react-jinke-music-player";
 import { Outlet } from "react-router-dom";
-import useDarkMode from "use-dark-mode";
+import { useCustomTheme } from "./components/V2/hooks/useCustomTheme";
 
 export type AudioContextType = {
 	audioLists: AudioList[];
@@ -15,9 +16,9 @@ export type AudioContextType = {
 export const AudioContext = createContext<AudioContextType | null>(null);
 
 const Index = () => {
-	const darkMode = useDarkMode();
+	const { isDarkMode } = useCustomTheme();
 	const [audioList, setAudioList] = useState<AudioList[]>([]);
-	const [isPlaying, setIsPlaying] = useState(false);
+	let audioInstance: ReactJkMusicPlayerInstance = {} as ReactJkMusicPlayerInstance;
 
 	const onAudioListChange = (updatedList: AudioList[]) => {
 		// onChange remove audio
@@ -34,9 +35,17 @@ const Index = () => {
 	};
 
 	useEffect(() => {
-		if (audioList.length > 0) {
-			setIsPlaying(true);
-		}
+		const onKeydown = window.addEventListener("keydown", (e) => {
+			if (e.code === "Space") {
+				e.preventDefault();
+				audioInstance && audioInstance.togglePlay && audioInstance.togglePlay();
+			}
+		});
+		// @ts-ignore
+		window.removeEventListener("keydown", onKeydown);
+	}, []);
+
+	useEffect(() => {
 	}, [audioList]);
 
 	return (
@@ -47,13 +56,17 @@ const Index = () => {
 						<Outlet />
 					</AudioContext.Provider>
 					<MusicPlayer
+						spaceBar={true}
 						audioLists={audioList}
 						mode="full"
-						theme={darkMode.value ? "dark" : "light"}
+						theme={isDarkMode ? "dark" : "light"}
 						showThemeSwitch={false}
-						autoPlay={isPlaying}
 						onAudioListsChange={(_, audioList) => onAudioListChange(audioList)}
 						customDownloader={handleDownload}
+						showMediaSession
+						getAudioInstance={(instance) => {
+							audioInstance = instance;
+						}}
 					/>
 				</div>
 			</div>
