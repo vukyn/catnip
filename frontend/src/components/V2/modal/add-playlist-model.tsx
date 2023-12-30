@@ -1,10 +1,11 @@
-import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Image, Spinner } from '@nextui-org/react';
-import { useState } from 'react';
-import { GetPlaylistById } from '../../../wailsjs/go/handler/Playlist';
-import { IPlaylist } from '../../../types';
-import { PasteIcon } from '../icons/paste-icon';
-import { SavedPlaylist } from '../../../types/local';
-import { uuidv4 } from '../../../utils/guid';
+import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Image, Spinner } from "@nextui-org/react";
+import { useState } from "react";
+import { GetPlaylistById } from "../../../wailsjs/go/handler/Playlist";
+import { IPlaylist } from "../../../types";
+import { PasteIcon } from "../icons/paste-icon";
+import { SavedPlaylist } from "../../../types/local";
+import { uuidv4 } from "../../../utils/guid";
+import { useCustomTheme } from "../hooks/useCustomTheme";
 
 type Props = {
 	isOpen: boolean;
@@ -13,22 +14,23 @@ type Props = {
 };
 
 export const AddPlaylistModal = ({ isOpen, onSave, onOpenChange }: Props) => {
+	const { themeClass } = useCustomTheme();
 	const [loading, setLoading] = useState<boolean>(false);
-	const [url, setUrl] = useState<string>('');
-	const [title, setTitle] = useState<string>('');
+	const [url, setUrl] = useState<string>("");
+	const [title, setTitle] = useState<string>("");
 	const [playlist, setPlaylist] = useState<IPlaylist>({
-		id: '',
-		title: '',
-		channel_id: '',
-		channel_title: '',
+		id: "",
+		title: "",
+		channel_id: "",
+		channel_title: "",
 	});
 
 	const resetPlaylist = () => {
 		setPlaylist({
-			id: '',
-			title: '',
-			channel_id: '',
-			channel_title: '',
+			id: "",
+			title: "",
+			channel_id: "",
+			channel_title: "",
 		});
 	};
 
@@ -45,11 +47,11 @@ export const AddPlaylistModal = ({ isOpen, onSave, onOpenChange }: Props) => {
 	};
 
 	const onQuery = (value: string) => {
-		if (!value.includes('/playlist?list=')) return;
+		if (!value.includes("/playlist?list=")) return;
 
-		const id = value.split('list=')[1];
+		const id = value.split("list=")[1];
 		setLoading(true);
-		GetPlaylistById({id})
+		GetPlaylistById({ id })
 			.then((data) => {
 				if (title.length === 0) setTitle(data.title);
 				setPlaylist({
@@ -57,7 +59,7 @@ export const AddPlaylistModal = ({ isOpen, onSave, onOpenChange }: Props) => {
 				});
 				setLoading(false);
 			})
-			.catch(() => console.log('error', 'Failed to get playlist, please try again later.'));
+			.catch(() => console.log("error", "Failed to get playlist, please try again later."));
 	};
 
 	const onSavePlaylist = () => {
@@ -65,31 +67,31 @@ export const AddPlaylistModal = ({ isOpen, onSave, onOpenChange }: Props) => {
 			id: playlist.id,
 			guid: uuidv4(),
 			title: title,
-			type: 'custom',
+			type: "custom",
 		};
-		if (window.localStorage.getItem('saved_playlists') !== null) {
-			const playlists: SavedPlaylist[] = JSON.parse(window.localStorage.getItem('saved_playlists')!);
+		if (window.localStorage.getItem("saved_playlists") !== null) {
+			const playlists: SavedPlaylist[] = JSON.parse(window.localStorage.getItem("saved_playlists")!);
 
 			playlists.unshift(newItem);
 
-			window.localStorage.setItem('saved_playlists', JSON.stringify(playlists));
+			window.localStorage.setItem("saved_playlists", JSON.stringify(playlists));
 		} else {
-			window.localStorage.setItem('saved_playlists', JSON.stringify([newItem]));
+			window.localStorage.setItem("saved_playlists", JSON.stringify([newItem]));
 		}
 		onSave(newItem);
 		onModalClose();
 	};
 
 	const onModalClose = () => {
-		setUrl('');
-		setTitle('');
+		setUrl("");
+		setTitle("");
 		setLoading(false);
 		resetPlaylist();
 		onOpenChange(false);
 	};
 
 	return (
-		<Modal isOpen={isOpen} onOpenChange={onOpenChange} onClose={onModalClose} placement="top-center">
+		<Modal className={themeClass} isOpen={isOpen} onOpenChange={onOpenChange} onClose={onModalClose} placement="top-center">
 			<ModalContent>
 				{(onClose) => (
 					<>

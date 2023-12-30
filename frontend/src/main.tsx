@@ -15,7 +15,7 @@ export const App = () => {
 	const navigate = useNavigate();
 	return (
 		<NextUIProvider navigate={navigate}>
-			<main className={`${darkMode.value ? "dark" : ""} text-foreground bg-background`}>
+			<main className={`${darkMode.value ? "dark" : "light"} text-foreground bg-background`}>
 				<ToastContainer autoClose={2000} newestOnTop theme={darkMode.value ? "dark" : "light"} />
 				<Index />
 			</main>
