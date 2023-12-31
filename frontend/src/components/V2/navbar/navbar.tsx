@@ -1,64 +1,113 @@
-import { Input, Link, Navbar, NavbarContent } from '@nextui-org/react';
-import React from 'react';
-import { GithubIcon } from '../icons/github-icon';
-import { SearchIcon } from '../icons/search-icon';
-import { NotificationsDropdown } from './notifications-dropdown';
-import { UserDropdown } from './user-dropdown';
-import { FeedbackIcon } from '../icons/feedback-icon';
-import { SupportIcon } from '../icons/support-icon';
-import { BurgerButton } from './burger-button';
+import {
+    Input,
+    Link,
+    Navbar,
+    NavbarContent,
+    Popover,
+    PopoverTrigger,
+    PopoverContent,
+    Autocomplete,
+    AutocompleteItem,
+} from "@nextui-org/react";
+import React, { useEffect, useState } from "react";
+import { GithubIcon } from "../icons/github-icon";
+import { SearchIcon } from "../icons/search-icon";
+import { NotificationsDropdown } from "./notifications-dropdown";
+import { UserDropdown } from "./user-dropdown";
+import { FeedbackIcon } from "../icons/feedback-icon";
+import { SupportIcon } from "../icons/support-icon";
+import { BurgerButton } from "./burger-button";
+import { useDebounce } from "../hooks/useDebounce";
+import { SampleAudioList } from "../../../types/data";
+import { ReactJkMusicPlayerAudioListProps } from "react-jinke-music-player";
 
 interface Props {
-	children: React.ReactNode;
+    children: React.ReactNode;
 }
 
 export const NavbarWrapper = ({ children }: Props) => {
-	const [searchText, setSearchText] = React.useState('');
+    const [searchText, setSearchText] = React.useState("");
+    const debouncedValue = useDebounce<string>(searchText, 1000); // delay 1s before searching
+    const [matchCandidates, setMatchCandidates] = useState<
+        ReactJkMusicPlayerAudioListProps[]
+    >([]);
 
-	return (
-		<div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-			<Navbar
-				isBordered
-				className="w-full"
-				classNames={{
-					wrapper: 'w-full max-w-full',
-				}}
-			>
-				<NavbarContent className="md:hidden">
-					<BurgerButton />
-				</NavbarContent>
-				<NavbarContent className="w-full max-md:hidden">
-					<Input
-						startContent={<SearchIcon />}
-						isClearable
-						value={searchText}
-						onChange={(e) => setSearchText(e.target.value)}
-						onClear={() => setSearchText('')}
-						className="w-full"
-						placeholder="Search..."
-					/>
-				</NavbarContent>
-				<NavbarContent justify="end" className="w-fit data-[justify=end]:flex-grow-0">
-					<div className="flex items-center gap-2 max-md:hidden">
-						<FeedbackIcon />
-						<span>Feedback?</span>
-					</div>
+    useEffect(() => {
+        // search in playlist
+        setMatchCandidates(
+            SampleAudioList.filter(
+                (song) =>
+                    song.name?.toString().match(searchText) ||
+                    song.singer?.toString().match(searchText)
+            )
+        );
+    }, [debouncedValue]);
 
-					<NotificationsDropdown />
+    return (
+        <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+            <Navbar
+                isBordered
+                className="w-full"
+                classNames={{
+                    wrapper: "w-full max-w-full",
+                }}
+            >
+                <NavbarContent className="md:hidden">
+                    <BurgerButton />
+                </NavbarContent>
+                <NavbarContent className="w-full max-md:hidden">
+                    <Autocomplete label="Select an animal" className="max-w-xs">
+                        {matchCandidates.map((song) => (
+                            <AutocompleteItem
+                                key={song.name as string}
+                                value={song.name as string}
+                            >
+                                {song.name}
+                            </AutocompleteItem>
+                        ))}
+                    </Autocomplete>
+                    <Popover placement="bottom-start">
+                        <PopoverTrigger>
+                            <Input
+                                startContent={<SearchIcon />}
+                                isClearable
+                                value={searchText}
+                                onChange={(e) => setSearchText(e.target.value)}
+                                onClear={() => setSearchText("")}
+                                className="w-full"
+                                placeholder="Search..."
+                            />
+                        </PopoverTrigger>
+                        <PopoverContent>wwww</PopoverContent>
+                    </Popover>
+                </NavbarContent>
+                <NavbarContent
+                    justify="end"
+                    className="w-fit data-[justify=end]:flex-grow-0"
+                >
+                    <div className="flex items-center gap-2 max-md:hidden">
+                        <FeedbackIcon />
+                        <span>Feedback?</span>
+                    </div>
 
-					<div className="max-md:hidden">
-						<SupportIcon />
-					</div>
+                    <NotificationsDropdown />
 
-					<Link href="https://github.com/Siumauricio/nextui-dashboard-template" target={'_blank'}>
-						<GithubIcon />
-					</Link>
-					<NavbarContent>
-						<UserDropdown />
-					</NavbarContent>
-				</NavbarContent>
-			</Navbar>
-			{children}
-		</div>
-	);
+                    <div className="max-md:hidden">
+                        <SupportIcon />
+                    </div>
+
+                    <Link
+                        href="https://github.com/Siumauricio/nextui-dashboard-template"
+                        target={"_blank"}
+                    >
+                        <GithubIcon />
+                    </Link>
+                    <NavbarContent>
+                        <UserDropdown />
+                    </NavbarContent>
+                </NavbarContent>
+            </Navbar>
+            {children}
+        </div>
+    );
 };
