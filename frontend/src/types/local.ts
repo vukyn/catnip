@@ -4,3 +4,7 @@ export interface SavedPlaylist {
 	title: string;
 	type: string;
 }
+
+export interface DownloadPath {
+	path: string;
+}

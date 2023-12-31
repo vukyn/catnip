@@ -1,20 +1,20 @@
-# Wails + Vite + React
+# Catnip
 
 ## About
 
-This is the simplest Wails 2.x template with React and Javascript, using Vite for asset building.
+Fast and free music streaming music with modern UI. Written in Golang and React.
 
-Included:
-
-- Build tools: Vite 4.4
-- Framework: React 18.2
-
-## Live Development
-
-To run in live development mode, run `wails dev` in the project directory. In another terminal, go into the `frontend`
-directory and run `npm run dev`. The frontend dev server will run on http://localhost:34115. Connect to this in your
-browser and connect to your application.
-
-## Building
-
-To build a redistributable, production mode package, use `wails build`.
+## Features
+- [ ] Search
+- [ ] Import playlist (from local)
+- [x] Import playlist (from Youtube)
+- [ ] Import playlist (from Spotify)
+- [x] Add to queue
+- [x] Shuffle, repeat
+- [x] Play, pause, next, previous
+- [x] Download music
+- [ ] Lyrics
+- [x] Dark mode
+- [x] Mini player
+- [ ] Statistics
+- [x] Desktop app

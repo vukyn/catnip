@@ -1,7 +1,9 @@
 package models
 
 import (
-	ytModel "catnip/backend/youtube/models"
+	"catnip/backend/models"
+	yt1Model "catnip/backend/youtube/models"
+	"time"
 
 	"github.com/jinzhu/copier"
 )
@@ -17,34 +19,15 @@ type Playlist struct {
 	Items        []*PlaylistItem `json:"items"`
 }
 
-func (p *Playlist) ParseFromYoutube(in *ytModel.Playlist) {
+func (p *Playlist) ParseFromYoutubeV1(in *yt1Model.Playlist) {
 	p.Id = in.Id
 	copier.Copy(p, in.Snippet)
-	if in.Snippet.Thumbnails.Maxres != nil {
-		p.Thumbnail = in.Snippet.Thumbnails.Maxres.Url
-	} else if in.Snippet.Thumbnails.Standard != nil {
-		p.Thumbnail = in.Snippet.Thumbnails.Standard.Url
-	} else if in.Snippet.Thumbnails.High != nil {
-		p.Thumbnail = in.Snippet.Thumbnails.High.Url
-	} else {
-		p.Thumbnail = in.Snippet.Thumbnails.Default.Url
-	}
+	publishedAt, _ := time.Parse(time.RFC3339, in.Snippet.PublishedAt)
+	p.PublishedAt = publishedAt.Format("2006-01-02 15:04:05")
+	p.Thumbnail = getThumbnail(in.Snippet.Thumbnails)
 }
 
-type PlaylistItem struct {
-	Title       string `json:"title"`
-	Position    int    `json:"position"`
-	Description string `json:"description"`
-	VideoId     string `json:"video_id"`
-}
-
-func (p *PlaylistItem) ParseFromListItemYoutube(in []*ytModel.PlaylistItem) []*PlaylistItem {
-	out := make([]*PlaylistItem, 0)
-	for _, v := range in {
-		item := &PlaylistItem{}
-		copier.Copy(item, v.Snippet)
-		item.VideoId = v.Snippet.ResourceId.VideoId
-		out = append(out, item)
-	}
-	return out
+type GetPlaylistRequest struct {
+	Id string `json:"id"`
+	models.PaginationRequest
 }
