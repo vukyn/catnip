@@ -1,8 +1,8 @@
 {
-	"name": "Catnip",
+	"name": "catnip",
 	"author": "Vu Ky",
 	"private": true,
-	"version": "1.0.0",
+	"version": "0.1.2",
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
