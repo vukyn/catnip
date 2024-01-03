@@ -7,6 +7,10 @@ Features:
   ☐ Autoplay next song
   ☐ Move folder V2 fronted to root
   ✔ Pause on spacebar @done(23-12-31 01:56)
+  ☐ https://wavesurfer.xyz/examples/?webaudio.js EQ music
+  ☐ import local music
+  ☐ create custom playlist
+  ☐ import and export playlist
 
 Bugs:
   ✔ Crash app when load playlist with more 100 songs => fixed in v0.1.1 @done(23-12-27 10:45)
