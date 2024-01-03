@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { useLockedBody } from '../hooks/useBodyLock';
-import { SidebarContext } from './layout-context';
-import { SidebarWrapper } from '../sidebar/sidebar';
-import { NavbarWrapper } from '../navbar/navbar';
+import { useState } from "react";
+import { useLockedBody } from "src/hooks/useBodyLock";
+import { SidebarContext } from "./layout-context";
+import { SidebarWrapper } from "src/components/sidebar/sidebar";
+import { NavbarWrapper } from "src/components/navbar/navbar";
 
 interface Props {
 	children: React.ReactNode;

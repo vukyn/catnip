@@ -5,7 +5,7 @@ Features:
   ☐ Add all to queue
   ✔ Routing with NextUI @done(23-12-28 23:09)
   ☐ Autoplay next song
-  ☐ Move folder V2 fronted to root
+  ✔ Move folder V2 frontend to root @done(24-01-03 18:01)
   ✔ Pause on spacebar @done(23-12-31 01:56)
   ☐ https://wavesurfer.xyz/examples/?webaudio.js EQ music
   ☐ import local music
@@ -20,3 +20,4 @@ Bugs:
   ✔ Download video with 0 byte => replace with customDownloader @done(23-12-28 11:37)
   ☐ Thumnail cut half
   ✔ Display home page => navigate to default path (/) @done(23-12-28 23:09)
+  ☐ Pause on spacebar conflict when focus on input field

@@ -1,5 +1,5 @@
 import React from "react";
-import { useSidebarContext } from "../../layout/layout-context";
+import { useSidebarContext } from "../../../layout/layout-context";
 import clsx from "clsx";
 import { Link } from "@nextui-org/react";
 

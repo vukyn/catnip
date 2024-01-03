@@ -1,6 +1,6 @@
-import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@nextui-org/react';
-import { useState } from 'react';
-import { DownloadPath } from '../../../types/local';
+import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@nextui-org/react";
+import { useState } from "react";
+import { DownloadPath } from "types/local";
 
 type Props = {
 	isOpen: boolean;
@@ -8,18 +8,18 @@ type Props = {
 };
 
 export const SettingModal = ({ isOpen, onOpenChange }: Props) => {
-	const [downloadPath, setDownloadPath] = useState<string>('');
+	const [downloadPath, setDownloadPath] = useState<string>("");
 
 	const onSavePath = () => {
 		let obj: DownloadPath = {
 			path: downloadPath,
 		};
-		window.localStorage.setItem('download_path', JSON.stringify(obj));
+		window.localStorage.setItem("download_path", JSON.stringify(obj));
 		onModalClose();
 	};
 
 	const onModalClose = () => {
-		setDownloadPath('');
+		setDownloadPath("");
 		onOpenChange(false);
 	};
 

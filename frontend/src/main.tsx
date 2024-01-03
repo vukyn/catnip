@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import useDarkMode from "use-dark-mode";
 import Index from ".";
-import PlaylistPage from "./components/V2/pages/playlist";
+import PlaylistPage from "src/pages/playlist";
 import IndexPage from "./pages";
 
 export const App = () => {

@@ -1,5 +1,5 @@
 import { Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger, NavbarItem } from "@nextui-org/react";
-import { NotificationIcon } from "../../icons/notification-icon";
+import { NotificationIcon } from "src/components/icons/notification-icon";
 
 export const NotificationsDropdown = () => {
 	return (

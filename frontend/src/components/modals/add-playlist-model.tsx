@@ -1,11 +1,11 @@
 import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Image, Spinner } from "@nextui-org/react";
 import { useState } from "react";
-import { GetPlaylistById } from "../../../wailsjs/go/handler/Playlist";
-import { IPlaylist } from "../../../types";
-import { PasteIcon } from "../icons/paste-icon";
-import { SavedPlaylist } from "../../../types/local";
-import { uuidv4 } from "../../../utils/guid";
-import { useCustomTheme } from "../hooks/useCustomTheme";
+import { GetPlaylistById } from "src/wailsjs/go/handler/Playlist";
+import { IPlaylist } from "types/index";
+import { PasteIcon } from "src/components/icons/paste-icon";
+import { SavedPlaylist } from "types/local";
+import { uuidv4 } from "src/utils/guid";
+import { useCustomTheme } from "src/hooks/useCustomTheme";
 
 type Props = {
 	isOpen: boolean;

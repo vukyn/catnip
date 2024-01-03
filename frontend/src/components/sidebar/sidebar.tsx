@@ -1,24 +1,24 @@
 import { Sidebar } from "./components/sidebar.styles";
 import { CompaniesDropdown } from "./components/sidebar-logo";
-import { HomeIcon } from "../icons/home-icon";
-import { PlayIcon } from "../icons/play-circle-icon";
-import { PortraitIcon } from "../icons/portrait-icon";
-import { HeartIcon } from "../icons/heart-icon";
-import { ListIcon } from "../icons/list-icon";
-import { ListMusicIcon } from "../icons/list-music-icon";
-import { TrendingUpIcon } from "../icons/trending-up-icon";
-import { SettingIcon } from "../icons/setting-icon";
-import { SearchV2Icon } from "../icons/search-v2-icon";
+import { HomeIcon } from "src/components/icons/home-icon";
+import { PlayIcon } from "src/components/icons/play-circle-icon";
+import { PortraitIcon } from "src/components/icons/portrait-icon";
+import { HeartIcon } from "src/components/icons/heart-icon";
+import { ListIcon } from "src/components/icons/list-icon";
+import { ListMusicIcon } from "src/components/icons/list-music-icon";
+import { TrendingUpIcon } from "src/components/icons/trending-up-icon";
+import { SettingIcon } from "src/components/icons/setting-icon";
+import { SearchV2Icon } from "src/components/icons/search-v2-icon";
 import { SidebarItem } from "./components/sidebar-item";
 import { SidebarMenu } from "./components/sidebar-menu";
 import { useSidebarContext } from "../layout/layout-context";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CollapseItems, ItemProps } from "./components/collapse-items";
 import { useDisclosure } from "@nextui-org/react";
-import { AddPlaylistModal } from "../modal/add-playlist-model";
-import { SavedPlaylist } from "../../../types/local";
+import { AddPlaylistModal } from "src/components/modals/add-playlist-model";
+import { SavedPlaylist } from "types/local";
 import { useEffect, useState } from "react";
-import { SettingModal } from "../modal/setting-modal";
+import { SettingModal } from "src/components/modals/setting-modal";
 
 export const SidebarWrapper = () => {
 	const { pathname } = useLocation();

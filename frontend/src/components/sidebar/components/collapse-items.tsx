@@ -1,10 +1,10 @@
 import React from "react";
-import { ChevronUpIcon } from "../../icons/chevron-icon";
+import { ChevronUpIcon } from "src/components/icons/chevron-icon";
 import { Accordion, AccordionItem, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
-import { ViewIcon } from "../../icons/view-icon";
-import { EditIcon } from "../../icons/edit-icon";
-import { DeleteIcon } from "../../icons/delete-icon";
-import { useCustomTheme } from "../../hooks/useCustomTheme";
+import { ViewIcon } from "src/components/icons/view-icon";
+import { EditIcon } from "src/components/icons/edit-icon";
+import { DeleteIcon } from "src/components/icons/delete-icon";
+import { useCustomTheme } from "src/hooks/useCustomTheme";
 
 interface Props {
 	icon: React.ReactNode;

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Logo } from "../../../../types/logo";
-import AppIcon from "../../../../assets/appicon.png";
+import { Logo } from "types/logo";
+import AppIcon from "src/assets/appicon.png";
 
 export const CompaniesDropdown = () => {
 	const [logo, setLogo] = useState<Logo>({

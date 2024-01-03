@@ -1,9 +1,9 @@
 import { Button, Card, CardBody, Image } from "@nextui-org/react";
-import { IItem } from "../../../../../types";
-import { Play2Icon } from "../../../icons/play-circle-2-icon";
-import { DownloadVideo } from "../../../../../wailsjs/go/handler/Playlist";
+import { IItem } from "types/index";
+import { Play2Icon } from "src/components/icons/play-circle-2-icon";
+import { DownloadVideo } from "src/wailsjs/go/handler/Playlist";
 import { useContext, useState } from "react";
-import { AudioContext, AudioContextType } from "../../../../..";
+import { AudioContext, AudioContextType } from "src/index";
 import { toast } from "react-toastify";
 
 type Props = {
