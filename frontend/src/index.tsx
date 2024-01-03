@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Layout } from "./components/layout/layout";
 import {
 	default as MusicPlayer,
@@ -8,15 +8,12 @@ import {
 } from "react-jinke-music-player";
 import { Outlet } from "react-router-dom";
 import { useCustomTheme } from "./hooks/useCustomTheme";
-
-export type AudioContextType = {
-	audioLists: AudioList[];
-	setAudioLists: React.Dispatch<React.SetStateAction<AudioList[]>>;
-};
-export const AudioContext = createContext<AudioContextType | null>(null);
+import { InputFocusContext } from "./hooks/useInputFocusContext";
+import { AudioContext } from "./hooks/useAudioContext";
 
 const Index = () => {
 	const { isDarkMode } = useCustomTheme();
+	const [inputFocused, setInputFocused] = useState<boolean>(false);
 	const [audioList, setAudioList] = useState<AudioList[]>([]);
 	let audioInstance: ReactJkMusicPlayerInstance = {} as ReactJkMusicPlayerInstance;
 
@@ -45,7 +42,9 @@ const Index = () => {
 		window.removeEventListener("keydown", onKeydown);
 	}, []);
 
-	useEffect(() => {}, [audioList]);
+	useEffect(() => {
+		console.log("inputFocused index", inputFocused);
+	}, [inputFocused]);
 
 	return (
 		<Layout>
@@ -57,7 +56,14 @@ const Index = () => {
 							setAudioLists: setAudioList,
 						}}
 					>
-						<Outlet />
+						<InputFocusContext.Provider
+							value={{
+								focused: inputFocused,
+								setFocused: setInputFocused,
+							}}
+						>
+							<Outlet />
+						</InputFocusContext.Provider>
 					</AudioContext.Provider>
 					<MusicPlayer
 						spaceBar={true}

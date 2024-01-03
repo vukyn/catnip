@@ -2,16 +2,16 @@ import { Button, Card, CardBody, Image } from "@nextui-org/react";
 import { IItem } from "types/index";
 import { Play2Icon } from "src/components/icons/play-circle-2-icon";
 import { DownloadVideo } from "src/wailsjs/go/handler/Playlist";
-import { useContext, useState } from "react";
-import { AudioContext, AudioContextType } from "src/index";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { useAudioContext } from "src/hooks/useAudioContext";
 
 type Props = {
 	item: IItem;
 };
 
 export const SongCard = ({ item }: Props) => {
-	const { audioLists, setAudioLists } = useContext(AudioContext) as AudioContextType;
+	const { audioLists, setAudioLists } = useAudioContext();
 	const [loading, setLoading] = useState(false);
 
 	const onClick = (id: string) => {
@@ -36,6 +36,10 @@ export const SongCard = ({ item }: Props) => {
 				return;
 			});
 	};
+
+	useEffect(() => {
+		console.log("song card", audioLists);
+	}, [audioLists]);
 
 	return (
 		<Card className="bg-default-50 rounded-xl shadow-md px-3 w-full">

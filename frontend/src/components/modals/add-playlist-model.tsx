@@ -1,11 +1,13 @@
 import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Image, Spinner } from "@nextui-org/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GetPlaylistById } from "src/wailsjs/go/handler/Playlist";
 import { IPlaylist } from "types/index";
 import { PasteIcon } from "src/components/icons/paste-icon";
 import { SavedPlaylist } from "types/local";
 import { uuidv4 } from "src/utils/guid";
 import { useCustomTheme } from "src/hooks/useCustomTheme";
+import { useInputFocus } from "src/hooks/useInputFocus";
+import { InputFocusContext, useInputFocusContext } from "src/hooks/useInputFocusContext";
 
 type Props = {
 	isOpen: boolean;
@@ -18,6 +20,7 @@ export const AddPlaylistModal = ({ isOpen, onSave, onOpenChange }: Props) => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [url, setUrl] = useState<string>("");
 	const [title, setTitle] = useState<string>("");
+	const { focused, setFocused } = useInputFocusContext();
 	const [playlist, setPlaylist] = useState<IPlaylist>({
 		id: "",
 		title: "",
@@ -90,6 +93,10 @@ export const AddPlaylistModal = ({ isOpen, onSave, onOpenChange }: Props) => {
 		onOpenChange(false);
 	};
 
+	useEffect(() => {
+		console.log("inputFocused", focused);
+	}, [focused]);
+
 	return (
 		<Modal className={themeClass} isOpen={isOpen} onOpenChange={onOpenChange} onClose={onModalClose} placement="top-center">
 			<ModalContent>
@@ -102,6 +109,8 @@ export const AddPlaylistModal = ({ isOpen, onSave, onOpenChange }: Props) => {
 								variant="bordered"
 								value={url}
 								onChange={(e) => onChangeUrl(e.target.value)}
+								onFocus={() => setFocused(true)}
+								onBlur={() => setFocused(false)}
 								endContent={
 									url.length === 0 && (
 										<Button isIconOnly aria-label="Paste" variant="light" size="sm" onClick={onGetFromClipboard}>

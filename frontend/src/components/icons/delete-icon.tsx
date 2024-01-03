@@ -13,7 +13,7 @@ export const DeleteIcon = ({ width, height = 24, className }: Props) => {
 			fill="#60626a"
 			xmlns="http://www.w3.org/2000/svg"
 			viewBox="0 0 52 52"
-			enable-background="new 0 0 52 52"
+			enableBackground="new 0 0 52 52"
 			xmlSpace="preserve"
 		>
 			<g>
