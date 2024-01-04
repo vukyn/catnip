@@ -8,14 +8,13 @@ import {
 } from "react-jinke-music-player";
 import { Outlet } from "react-router-dom";
 import { useCustomTheme } from "./hooks/useCustomTheme";
-import { InputFocusContext } from "./hooks/useInputFocusContext";
 import { AudioContext } from "./hooks/useAudioContext";
+import { KEY_HOOK_EDIT } from "./hooks/keys";
 
 const Index = () => {
 	const { isDarkMode } = useCustomTheme();
-	const [inputFocused, setInputFocused] = useState<boolean>(false);
 	const [audioList, setAudioList] = useState<AudioList[]>([]);
-	let audioInstance: ReactJkMusicPlayerInstance = {} as ReactJkMusicPlayerInstance;
+	let audioInstance = {} as ReactJkMusicPlayerInstance;
 
 	const onAudioListChange = (updatedList: AudioList[]) => {
 		// onChange remove audio
@@ -32,19 +31,20 @@ const Index = () => {
 	};
 
 	useEffect(() => {
-		const onKeydown = window.addEventListener("keydown", (e) => {
-			if (e.code === "Space") {
-				e.preventDefault();
-				audioInstance && audioInstance.togglePlay && audioInstance.togglePlay();
+		const onPause: (this: Window, ev: KeyboardEvent) => any = (ev) => {
+			if (ev.code === "Space") {
+				const isEdit = window.localStorage.getItem(KEY_HOOK_EDIT) === "true" ? true : false;
+				if (!isEdit) {
+					ev.preventDefault();
+					audioInstance && audioInstance.togglePlay && audioInstance.togglePlay();
+				}
 			}
-		});
-		// @ts-ignore
-		window.removeEventListener("keydown", onKeydown);
+		};
+		window.addEventListener("keydown", onPause);
+		return () => {
+			window.removeEventListener("keydown", onPause);
+		};
 	}, []);
-
-	useEffect(() => {
-		console.log("inputFocused index", inputFocused);
-	}, [inputFocused]);
 
 	return (
 		<Layout>
@@ -56,14 +56,7 @@ const Index = () => {
 							setAudioLists: setAudioList,
 						}}
 					>
-						<InputFocusContext.Provider
-							value={{
-								focused: inputFocused,
-								setFocused: setInputFocused,
-							}}
-						>
-							<Outlet />
-						</InputFocusContext.Provider>
+						<Outlet />
 					</AudioContext.Provider>
 					<MusicPlayer
 						spaceBar={true}
@@ -74,9 +67,7 @@ const Index = () => {
 						onAudioListsChange={(_, audioList) => onAudioListChange(audioList)}
 						customDownloader={handleDownload}
 						showMediaSession
-						getAudioInstance={(instance) => {
-							audioInstance = instance;
-						}}
+						getAudioInstance={(instance) => (audioInstance = instance)}
 					/>
 				</div>
 			</div>

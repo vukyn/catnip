@@ -60,10 +60,10 @@ const PlaylistPage = ({}: Props) => {
 		setNext(data.next);
 		setPrev(data.prev);
 		setTotal(data.total);
-		UpdateLocalSong(data.items);
+		updateLocalSong(data.items);
 	};
 
-	const UpdateLocalSong = (songs: models.PlaylistItemDetail[]) => {
+	const updateLocalSong = (songs: models.PlaylistItemDetail[]) => {
 		var savedItem: IItem[] = JSON.parse(window.localStorage.getItem("saved_songs")!) ?? [];
 		songs.forEach((song) => {
 			if (!savedItem.find((item) => item.video_id === song.video_id)) {

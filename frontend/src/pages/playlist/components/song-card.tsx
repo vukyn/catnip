@@ -37,9 +37,7 @@ export const SongCard = ({ item }: Props) => {
 			});
 	};
 
-	useEffect(() => {
-		console.log("song card", audioLists);
-	}, [audioLists]);
+	useEffect(() => {}, []);
 
 	return (
 		<Card className="bg-default-50 rounded-xl shadow-md px-3 w-full">

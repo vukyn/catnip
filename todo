@@ -11,6 +11,7 @@ Features:
   ☐ import local music
   ☐ create custom playlist
   ☐ import and export playlist
+  ☐ share playlist
 
 Bugs:
   ✔ Crash app when load playlist with more 100 songs => fixed in v0.1.1 @done(23-12-27 10:45)
@@ -20,4 +21,4 @@ Bugs:
   ✔ Download video with 0 byte => replace with customDownloader @done(23-12-28 11:37)
   ☐ Thumnail cut half
   ✔ Display home page => navigate to default path (/) @done(23-12-28 23:09)
-  ☐ Pause on spacebar conflict when focus on input field
+  ✔ Pause on spacebar conflict when focus on input field @done(24-01-05 01:30)

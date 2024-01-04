@@ -6,8 +6,7 @@ import { PasteIcon } from "src/components/icons/paste-icon";
 import { SavedPlaylist } from "types/local";
 import { uuidv4 } from "src/utils/guid";
 import { useCustomTheme } from "src/hooks/useCustomTheme";
-import { useInputFocus } from "src/hooks/useInputFocus";
-import { InputFocusContext, useInputFocusContext } from "src/hooks/useInputFocusContext";
+import { usePersistEdit } from "src/hooks/useEdit";
 
 type Props = {
 	isOpen: boolean;
@@ -20,7 +19,7 @@ export const AddPlaylistModal = ({ isOpen, onSave, onOpenChange }: Props) => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [url, setUrl] = useState<string>("");
 	const [title, setTitle] = useState<string>("");
-	const { focused, setFocused } = useInputFocusContext();
+	const { setIsEdit } = usePersistEdit();
 	const [playlist, setPlaylist] = useState<IPlaylist>({
 		id: "",
 		title: "",
@@ -74,9 +73,7 @@ export const AddPlaylistModal = ({ isOpen, onSave, onOpenChange }: Props) => {
 		};
 		if (window.localStorage.getItem("saved_playlists") !== null) {
 			const playlists: SavedPlaylist[] = JSON.parse(window.localStorage.getItem("saved_playlists")!);
-
 			playlists.unshift(newItem);
-
 			window.localStorage.setItem("saved_playlists", JSON.stringify(playlists));
 		} else {
 			window.localStorage.setItem("saved_playlists", JSON.stringify([newItem]));
@@ -89,13 +86,12 @@ export const AddPlaylistModal = ({ isOpen, onSave, onOpenChange }: Props) => {
 		setUrl("");
 		setTitle("");
 		setLoading(false);
+		setIsEdit(false);
 		resetPlaylist();
 		onOpenChange(false);
 	};
 
-	useEffect(() => {
-		console.log("inputFocused", focused);
-	}, [focused]);
+	useEffect(() => {}, []);
 
 	return (
 		<Modal className={themeClass} isOpen={isOpen} onOpenChange={onOpenChange} onClose={onModalClose} placement="top-center">
@@ -109,8 +105,8 @@ export const AddPlaylistModal = ({ isOpen, onSave, onOpenChange }: Props) => {
 								variant="bordered"
 								value={url}
 								onChange={(e) => onChangeUrl(e.target.value)}
-								onFocus={() => setFocused(true)}
-								onBlur={() => setFocused(false)}
+								onFocus={() => setIsEdit(true)}
+								onBlur={() => setIsEdit(false)}
 								endContent={
 									url.length === 0 && (
 										<Button isIconOnly aria-label="Paste" variant="light" size="sm" onClick={onGetFromClipboard}>
@@ -119,7 +115,14 @@ export const AddPlaylistModal = ({ isOpen, onSave, onOpenChange }: Props) => {
 									)
 								}
 							/>
-							<Input placeholder="Title" variant="bordered" value={title} onChange={(e) => setTitle(e.target.value)} />
+							<Input
+								placeholder="Title"
+								variant="bordered"
+								value={title}
+								onChange={(e) => setTitle(e.target.value)}
+								onFocus={() => setIsEdit(true)}
+								onBlur={() => setIsEdit(false)}
+							/>
 							<div className="w-full flex flex-row justify-center">{loading ? <Spinner color="secondary" /> : ""}</div>
 							<div className="w-full flex flex-row justify-center">
 								<Image width={300} alt="" src={playlist.thumbnail} />
