@@ -1,5 +1,6 @@
 import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@nextui-org/react";
 import { useState } from "react";
+import { useTheme } from "src/hooks/useTheme";
 import { DownloadPath } from "types/local";
 
 type Props = {
@@ -8,6 +9,7 @@ type Props = {
 };
 
 export const SettingModal = ({ isOpen, onOpenChange }: Props) => {
+	const { themeClass } = useTheme();
 	const [downloadPath, setDownloadPath] = useState<string>("");
 
 	const onSavePath = () => {
@@ -24,7 +26,7 @@ export const SettingModal = ({ isOpen, onOpenChange }: Props) => {
 	};
 
 	return (
-		<Modal isOpen={isOpen} onOpenChange={onOpenChange} onClose={onModalClose} placement="top-center">
+		<Modal className={themeClass} isOpen={isOpen} onOpenChange={onOpenChange} onClose={onModalClose} placement="top-center">
 			<ModalContent>
 				{(onClose) => (
 					<>
