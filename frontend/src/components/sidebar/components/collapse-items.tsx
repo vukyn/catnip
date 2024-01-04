@@ -4,7 +4,7 @@ import { Accordion, AccordionItem, Button, Dropdown, DropdownItem, DropdownMenu,
 import { ViewIcon } from "src/components/icons/view-icon";
 import { EditIcon } from "src/components/icons/edit-icon";
 import { DeleteIcon } from "src/components/icons/delete-icon";
-import { useCustomTheme } from "src/hooks/useCustomTheme";
+import { useTheme } from "src/hooks/useTheme";
 
 interface Props {
 	icon: React.ReactNode;
@@ -22,7 +22,7 @@ export interface ItemProps {
 }
 
 export const CollapseItems = ({ icon, items, title }: Props) => {
-	const { themeClass } = useCustomTheme();
+	const { themeClass } = useTheme();
 	return (
 		<div className="flex gap-2 h-full items-center cursor-pointer">
 			<Accordion className="px-0">

@@ -7,12 +7,12 @@ import {
 	ReactJkMusicPlayerInstance,
 } from "react-jinke-music-player";
 import { Outlet } from "react-router-dom";
-import { useCustomTheme } from "./hooks/useCustomTheme";
+import { useTheme } from "./hooks/useTheme";
 import { AudioContext } from "./hooks/useAudioContext";
 import { KEY_HOOK_EDIT } from "./hooks/keys";
 
 const Index = () => {
-	const { isDarkMode } = useCustomTheme();
+	const { isDarkMode } = useTheme();
 	const [audioList, setAudioList] = useState<AudioList[]>([]);
 	let audioInstance = {} as ReactJkMusicPlayerInstance;
 

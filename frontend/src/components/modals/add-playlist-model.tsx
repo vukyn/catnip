@@ -5,7 +5,7 @@ import { IPlaylist } from "types/index";
 import { PasteIcon } from "src/components/icons/paste-icon";
 import { SavedPlaylist } from "types/local";
 import { uuidv4 } from "src/utils/guid";
-import { useCustomTheme } from "src/hooks/useCustomTheme";
+import { useTheme } from "src/hooks/useTheme";
 import { usePersistEdit } from "src/hooks/useEdit";
 
 type Props = {
@@ -15,7 +15,7 @@ type Props = {
 };
 
 export const AddPlaylistModal = ({ isOpen, onSave, onOpenChange }: Props) => {
-	const { themeClass } = useCustomTheme();
+	const { themeClass } = useTheme();
 	const [loading, setLoading] = useState<boolean>(false);
 	const [url, setUrl] = useState<string>("");
 	const [title, setTitle] = useState<string>("");

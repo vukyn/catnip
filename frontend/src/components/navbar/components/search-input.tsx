@@ -1,10 +1,10 @@
 import { Autocomplete, AutocompleteItem, Avatar } from "@nextui-org/react";
 import { SearchIcon } from "src/components/icons/search-icon";
+import { useTheme } from "src/hooks/useTheme";
 import { IItem } from "src/types";
-import useDarkMode from "use-dark-mode";
 
 const Index = () => {
-	const darkMode = useDarkMode();
+	const { themeClass } = useTheme();
 	const Items: IItem[] = JSON.parse(window.localStorage.getItem("saved_songs")!) ?? [];
 
 	return (
@@ -38,7 +38,7 @@ const Index = () => {
 				offset: 10,
 				classNames: {
 					base: "rounded-large",
-					content: "p-1 border-small border-default-100 bg-background " + (darkMode.value ? "dark" : "light"),
+					content: "p-1 border-small border-default-100 " + themeClass,
 				},
 			}}
 			startContent={<SearchIcon />}
