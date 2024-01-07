@@ -25,7 +25,8 @@ export const SongCard = ({ item }: Props) => {
 						name: item.title,
 						singer: item.author,
 						musicSrc: data,
-						cover: item.thumbnail,
+						// cover: item.thumbnail,
+						cover: "https://gocleanarch.blob.core.windows.net/media/OIG.W5kPY.jpg",
 					},
 				]);
 				setLoading(false);

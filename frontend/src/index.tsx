@@ -59,6 +59,9 @@ const Index = () => {
 						<Outlet />
 					</AudioContext.Provider>
 					<MusicPlayer
+						quietUpdate
+						// autoHiddenCover
+						showMediaSession
 						spaceBar={true}
 						audioLists={audioList}
 						mode="full"
@@ -66,7 +69,6 @@ const Index = () => {
 						showThemeSwitch={false}
 						onAudioListsChange={(_, audioList) => onAudioListChange(audioList)}
 						customDownloader={handleDownload}
-						showMediaSession
 						getAudioInstance={(instance) => (audioInstance = instance)}
 					/>
 				</div>
