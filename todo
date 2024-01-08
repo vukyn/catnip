@@ -19,6 +19,7 @@ Bugs:
     ✔ Reason: App crash when load private video -> cannot load thumnail (nil pointer reference) @done(23-12-27 10:45)
   ✔ Run app background (not shutdown completely) => set HideWindowOnClose to false @done(23-12-27 10:52)
   ☐ Download video access denied when run with installer
+  ☐ Not show popup new added playlist
   ✔ Download video with 0 byte => replace with customDownloader @done(23-12-28 11:37)
   ✔ Thumnail cut half => replace with default thumnail (need square ratio) @done(24-01-07 23:48)
   ✔ Display home page => navigate to default path (/) @done(23-12-28 23:09)
