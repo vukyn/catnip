@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Card, CardBody, CardHeader, Divider, Image, Spacer } from "@nextui-org/react";
+import { Button, ButtonGroup, Card, CardBody, CardHeader, Divider, Image, Skeleton, Spacer } from "@nextui-org/react";
 import { SongCard } from "src/pages/playlist/components/song-card";
 import { GetPlaylistById, GetPlaylistItemByPlaylistId } from "src/wailsjs/go/handler/Playlist";
 import { memo, useEffect, useState } from "react";
@@ -12,6 +12,8 @@ type Props = {};
 
 const PlaylistPage = ({}: Props) => {
 	let { id } = useParams();
+	const [loading, setLoading] = useState<boolean>(false);
+	const [loadingItems, setLoadingItems] = useState<boolean>(false);
 	const [playlist, setPlaylist] = useState<IPlaylist>();
 	const [items, setItems] = useState<IItem[]>([]);
 	const [next, setNext] = useState<string>("");
@@ -21,8 +23,11 @@ const PlaylistPage = ({}: Props) => {
 
 	const onRender = (id: string) => {
 		setPage(1);
+		setLoading(true);
+		setLoadingItems(true);
 		GetPlaylistById({ id: id })
 			.then((data) => {
+				setLoading(false);
 				setPlaylist({
 					...data,
 				});
@@ -31,15 +36,18 @@ const PlaylistPage = ({}: Props) => {
 
 		GetPlaylistItemByPlaylistId({ id, page_token: "", size: 10 })
 			.then((data) => {
+				setLoadingItems(false);
 				ReRenderPlaylistItem(data);
 			})
 			.catch(() => toast.error("Failed to get playlist items, please try again later."));
 	};
 
 	const onNext = (id: string) => {
+		setLoadingItems(true);
 		GetPlaylistItemByPlaylistId({ id, page_token: next, size: 10 })
 			.then((data) => {
 				setPage(page + 1);
+				setLoadingItems(false);
 				ReRenderPlaylistItem(data);
 				window.scrollTo(0, 0);
 			})
@@ -47,9 +55,11 @@ const PlaylistPage = ({}: Props) => {
 	};
 
 	const onPrev = (id: string) => {
+		setLoadingItems(true);
 		GetPlaylistItemByPlaylistId({ id, page_token: prev, size: 10 })
 			.then((data) => {
 				setPage(page - 1);
+				setLoadingItems(false);
 				ReRenderPlaylistItem(data);
 				window.scrollTo(0, 0);
 			})
@@ -86,22 +96,30 @@ const PlaylistPage = ({}: Props) => {
 			<div className="flex flex-col gap-2">
 				<div className="gap-5 justify-center w-full">
 					<Card className="bg-default-50 rounded-xl shadow-md px-3 w-full">
-						<CardHeader className="text-2xl font-semibold">{playlist?.channel_title}</CardHeader>
+						<CardHeader className="text-2xl font-semibold">
+							<Skeleton className="rounded-lg" isLoaded={!loading}>
+								{playlist?.channel_title}
+							</Skeleton>
+						</CardHeader>
 						<Divider />
 						<CardBody className="py-5">
 							<div className="flex gap-2.5">
 								<div className="flex-none">
-									<Image width={300} alt="NextUI hero Image" src={playlist?.thumbnail} />
+									<Skeleton className="rounded-lg" isLoaded={!loading}>
+										<Image width={300} alt="NextUI hero Image" src={playlist?.thumbnail} />
+									</Skeleton>
 								</div>
-								<div className="w-full">
-									<h1 className="text-xl">{playlist?.title}</h1>
-									<div
-										className="text-xs overflow-auto max-h-32"
-										dangerouslySetInnerHTML={{
-											__html: playlist?.description?.replaceAll("\n", "<br/>") || "",
-										}}
-									></div>
-								</div>
+								<Skeleton className="rounded-lg w-full" isLoaded={!loading}>
+									<div className="w-full">
+										<h1 className="text-xl">{playlist?.title}</h1>
+										<div
+											className="text-xs overflow-auto max-h-32"
+											dangerouslySetInnerHTML={{
+												__html: playlist?.description?.replaceAll("\n", "<br/>") || "",
+											}}
+										></div>
+									</div>
+								</Skeleton>
 							</div>
 						</CardBody>
 					</Card>
@@ -112,7 +130,7 @@ const PlaylistPage = ({}: Props) => {
 				<div className=" w-full flex flex-col gap-4">
 					{items &&
 						items.map((item) => {
-							return <SongCard key={item.video_id} item={item} />;
+							return <SongCard key={item.video_id} item={item} loadingItems={loadingItems} />;
 						})}
 				</div>
 			</div>

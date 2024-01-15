@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, Image } from "@nextui-org/react";
+import { Button, Card, CardBody, Image, Skeleton } from "@nextui-org/react";
 import { IItem } from "types/index";
 import { Play2Icon } from "src/components/icons/play-circle-2-icon";
 import { DownloadVideo } from "src/wailsjs/go/handler/Playlist";
@@ -8,9 +8,10 @@ import { useAudioContext } from "src/hooks/useAudioContext";
 
 type Props = {
 	item: IItem;
+	loadingItems: boolean;
 };
 
-export const SongCard = ({ item }: Props) => {
+export const SongCard = ({ item, loadingItems }: Props) => {
 	const { audioLists, setAudioLists } = useAudioContext();
 	const [loading, setLoading] = useState(false);
 
@@ -45,7 +46,9 @@ export const SongCard = ({ item }: Props) => {
 			<CardBody className="py-5">
 				<div className="flex gap-2.5">
 					<div className="relative hover:opacity-80 hover:cursor-pointer" onClick={() => onClick(item.video_id)}>
-						<Image width={180} alt="thumnail" src={item.thumbnail} />
+						<Skeleton className="rounded-lg" isLoaded={!loadingItems}>
+							<Image width={180} alt="thumnail" src={item.thumbnail} />
+						</Skeleton>
 						<Button
 							style={{ background: "transparent" }}
 							className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
@@ -60,9 +63,13 @@ export const SongCard = ({ item }: Props) => {
 						</Button>
 					</div>
 					<div>
-						<h1 className="text-l">{item.title}</h1>
+						<Skeleton className="rounded-lg" isLoaded={!loadingItems}>
+							<h1 className="text-l">{item.title}</h1>
+						</Skeleton>
 						<div className="grid grid-cols-3">
-							<p className="text-xs mt-2">Phát hành: {item.published_at}</p>
+							<Skeleton className="rounded-lg mt-2" isLoaded={!loadingItems}>
+								<p className="text-xs mt-2">Phát hành: {item.published_at}</p>
+							</Skeleton>
 						</div>
 					</div>
 				</div>
