@@ -10,6 +10,7 @@ interface Props {
 	icon: React.ReactNode;
 	title: string;
 	items: ItemProps[];
+	onEdit: (item: ItemProps) => void;
 }
 
 export interface ItemProps {
@@ -21,7 +22,7 @@ export interface ItemProps {
 	onDelete: (key: string) => void;
 }
 
-export const CollapseItems = ({ icon, items, title }: Props) => {
+export const CollapseItems = ({ icon, items, title, onEdit }: Props) => {
 	const { themeClass } = useTheme();
 	return (
 		<div className="flex gap-2 h-full items-center cursor-pointer">
@@ -64,7 +65,7 @@ export const CollapseItems = ({ icon, items, title }: Props) => {
 										<DropdownItem key="view" startContent={<ViewIcon width={16} height={16} />} onClick={item.onClick}>
 											Go to
 										</DropdownItem>
-										<DropdownItem key="edit" startContent={<EditIcon width={16} height={16} />}>
+										<DropdownItem key="edit" startContent={<EditIcon width={16} height={16} />} onClick={() => onEdit(item)}>
 											Edit
 										</DropdownItem>
 										<DropdownItem

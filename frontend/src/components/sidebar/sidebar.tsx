@@ -16,15 +16,18 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { CollapseItems, ItemProps } from "./components/collapse-items";
 import { useDisclosure } from "@nextui-org/react";
 import { AddPlaylistModal } from "src/components/modals/add-playlist-model";
+import { EditPlaylistModal } from "src/components/modals/edit-playlist-model";
 import { SavedPlaylist } from "types/local";
 import { useEffect, useState } from "react";
 import { SettingModal } from "src/components/modals/setting-modal";
 
 export const SidebarWrapper = () => {
 	const { pathname } = useLocation();
+	const [editItem, setEditItem] = useState<ItemProps>({} as ItemProps);
 	const [playlistItems, setPlaylistItems] = useState<ItemProps[]>([]);
 	const { collapsed, setCollapsed } = useSidebarContext();
 	const { isOpen: isOpenAddPlaylist, onOpen: onOpenAddPlaylist, onOpenChange: onOpenChangeAddPlaylist } = useDisclosure();
+	const { isOpen: isOpenEditPlaylist, onOpen: onOpenEditPlaylist, onOpenChange: onOpenChangeEditPlaylist } = useDisclosure();
 	const { isOpen: isOpenSetting, onOpen: onOpenSetting, onOpenChange: onOpenChangeSetting } = useDisclosure();
 	const navigate = useNavigate();
 
@@ -91,20 +94,28 @@ export const SidebarWrapper = () => {
 		}
 	}, []);
 
-	const onAddPlaylist = (playlist: SavedPlaylist) => {
+	const onAddPlaylist = (item: SavedPlaylist) => {
 		setPlaylistItems([
 			...playlistItems,
 			{
 				id: "add-playlist",
-				title: playlist.title,
+				title: item.title,
 				onClick: () => {
-					navigate(`/playlist/${playlist.id}`);
+					navigate(`/playlist/${item.id}`);
 				},
 				isDefault: true,
 				canDelete: true,
 				onDelete: onDeletePlaylist,
 			},
 		]);
+	};
+
+	const onEditPlaylist = (item: ItemProps) => {
+		let itemIdx = playlistItems.findIndex((playlist) => playlist.id === item.id);
+		if (itemIdx > -1) {
+			playlistItems[itemIdx].title = item.title;
+			setPlaylistItems([...playlistItems]);
+		}
 	};
 
 	return (
@@ -129,12 +140,27 @@ export const SidebarWrapper = () => {
 						</SidebarMenu> */}
 						<SidebarMenu title="Your collection">
 							{/* <SidebarItem isActive={pathname === '/me/tracks'} title="Tracks" icon={<ListIcon />} href="me/tracks" /> */}
-							<CollapseItems icon={<ListMusicIcon />} items={playlistItems} title="Playlists" />
+							<CollapseItems
+								icon={<ListMusicIcon />}
+								items={playlistItems}
+								title="Playlists"
+								onEdit={(item: ItemProps) => {
+									setEditItem(item);
+									onOpenEditPlaylist();
+								}}
+							/>
 							<AddPlaylistModal
 								key="add-playlist"
 								isOpen={isOpenAddPlaylist}
 								onSave={onAddPlaylist}
 								onOpenChange={onOpenChangeAddPlaylist}
+							/>
+							<EditPlaylistModal
+								key="edit-playlist"
+								item={editItem}
+								isOpen={isOpenEditPlaylist}
+								onSave={onEditPlaylist}
+								onOpenChange={onOpenChangeEditPlaylist}
 							/>
 							{/* <SidebarItem isActive={pathname === '/me/likes'} title="Likes" icon={<HeartIcon />} href="me/likes" /> */}
 							<SidebarItem title="Setting" icon={<SettingIcon />} onClick={onOpenSetting} />
