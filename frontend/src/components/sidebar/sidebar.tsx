@@ -20,6 +20,7 @@ import { EditPlaylistModal } from "src/components/modals/edit-playlist-model";
 import { SavedPlaylist } from "types/local";
 import { useEffect, useState } from "react";
 import { SettingModal } from "src/components/modals/setting-modal";
+import { SAVED_PLAYLISTS } from "src/constants/local_storage";
 
 export const SidebarWrapper = () => {
 	const { pathname } = useLocation();
@@ -32,9 +33,9 @@ export const SidebarWrapper = () => {
 	const navigate = useNavigate();
 
 	const onDeletePlaylist = (key: string) => {
-		const playlists: SavedPlaylist[] = JSON.parse(window.localStorage.getItem("saved_playlists")!);
+		const playlists: SavedPlaylist[] = JSON.parse(window.localStorage.getItem(SAVED_PLAYLISTS)!);
 		const newPlaylists = playlists.filter((playlist) => playlist.guid !== key);
-		window.localStorage.setItem("saved_playlists", JSON.stringify(newPlaylists));
+		window.localStorage.setItem(SAVED_PLAYLISTS, JSON.stringify(newPlaylists));
 		setPlaylistItems([
 			{
 				id: "add-playlist",
@@ -58,8 +59,8 @@ export const SidebarWrapper = () => {
 	};
 
 	useEffect(() => {
-		if (window.localStorage.getItem("saved_playlists") !== null) {
-			const playlists: SavedPlaylist[] = JSON.parse(window.localStorage.getItem("saved_playlists")!);
+		if (window.localStorage.getItem(SAVED_PLAYLISTS) !== null) {
+			const playlists: SavedPlaylist[] = JSON.parse(window.localStorage.getItem(SAVED_PLAYLISTS)!);
 			setPlaylistItems([
 				{
 					id: "add-playlist",

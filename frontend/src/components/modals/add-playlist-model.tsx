@@ -7,6 +7,7 @@ import { SavedPlaylist } from "types/local";
 import { uuidv4 } from "src/utils/guid";
 import { useTheme } from "src/hooks/useTheme";
 import { usePersistEdit } from "src/hooks/useEdit";
+import { SAVED_PLAYLISTS } from "src/constants/local_storage";
 
 type Props = {
 	isOpen: boolean;
@@ -71,12 +72,12 @@ export const AddPlaylistModal = ({ isOpen, onSave, onOpenChange }: Props) => {
 			title: title,
 			type: "custom",
 		};
-		if (window.localStorage.getItem("saved_playlists") !== null) {
-			const playlists: SavedPlaylist[] = JSON.parse(window.localStorage.getItem("saved_playlists")!);
+		if (window.localStorage.getItem(SAVED_PLAYLISTS) !== null) {
+			const playlists: SavedPlaylist[] = JSON.parse(window.localStorage.getItem(SAVED_PLAYLISTS)!);
 			playlists.unshift(newItem);
-			window.localStorage.setItem("saved_playlists", JSON.stringify(playlists));
+			window.localStorage.setItem(SAVED_PLAYLISTS, JSON.stringify(playlists));
 		} else {
-			window.localStorage.setItem("saved_playlists", JSON.stringify([newItem]));
+			window.localStorage.setItem(SAVED_PLAYLISTS, JSON.stringify([newItem]));
 		}
 		onSave(newItem);
 		onModalClose();

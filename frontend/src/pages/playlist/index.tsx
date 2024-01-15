@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ChevronLeftIcon, ChevronRightIcon } from "src/components/icons/chevron-icon";
 import { models } from "src/wailsjs/go/models";
+import { SAVED_SONGS } from "src/constants/local_storage";
 
 type Props = {};
 
@@ -75,13 +76,13 @@ const PlaylistPage = ({}: Props) => {
 	};
 
 	const updateLocalSong = (songs: models.PlaylistItemDetail[]) => {
-		var savedItem: IItem[] = JSON.parse(window.localStorage.getItem("saved_songs")!) ?? [];
+		var savedItem: IItem[] = JSON.parse(window.localStorage.getItem(SAVED_SONGS)!) ?? [];
 		songs.forEach((song) => {
 			if (!savedItem.find((item) => item.video_id === song.video_id)) {
 				savedItem.push(song);
 			}
 		});
-		window.localStorage.setItem("saved_songs", JSON.stringify(savedItem));
+		window.localStorage.setItem(SAVED_SONGS, JSON.stringify(savedItem));
 	};
 
 	useEffect(() => {

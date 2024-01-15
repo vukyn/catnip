@@ -1,11 +1,12 @@
 import { Autocomplete, AutocompleteItem, Avatar } from "@nextui-org/react";
 import { SearchIcon } from "src/components/icons/search-icon";
+import { SAVED_SONGS } from "src/constants/local_storage";
 import { useTheme } from "src/hooks/useTheme";
 import { IItem } from "src/types";
 
 const Index = () => {
 	const { themeClass } = useTheme();
-	const Items: IItem[] = JSON.parse(window.localStorage.getItem("saved_songs")!) ?? [];
+	const Items: IItem[] = JSON.parse(window.localStorage.getItem(SAVED_SONGS)!) ?? [];
 
 	return (
 		<Autocomplete

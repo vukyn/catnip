@@ -1,5 +1,5 @@
 import { useLocalStorage, useReadLocalStorage } from "usehooks-ts";
-import { KEY_HOOK_EDIT } from "./keys";
+import { KEY_HOOK_EDIT } from "src/constants/hooks";
 import { useState } from "react";
 
 type EditType = {

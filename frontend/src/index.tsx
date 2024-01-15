@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Layout } from "./components/layout/layout";
+import { Layout } from "src/components/layout/layout";
 import {
 	default as MusicPlayer,
 	ReactJkMusicPlayerAudioListProps as AudioList,
@@ -7,9 +7,10 @@ import {
 	ReactJkMusicPlayerInstance,
 } from "react-jinke-music-player";
 import { Outlet } from "react-router-dom";
-import { useTheme } from "./hooks/useTheme";
-import { AudioContext } from "./hooks/useAudioContext";
-import { KEY_HOOK_EDIT } from "./hooks/keys";
+import { useTheme } from "src/hooks/useTheme";
+import { AudioContext } from "src/hooks/useAudioContext";
+import { KEY_HOOK_EDIT } from "src/constants/hooks";
+import { QUEUE_PLAYLIST } from "src/constants/local_storage";
 
 const Index = () => {
 	const { isDarkMode } = useTheme();
@@ -31,6 +32,9 @@ const Index = () => {
 	};
 
 	useEffect(() => {
+		if (window.localStorage.getItem(QUEUE_PLAYLIST) !== null) {
+			setAudioList(JSON.parse(window.localStorage.getItem(QUEUE_PLAYLIST)!));
+		}
 		const onPause: (this: Window, ev: KeyboardEvent) => any = (ev) => {
 			if (ev.code === "Space") {
 				const isEdit = window.localStorage.getItem(KEY_HOOK_EDIT) === "true" ? true : false;
@@ -45,6 +49,10 @@ const Index = () => {
 			window.removeEventListener("keydown", onPause);
 		};
 	}, []);
+
+	useEffect(() => {
+		window.localStorage.setItem(QUEUE_PLAYLIST, JSON.stringify(audioList));
+	}, [audioList]);
 
 	return (
 		<Layout>

@@ -4,6 +4,7 @@ import { SavedPlaylist } from "types/local";
 import { useTheme } from "src/hooks/useTheme";
 import { usePersistEdit } from "src/hooks/useEdit";
 import { ItemProps } from "src/components/sidebar/components/collapse-items";
+import { SAVED_PLAYLISTS } from "src/constants/local_storage";
 
 type Props = {
 	isOpen: boolean;
@@ -18,14 +19,14 @@ export const EditPlaylistModal = ({ item, isOpen, onSave, onOpenChange }: Props)
 	const { setIsEdit } = usePersistEdit();
 
 	const onSavePlaylist = () => {
-		if (window.localStorage.getItem("saved_playlists") !== null) {
-			const playlists: SavedPlaylist[] = JSON.parse(window.localStorage.getItem("saved_playlists")!);
+		if (window.localStorage.getItem(SAVED_PLAYLISTS) !== null) {
+			const playlists: SavedPlaylist[] = JSON.parse(window.localStorage.getItem(SAVED_PLAYLISTS)!);
 			let itemIdx = playlists.findIndex((playlist) => playlist.guid === item.id);
 			if (itemIdx > -1) {
 				item.title = title;
 				playlists[itemIdx].title = title;
 				onSave(item);
-				window.localStorage.setItem("saved_playlists", JSON.stringify(playlists));
+				window.localStorage.setItem(SAVED_PLAYLISTS, JSON.stringify(playlists));
 			}
 		}
 		onModalClose();
