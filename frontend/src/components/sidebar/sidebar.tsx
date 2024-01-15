@@ -103,7 +103,7 @@ export const SidebarWrapper = () => {
 				onClick: () => {
 					navigate(`/playlist/${item.id}`);
 				},
-				isDefault: true,
+				isDefault: false,
 				canDelete: true,
 				onDelete: onDeletePlaylist,
 			},
