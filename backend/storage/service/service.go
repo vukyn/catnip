@@ -39,15 +39,30 @@ func (s *service) Upload(ctx context.Context, req *models.UploadRequest) (string
 		return url, nil
 	}
 
+	userDir, err := os.UserCacheDir() // C:\Users\YourUser\AppData\Local
+	if err != nil {
+		return "", err
+	}
+
+	// Write file in system is not allowed, so write to temp folder.
+	tmpDir := userDir + "\\Temp\\catnip\\"
+	if _, err := os.Stat(tmpDir); err != nil {
+		// Create temp folder if not exist
+		if err := os.MkdirAll(tmpDir, os.ModePerm); err != nil {
+			return "", err
+		}
+	}
+
 	// Destination
-	file, err := os.Create(req.Filename)
+	filepath := tmpDir + req.Filename
+	file, err := os.Create(filepath)
 	if err != nil {
 		return "", err
 	}
 
 	defer func() {
 		file.Close()
-		os.Remove(req.Filename)
+		os.Remove(filepath)
 	}()
 
 	// Copy
@@ -71,3 +86,21 @@ func (s *service) exist(ctx context.Context, url string) (bool, error) {
 	}
 	return res.StatusCode == http.StatusOK, nil
 }
+
+/*
+func UserHomeDir() string {
+    if runtime.GOOS == "windows" {
+        home := os.Getenv("HOMEDRIVE") + os.Getenv("HOMEPATH")
+        if home == "" {
+            home = os.Getenv("USERPROFILE")
+        }
+        return home
+    }
+    return os.Getenv("HOME")
+}
+
+func main() {
+    homeDir := UserHomeDir()
+    fmt.Println(homeDir + "\\AppData")
+}
+*/

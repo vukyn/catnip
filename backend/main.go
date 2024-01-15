@@ -13,7 +13,7 @@ import (
 )
 
 func main() {
-	testPlaylistApi()
+	testYoutubeApi()
 }
 
 const (
@@ -41,7 +41,7 @@ func testYoutubeApi() {
 	}
 	storage := initStorage.NewInit(az)
 	youtube := initYoutube.NewInit(storage)
-	res, err := youtube.Service.GetVideoV2(ctx, "9QAevjELLMs")
+	res, err := youtube.Service.DownloadVideoV2(ctx, "9QAevjELLMs")
 	if err != nil {
 		panic(err)
 	}
