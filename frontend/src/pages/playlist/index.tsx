@@ -20,6 +20,7 @@ const PlaylistPage = ({}: Props) => {
 	const [page, setPage] = useState<number>(1);
 
 	const onRender = (id: string) => {
+		setPage(1);
 		GetPlaylistById({ id: id })
 			.then((data) => {
 				setPlaylist({
