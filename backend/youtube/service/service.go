@@ -181,8 +181,8 @@ func (s *service) DownloadVideoV2(ctx context.Context, id string) (*youtubeModel
 	// 139: m4a, audio, 48k
 	// 140: m4a, audio, 128k
 	// 141: m4a, audio, 256k
-	formats := video.Formats.FindByItag(140) // (m4a, audio, 128k)
-	stream, _, err := client.GetStream(video, formats)
+	formats := video.Formats.Itag(140) // (m4a, audio, 128k)
+	stream, _, err := client.GetStream(video, &formats[0])
 	if err != nil {
 		return nil, err
 	}
