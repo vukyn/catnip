@@ -22,6 +22,16 @@ var assets embed.FS
 //go:embed build/appicon.png
 var icon []byte
 
+//	@title			Catnip API
+//	@version		1.0
+//	@description	Catnip API.
+
+//	@contact.name	Vu Ky
+//	@contact.url	github.com/vukyn
+//	@contact.email	vukynpro@gmail.com
+
+//	@host		localhost:3001
+//	@BasePath	/
 func main() {
 	// Create an instance of the app structure
 	app := NewApp()

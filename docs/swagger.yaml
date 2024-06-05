@@ -1,0 +1,86 @@
+basePath: /
+definitions:
+  models.FileInfo:
+    properties:
+      extension:
+        type: string
+      name:
+        type: string
+      path:
+        type: string
+    type: object
+  models.FolderInfo:
+    properties:
+      name:
+        type: string
+      path:
+        type: string
+    type: object
+  models.LookupFolderResponse:
+    properties:
+      files:
+        items:
+          $ref: '#/definitions/models.FileInfo'
+        type: array
+      folders:
+        items:
+          $ref: '#/definitions/models.FolderInfo'
+        type: array
+    type: object
+host: localhost:3001
+info:
+  contact:
+    email: vukynpro@gmail.com
+    name: Vu Ky
+    url: github.com/vukyn
+  description: Catnip API.
+  title: Catnip API
+  version: "1.0"
+paths:
+  /file:
+    get:
+      description: get file from computer
+      parameters:
+      - description: file path
+        in: query
+        name: path
+        required: true
+        type: string
+      produces:
+      - application/octet-stream
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: get file
+      tags:
+      - FileService
+  /folder:
+    get:
+      description: get all file in folder from computer
+      parameters:
+      - description: folder path
+        in: query
+        name: path
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.LookupFolderResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: get files in folder
+      tags:
+      - FileService
+swagger: "2.0"

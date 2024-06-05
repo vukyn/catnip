@@ -14,7 +14,11 @@ import { QUEUE_PLAYLIST } from "src/constants/local_storage";
 
 const Index = () => {
 	const { isDarkMode } = useTheme();
-	const [audioList, setAudioList] = useState<AudioList[]>([]);
+	let t = {
+		musicSrc: "http://localhost:3001/file?path=D:\\Music\\Ai Cũng Phải Bắt Đầu Từ Đâu Đó.mp3",
+		name: "Test 1",
+	} as AudioList;
+	const [audioList, setAudioList] = useState<AudioList[]>([t]);
 	let audioInstance = {} as ReactJkMusicPlayerInstance;
 
 	const onAudioListChange = (updatedList: AudioList[]) => {

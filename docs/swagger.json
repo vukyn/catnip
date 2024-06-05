@@ -1,0 +1,131 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Catnip API.",
+        "title": "Catnip API",
+        "contact": {
+            "name": "Vu Ky",
+            "url": "github.com/vukyn",
+            "email": "vukynpro@gmail.com"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:3001",
+    "basePath": "/",
+    "paths": {
+        "/file": {
+            "get": {
+                "description": "get file from computer",
+                "produces": [
+                    "application/octet-stream"
+                ],
+                "tags": [
+                    "FileService"
+                ],
+                "summary": "get file",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "file path",
+                        "name": "path",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/folder": {
+            "get": {
+                "description": "get all file in folder from computer",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FileService"
+                ],
+                "summary": "get files in folder",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "folder path",
+                        "name": "path",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.LookupFolderResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.FileInfo": {
+            "type": "object",
+            "properties": {
+                "extension": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.FolderInfo": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.LookupFolderResponse": {
+            "type": "object",
+            "properties": {
+                "files": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.FileInfo"
+                    }
+                },
+                "folders": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.FolderInfo"
+                    }
+                }
+            }
+        }
+    }
+}
